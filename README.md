@@ -1,7 +1,7 @@
 # Croneos frontend
 
-This is the frontend for croneos.
-See [croneos.io](https://croneos.io)
+This is the frontend for eosgroups.
+See [eosgroups.io](https://eosgroups.io)
 
 ## Install the dependencies
 ```bash
