@@ -83,7 +83,7 @@
       </div>
 
     </div>
-    
+    <wasm-compiler :asbuffer="false"/>
     <!-- <pre>{{getActiveGroupConfig}}</pre> -->
 
   </q-page>
@@ -92,12 +92,14 @@
 <script>
 import { mapGetters } from "vuex";
 import {openURL} from "quasar";
-import {isValidUrl} from "../../imports/validators.js"
+import {isValidUrl} from "../../imports/validators.js";
+
+import wasmCompiler from "components/wasm-compiler";
 
 export default {
   name: "PageIndex",
   components: {
-    
+    wasmCompiler
   },
   data() {
     return {

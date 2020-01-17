@@ -154,20 +154,41 @@
           </router-link> -->
           </div>
       </q-carousel-slide>
+      <q-carousel-slide :name="`request_activation`" class="no-padding">
+        <div class="column items-center full-height text-grey-6 q-pt-md">
+          account created
+            <q-btn
+              color="primary"
+              label="activate"
+              style="width:150px"
+              :disabled="!account_name_validated"
+              @click="activateGroup"
+            />
+        </div>
+      </q-carousel-slide>
       <q-carousel-slide :name="`request_signature`" class="no-padding">
         <div class="column items-center full-height text-grey-6 q-pt-md">
           <q-spinner color="primary" size="40px" @click="step='request_account_name'" class="cursor-pointer" />
           <div class="q-mt-md">Waiting for Signature</div>
         </div>
       </q-carousel-slide>
+      <q-carousel-slide :name="`group_created`" class="no-padding">
+        <div class="column items-center full-height text-grey-6 q-pt-md">
+          <q-icon color="primary" size="40px" name="check" />
+          <div class="q-mt-xs">Group created successful</div>
+          <q-btn label="visit group" color="secondary" class="q-mt-md" :to="`./manage/${new_group_account_name}`" />
+        </div>
+      </q-carousel-slide>
     </q-carousel>
   </div>
+  <wasm-compiler ref="wasm_compiler"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import newGroup from "components/new-group";
+import wasmCompiler from "components/wasm-compiler";
 import {
   isValidAccountName,
   isAvailableAccountName
@@ -176,7 +197,8 @@ import {
 export default {
   name: "create",
   components: {
-    newGroup
+    newGroup,
+    wasmCompiler
   },
   props:{
     prefill:{
@@ -190,11 +212,13 @@ export default {
   },
   data() {
     return {
-      number_of_steps:2,
+      number_of_steps:3,
       step: 'request_account_name', //request_account_name, request_signature
       new_group_account_name: "",
       account_name_validated: false,
-      voice_only: false
+      voice_only: false,
+      wasmhex: '',
+      abihex: ''
     };
   },
   computed: {
@@ -217,23 +241,36 @@ export default {
         return test;
       }
     },
-    async createGroup(){
-      alert('creating groups is disabled');
-      return;
+    async activateGroup(){
+      // alert('creating groups is disabled');
+      // return;
       this.deploycontract(this.new_group_account_name);
 
     },
-      async deploycontract(new_group){
+    async createGroup(){
+      alert('creating groups is disabled');
+      return false;
       this.step="request_signature";
-
       let create_group = {
         account: this.getAppConfig.groups_contract,
         name: "creategroup",
         data: {
-          groupname: new_group,
+          groupname: this.new_group_account_name,
           creator: this.getAccountName
         }
       };
+
+      let res = await this.$store.dispatch("ual/transact", { actions: [create_group], disable_signing_overlay: true });
+      if(res && res.transactionId && res.status == "executed"){
+        this.step="request_activation";
+      }
+      else{
+        return false;
+      }
+
+    },
+    async deploycontract(new_group){
+      this.step="request_signature";
 
       let setcode = {
         account: "eosio",
@@ -242,10 +279,9 @@ export default {
           account: new_group,
           vmtype: 0,
           vmversion: 0,
-          code: ""
+          code: this.wasmhex
         },
-        authorization: [{actor: new_group, permission: "eosio.code"}]
-
+        authorization: [{actor: new_group, permission: 'active'}]
       }
 
       let setabi = {
@@ -253,9 +289,9 @@ export default {
         name: "setabi",
         data: {
           account: new_group,
-          abi: ""
+          abi: this.abihex
         },
-        authorization: [{actor: new_group, permission: "eosio.code"}]
+        authorization: [{actor: new_group, permission: 'active'}]
       }
 
       let activate = {
@@ -264,12 +300,11 @@ export default {
         data: {
           groupname: new_group,
           creator: this.getAccountName
-         },
-         authorization: [{actor: new_group, permission: "active"}]
+         }
       }
-      let res = await this.$store.dispatch("ual/transact", { actions: [create_group, setcode, setabi, activate ], disable_signing_overlay: true });
+      let res = await this.$store.dispatch("ual/transact", { actions: [ setabi, setcode, activate], disable_signing_overlay: true });
       if(res && res.transactionId && res.status == "executed"){
-        console.log(res)
+        this.step="group_created";
         return true;
       }
       else{
@@ -278,15 +313,19 @@ export default {
 
 
     },
-    next(){
+    async next(){
       this.step="request_settings";
+      if(this.wasmhex == '' || this.abihex == ''){
+        this.wasmhex = await this.$refs.wasm_compiler.loadRemoteWasm('https://raw.githubusercontent.com/eosgroups/group/master/group.wasm');
+        this.abihex = await this.$refs.wasm_compiler.loadRemoteAbi('https://raw.githubusercontent.com/eosgroups/group/master/group.abi');
+      }
+
     }
   },
-  mounted(){
+  async mounted(){
     if(this.prefill.group_account_name){
       this.new_group_account_name = this.prefill.group_account_name;
-    }
-    
+    }    
   },
   watch: {
     new_group_account_name: function() {
