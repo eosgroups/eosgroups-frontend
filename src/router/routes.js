@@ -1,4 +1,3 @@
-
 const routes = [
   {
     path: '/',
@@ -23,7 +22,7 @@ const routes = [
 
   {
     path: '/manage/:groupname',
-    component: () => import('layouts/groupLayout.vue'),
+    component: () => import('layouts/GroupLayout.vue'),
     children: [
       { path: '', component: () => import('pages/manage/info.vue') },
       { path: 'custodians', component: () => import('pages/manage/custodians.vue') },
@@ -39,7 +38,7 @@ const routes = [
 
   {
     path: '/members/:groupname',
-    component: () => import('layouts/groupLayout.vue'),
+    component: () => import('layouts/GroupLayout.vue'),
     children: [
       { path: '', component: () => import('pages/manage/info.vue') },
       { path: 'dashboard', component: () => import('pages/members/dashboard.vue') },
@@ -49,11 +48,11 @@ const routes = [
     ]
   },
 
-  
+
 ]
 
 // Always leave this as last one
-if (process.env.MODE !== 'ssr') {
+if(process.env.MODE !== 'ssr') {
   routes.push({
     path: '*',
     component: () => import('pages/Error404.vue')
