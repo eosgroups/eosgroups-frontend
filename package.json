@@ -7,6 +7,8 @@
   "author": "",
   "private": true,
   "scripts": {
+    "dev": "quasar dev",
+    "build": "quasar build && cp _redirects dist/spa",
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
