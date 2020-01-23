@@ -97,7 +97,9 @@ module.exports = function (ctx) {
         'QColor',
         'QSplitter',
         'QCircularProgress',
-        'QMarkupTable'
+        'QMarkupTable',
+        'QFab',
+        'QFabAction'
 
       ],
 

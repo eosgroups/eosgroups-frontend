@@ -1,5 +1,5 @@
 <template>
-      <q-list class="primary-hover-list" :class="$q.dark.isActive? `bg-dark`:`bg-grey-3`"  separator>
+      <q-list class="primary-hover-list" :class="$q.dark.isActive? `bg-dark`:`bg-grey-3`"  :separator="!$q.dark.isActive">
 
         <q-item clickable :to="`/manage/${getActiveGroup}`" exact>
           <q-item-section avatar>

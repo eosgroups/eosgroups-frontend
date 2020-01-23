@@ -9,7 +9,8 @@ export default {
   },
   selectedBlockExplorer: {
     base: 'https://jungle.eosq.app/',
-    trx: 'tx/'
+    trx: 'tx/',
+    account: 'account/'
   },
   minifyCustodians: false,
   isDark: false,

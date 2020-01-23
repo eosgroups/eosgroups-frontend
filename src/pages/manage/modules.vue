@@ -1,7 +1,8 @@
 <template>
   <q-page padding class="constrain-page-width">
 
-    <kitten test="fff"/>
+    <!-- <kitten test="fff"/> -->
+
 
     <q-card>
       <div
@@ -47,6 +48,12 @@
       </q-tab-panels>
     </q-card>
 
+    <div class="q-mt-md">
+      <q-card class="primary-hover-list">
+        <core-version-manager />
+      </q-card>
+    </div>
+
     <!-- {{ getNewCoreConfig }} -->
   </q-page>
 </template>
@@ -60,9 +67,11 @@ import childAccountSelector from "components/child-account-selector";
 import configEditor from "components/config/config-editor";
 import configUpdater from "components/config/config-updater";
 
+import coreVersionManager from "components/core-version-manager";
 
 
-const kitten = window.httpVueLoader('http://localhost:8080/statics/test_component.vue');
+
+// const kitten = window.httpVueLoader('http://localhost:8080/statics/test_component.vue');
 
 
 export default {
@@ -72,7 +81,7 @@ export default {
     configEditor,
     configUpdater,
     childAccountSelector,
-    kitten
+    coreVersionManager
   },
   data() {
     return {

@@ -64,7 +64,7 @@
             <q-icon name="mdi-account-group" color="primary" style="margin-top:-4px"/>
           </q-item-section>
           <q-item-section>
-            <q-item-label class="text-primary text-uppercase" style="margin-left:-15px">{{ getActiveGroup }}</q-item-label>
+            <q-item-label class="text-primary text-uppercase" style="margin-left:-26px">{{ getActiveGroup }}</q-item-label>
           </q-item-section>
           <q-item-section side>
             <q-item-label>
@@ -80,13 +80,17 @@
         >
           <q-list style="min-width: 200px" class="primary-hover-list" separator >
 
-            <q-item v-if="menu_mode=='management'" clickable  v-close-popup class="text-right">
+            <q-item v-if="getCoreConfig && menu_mode=='management'" clickable  v-close-popup class="text-right">
               <q-item-section side>
                 <q-btn round icon="close" flat color="primary" />
               </q-item-section>
-              <q-item-section @click="menu_mode='members'">
+              <q-item-section v-if="getCoreConfig.conf.member_registration" @click="menu_mode='members'">
                 <q-item-label>Members</q-item-label>
                 <q-item-label caption>Switch To Member Menu</q-item-label>
+              </q-item-section>
+              <q-item-section v-else>
+                <q-item-label>Members Disabled</q-item-label>
+                <!-- <q-item-label caption>This group doesn't accept member registrations</q-item-label> -->
               </q-item-section>
             </q-item>
 
@@ -206,7 +210,8 @@ export default {
   computed: {
     ...mapGetters({
       getActiveGroup: "group/getActiveGroup",
-      getActiveGroupConfig: "group/getActiveGroupConfig"
+      getActiveGroupConfig: "group/getActiveGroupConfig",
+      getCoreConfig: "group/getCoreConfig"
     })
   },
   methods: {

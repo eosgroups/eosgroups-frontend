@@ -1,4 +1,5 @@
 <template>
+<div>
   <div v-if="getGroupWallet.length">
     <q-item clickable @click.native="toggleTokenSelector" id="tokendisplay">
       <q-item-section avatar>
@@ -113,6 +114,10 @@
   
       </div>
     </div>
+  </div>
+  <div v-else class="text-grey-7 text-weight-light">
+    Group doesn't own any tokens. Transfer to "<b>{{getActiveGroup}}</b>" to fund the group.
+  </div>
   </div>
   <!-- {{ getGroupWallet }} -->
 </template>

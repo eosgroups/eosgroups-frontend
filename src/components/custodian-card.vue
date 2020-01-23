@@ -4,7 +4,7 @@
       <!-- <pre>{{getImAliveStats}}</pre> -->
       <q-item>
         <q-item-section avatar>
-          <profile-pic :size="60" />
+          <profile-pic :size="60"  account=""/> <!--  icon="mdi-star" iconColor="primary" -->
         </q-item-section>
 
         <q-item-section>
@@ -35,7 +35,7 @@
                 size="35px"
                 :thickness="0.2"
                 color="primary"
-                center-color="grey-2"
+                center-color="transparent"
                 track-color="grey-4"
               >
                 <q-icon name="mdi-heart" size="20px" :color="`primary`" :style="`filter: grayscale(${100-getImAliveStats}%); margin-top:3px`" />

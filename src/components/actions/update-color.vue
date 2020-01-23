@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-      palette:['#019A9D', '#D9B801', '#E8045A', '#B2028A', '#7DC6EC', '#7CB342', '#F4511E', '#FF9A17', '#798CEF'],
+      palette:['#019A9D', '#D9B801', '#E8045A', '#B2028A', '#7DC6EC', '#7CB342', '#F4511E', '#FF9A17', '#798CEF','#9E8D67', '#3399FF'],
       palette_size: "35px",
       new_hexcolor: '',
     };

@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <q-btn-dropdown
       split
       flat 
@@ -12,6 +13,7 @@
 
       <template v-slot:label>
         <div class="row items-center justify-between no-wrap">
+          
           <q-btn flat  class="bg-secondary q-mr-sm networkbuttonhover" round :icon="`img:statics/images/networks/${getActiveNetwork}.png`" size="sm">
             <q-tooltip content-class="bg-secondary" :delay="500">
               <div v-if="getAccountName">
@@ -22,7 +24,10 @@
               </div>
             </q-tooltip>
           </q-btn>
+          
+          <profile-pic v-if="getAccountName" :size="28"  :icon="getIsCustodian(getAccountName)?'mdi-star':''" iconColor="primary"  account="" class="q-mr-xs"/>
           <div class="text-center">{{getAccountName ? getAccountName : 'login'}}</div>
+          
         </div>
       </template>
 
@@ -60,8 +65,12 @@
 <script>
 import { mapGetters } from "vuex";
 import {notifyError} from '../../imports/notifications.js';
+import profilePic from "components/profile-pic";
 export default {
   // name: 'ComponentName',
+  components:{
+    profilePic
+  },
   data() {
     return {
       selected_network: null,
@@ -94,6 +103,7 @@ export default {
       getShouldRenderLoginModal: "ual/getShouldRenderLoginModal",
       getActiveNetwork: "ual/getActiveNetwork",
       getSESSION: "ual/getSESSION",
+      getIsCustodian: "group/getIsCustodian",
     })
   },
   methods:{

@@ -123,7 +123,7 @@ export default {
   },
   watch: {
     "action.data.quant": function(newV, oldV) {
-      if (this.action.data.quant) {
+      if (this.action.data.quant && this.getPaymentToken()) {
         this.action.data.quant = Number(this.action.data.quant).toFixed(this.getPaymentToken().precision);
       }
     }

@@ -4,18 +4,42 @@
 
       <div class="col-xs-12">
         <q-card>
-          <q-card-section>
-            <img :src="getActiveGroupConfig.ui.logo"  style="width:100%; max-width:300px;">
+          
+          <q-card-section >
+            <q-btn icon="mdi-pencil"  color="secondary" size="sm" text-color="primary" round  class="absolute-top-right q-mr-md q-mt-md" />
+            <q-img v-if="getActiveGroupConfig.ui.logo" :src="getActiveGroupConfig.ui.logo"  style="width:100%; max-width:300px;">
+              <template v-slot:error>
+                <div class="text-weight-light bg-transparent flex">
+                  <span class="text-primary" >error loading logo</span>
+                </div>
+              </template>
+            </q-img>
+            <div v-else class="text-primary text-h5" >No Logo</div>
           </q-card-section>
-          <q-card-section>
-            <q-item class="no-padding">
-              <q-item-section>
-                <q-item-label>Group Account</q-item-label>
-                <q-item-label caption>{{getActiveGroupConfig.groupname}}</q-item-label>
-              </q-item-section>
-            </q-item>
+          <q-card-section >
+            <div class="row justify-between">
+              <q-item class="no-padding q-mr-sm">
+                <q-item-section>
+                  <q-item-label>Group Account</q-item-label>
+                  <q-item-label caption>
+                    <a :href="getSelectedBlockExplorer.base+getSelectedBlockExplorer.account+getActiveGroupConfig.groupname" target="_blank" class="text-link row items-center">
+                      <q-icon name="search" size="16px"/>
+                      <span>{{getActiveGroupConfig.groupname}}</span>
+                    </a>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item class="no-padding">
+                <q-item-section>
+                  <q-item-label >
+                    <group-tags :tags="getActiveGroupConfig.tags" content-class="bg-primary text-white"/>
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+              
+            </div>
             <div class="q-mt-md">About</div>
-            <p class="text-grey-7 text-caption text-weight-light">{{getActiveGroupConfig.meta.about}}</p>
+            <p class="text-caption text-weight-light">{{getActiveGroupConfig.meta.about}}</p>
 
             <div class="text-weight-light row justify-between items-center">
             <div>
@@ -36,6 +60,14 @@
           </q-card-section>
         </q-card>
       </div>
+
+      <div v-if="getCoreConfig" class="col-xs-12">
+        <q-card class="primary-hover-list">
+           <core-version-manager />
+        </q-card>
+      </div>
+
+
       <div class="col-xs-12 col-sm-6 col-lg-4">
         <q-card class="primary-hover-list">
           <q-item clickable :to="`/manage/${getActiveGroup}/custodians`">
@@ -82,9 +114,12 @@
         </q-card>
       </div>
 
+
     </div>
-    <wasm-compiler :asbuffer="false"/>
+    
+   
     <!-- <pre>{{getActiveGroupConfig}}</pre> -->
+ 
 
   </q-page>
 </template>
@@ -93,13 +128,16 @@
 import { mapGetters } from "vuex";
 import {openURL} from "quasar";
 import {isValidUrl} from "../../imports/validators.js";
+import groupTags from "components/group-tags";
 
-import wasmCompiler from "components/wasm-compiler";
+
+import coreVersionManager from "components/core-version-manager";
 
 export default {
   name: "PageIndex",
   components: {
-    wasmCompiler
+    groupTags,
+    coreVersionManager
   },
   data() {
     return {
@@ -113,13 +151,14 @@ export default {
       getActiveGroupConfig: "group/getActiveGroupConfig",
       getCoreConfig: "group/getCoreConfig",
       getCoreState: "group/getCoreState",
-      getNumberCustodians: "group/getNumberCustodians"
+      getNumberCustodians: "group/getNumberCustodians",
+      getSelectedBlockExplorer: "user/getSelectedBlockExplorer"
     })
   },
   methods: {
     isValidUrl,
     openURL,
-    dologin() {}
+
   }
 
 };

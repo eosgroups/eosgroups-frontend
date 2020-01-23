@@ -24,8 +24,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
+import { mapGetters } from 'vuex'
+import {sha256} from "../imports/helpers.js";
 export default {
   name: 'wasmCompiler',
   props: {
@@ -54,16 +55,21 @@ export default {
       let res = await this.$axios.get(url, {
           responseType: 'arraybuffer'
       })
-      res = this.buf2hex(res.data)
- 
+
+      let code_hash = sha256(new Uint8Array(res.data, 0));
+      console.log('calculated code_hash', code_hash)
+      res = {
+        wasm: this.buf2hex(res.data),
+        code_hash : code_hash
+      };
       return res;
     },
     async loadRemoteAbi(url){
       let res = await this.$axios.get(url, {
-          responseType: 'text/plain',
+          responseType: 'text',
           transformResponse: [data => data]
       });
-      console.log(res)
+ 
       res = await this.parseAbi(res.data);
     
       return res;

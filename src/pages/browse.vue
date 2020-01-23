@@ -3,11 +3,7 @@
     <!-- content -->
     <div class="center-page-content">
       <div>
-        <q-input
-          placeholder="Find Group"
-          outlined
-          v-model.trim="searchfilter"
-        >
+        <q-input placeholder="Find Group" outlined v-model.trim="searchfilter">
           <template v-slot:prepend>
             <q-icon name="search" class="cursor-pointer" />
           </template>
@@ -32,7 +28,7 @@
                 class="cursor-pointer"
               >
                 <q-menu
-                v-if="false"
+                  v-if="false"
                   fit
                   @before-show="menu_visible = true"
                   @hide="menu_visible = false"
@@ -85,8 +81,6 @@
         </span>
       </transition>
 
-
-
       <transition-group
         appear
         enter-active-class="animated zoomIn"
@@ -99,52 +93,8 @@
           :key="group.groupname"
           class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3"
         >
-          <q-card
-            v-if="group.state"
-            class="full-height"
-            :style="{ backgroundColor: group.ui.hexcolor }"
-          >
-            <q-card-section style="max-height:70px" class="  ">
-
-                <q-img
-                  :src="group.ui.logo"
-                  style="max-width:200px; filter: brightness(0) invert(1);"
-                />
-
-     
-            </q-card-section>
-            <q-card-section>
-              <div
-                class="row text-uppercase justify-center text-white text-weight-light"
-              >
-                {{ group.groupname }}
-              </div>
-            </q-card-section>
-
-            <q-card-section>
-              <div class="row justify-between items-center">
-                <q-btn
-                  round
-                  :color="group.is_fav ? 'yellow' : 'white'"
-                  flat
-                  icon="star"
-                  size="lg"
-                  @click="
-                    $store.commit('user/setFavouriteGroups', group.groupname);
-                    group.is_fav = !group.is_fav;
-                  "
-                />
-                <q-btn
-                  label="Visit Group"
-                  :to="`./manage/${group.groupname}`"
-                  flat
-                  text-color="white"
-                  :style="{ backgroundColor: group.ui.hexcolor }"
-                />
-              </div>
-            </q-card-section>
-            <!-- {{group}} -->
-          </q-card>
+          <group-card :group="group" class="full-height" />
+         
         </div>
       </transition-group>
     </div>
@@ -153,10 +103,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import groupCard from "components/group-card"
 
 export default {
   // name: 'LayoutName',
-  components: {},
+  components: {
+    groupCard
+  },
   data() {
     return {
       searchfilter: "",
@@ -184,14 +137,26 @@ export default {
         return res.filter(
           g =>
             g.groupname.includes(this.searchfilter) ||
-            g.meta.about.includes(this.searchfilter)
+            g.meta.about.includes(this.searchfilter) ||
+            this.arrayStartsWith(g.tags, this.searchfilter )
         );
       } else {
         return res;
       }
     }
   },
-  methods: {},
+  methods: {
+    arrayStartsWith(arr, needle){
+      let test = false;
+      for(let i = 0; i < arr.length; i++){
+        if(arr[i].startsWith(needle)){
+          test =  true;
+          break;
+        }
+      }
+      return test;
+    }
+  },
   mounted() {
     let hash = window.location.hash;
     if (hash) {

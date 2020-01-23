@@ -35,7 +35,7 @@
 </template>
 
 <script>
-const append_accounts=['eosio.token'];
+const append_accounts=['eosio.token', 'eosio.msig'];
 export default {
   name: 'findAccount',
   props:{

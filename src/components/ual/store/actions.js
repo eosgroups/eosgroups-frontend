@@ -1,5 +1,7 @@
 import {notifyError, notifySuccess} from '../../../imports/notifications.js';
 
+import {serializeActionData} from '../../../imports/helpers.js'
+
 import { UAL } from "universal-authenticator-library";
 import { Scatter } from 'ual-scatter';
 import { Ledger } from 'ual-ledger';
@@ -173,3 +175,77 @@ export async function hideSigningOverlay({ commit }, ms=10000) {
   await new Promise(resolve=>{setTimeout(resolve,ms)})
   commit('setSigningOverlay', { show: false, status:0});
 }
+
+
+export async function proposeSystemMsig({ state, rootState, commit, dispatch, getters, rootGetters }, payload) {
+  //payload example
+  // {
+  //   return_action: false
+  //   actions: [], //required
+  //   requested: [],
+  //   proposal_name: "aname",
+  //   expiration: "2019-08-10T19:14:14",
+  //   delay_sec: 0,
+  //   title: "a title",
+  //   description: "a description"
+  //   is_personal_msig: false
+  // }
+  console.log(payload.actions)
+  //proposalname
+  let proposal_name = payload.proposal_name ;
+  //expiration
+  let exp = new Date();
+  exp.setDate(exp.getDate() + 30);
+  let [expiration] = exp.toISOString().split(".");
+
+  //requested
+  let requested = payload.requested
+  //msig trx template
+  let msigTrx_template = {
+    expiration: payload.expiration || expiration,
+    ref_block_num: 0,
+    ref_block_prefix: 0,
+    max_net_usage_words: 0,
+    max_cpu_usage_ms: 0,
+    delay_sec: payload.delay_sec || 0,
+    actions: [],
+    context_free_actions: [],
+    transaction_extensions: [],
+    signatures: [],
+    context_free_data: []
+  };
+
+  //serialize action data and add to template
+  for (let i = 0; i < payload.actions.length; i++) {
+    let action = payload.actions[i];
+    let hexdata = await serializeActionData(action);
+    action.data = hexdata;
+    msigTrx_template.actions.push(action);
+  }
+
+  //do the transaction
+  let propose = {
+    account: 'eosio.msig',
+    name: "propose",
+    data: {
+      proposer: state.accountName,
+      proposal_name: proposal_name,
+      requested: requested,
+      trx: msigTrx_template
+    }
+  };
+
+  if(payload.return_action){
+    return propose;
+  }
+
+  let msig_actions = [propose];
+
+  let res = await dispatch("transact", { actions: msig_actions });
+  if (res) {
+    res.proposal_name = proposal_name;
+  }
+  return res;
+}
+
+

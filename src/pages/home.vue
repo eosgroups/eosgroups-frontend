@@ -1,5 +1,5 @@
 <template>
-  <q-page class=" full-height">
+  <q-page class=" bg-dark full-height">
     <!-- <div class="diagonal"></div> -->
     <div class="header_box relative-position">
       <!-- https://svg-clipart.com/blue/P9e4bp8-crowd-clipart -->
@@ -21,14 +21,14 @@
       </q-parallax>
     </div>
 
-    <div style="height:1000px">
+    <!-- <div style="height:1000px">
       <q-card>
         <q-card-section>
 
         manage wallet in group, manage contracts, proxy accounts, collect charitiy account,
         </q-card-section>
       </q-card>
-    </div>
+    </div> -->
 
   </q-page>
 </template>

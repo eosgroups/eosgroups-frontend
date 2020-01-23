@@ -189,6 +189,7 @@
 import { mapGetters } from "vuex";
 import newGroup from "components/new-group";
 import wasmCompiler from "components/wasm-compiler";
+
 import {
   isValidAccountName,
   isAvailableAccountName
@@ -248,8 +249,8 @@ export default {
 
     },
     async createGroup(){
-      alert('creating groups is disabled');
-      return false;
+      // alert('creating groups is disabled');
+      // return false;
       this.step="request_signature";
       let create_group = {
         account: this.getAppConfig.groups_contract,
@@ -302,6 +303,8 @@ export default {
           creator: this.getAccountName
          }
       }
+
+
       let res = await this.$store.dispatch("ual/transact", { actions: [ setabi, setcode, activate], disable_signing_overlay: true });
       if(res && res.transactionId && res.status == "executed"){
         this.step="group_created";
@@ -316,8 +319,10 @@ export default {
     async next(){
       this.step="request_settings";
       if(this.wasmhex == '' || this.abihex == ''){
-        this.wasmhex = await this.$refs.wasm_compiler.loadRemoteWasm('https://raw.githubusercontent.com/eosgroups/group/master/group.wasm');
+        this.wasmhex = (await this.$refs.wasm_compiler.loadRemoteWasm('https://raw.githubusercontent.com/eosgroups/group/master/group.wasm')).wasm;
+        
         this.abihex = await this.$refs.wasm_compiler.loadRemoteAbi('https://raw.githubusercontent.com/eosgroups/group/master/group.abi');
+
       }
 
     }

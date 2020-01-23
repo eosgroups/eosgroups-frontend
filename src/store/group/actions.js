@@ -278,6 +278,11 @@ export async function fetchTokensOwnedByScope ({ state, commit }, payload) {
 
 
 export async function propose({ state, rootState, dispatch, commit }, payload) {
+  // return_action: false
+  // description:"",
+  // title:"",
+  // expiration:",
+  // actions: []
 
   let active_period = (60*60*24*7)*1000;
   let default_expiration = new Date(Date.now()+active_period).toISOString().split('.')[0]; //"2019-12-03T00:28:24.215Z"
@@ -310,6 +315,10 @@ export async function propose({ state, rootState, dispatch, commit }, payload) {
     propose_action.data.actions.push(action);
   }
 
+  if(payload.return_action === true){
+    return propose_action;
+  }
+
   const propose_payload = {
     disable_signing_overlay: true,
     actions: [propose_action]
@@ -340,3 +349,5 @@ export async function propose({ state, rootState, dispatch, commit }, payload) {
   return res;
 
 }
+
+

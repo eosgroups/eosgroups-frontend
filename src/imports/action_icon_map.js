@@ -28,6 +28,10 @@ export const action_icon_map = {
       name: "color_lens",
       size: "35px"
     },
+    updatetags: {
+      name: "mdi-tag",
+      size: "30px"
+    },
     manthreshold: {
       name: "mdi-chart-gantt",
       size: "30px",
