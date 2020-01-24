@@ -55,7 +55,7 @@
             no-caps
             inline-label
           >
-            <q-tab label="All" name="all" />
+            <q-tab :label="`All (${getGroups.length})`" name="all" />
             <q-tab
               :label="`Favourites (${getFavouriteGroups.length})`"
               name="favourites"
