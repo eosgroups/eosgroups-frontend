@@ -5,6 +5,7 @@
       split
       flat 
       color="white"
+      v-model="menu_open"
       dark
       @click="handleLoginClick"
       :loading="getShouldRenderLoginModal"
@@ -44,6 +45,18 @@
           </q-item-section>
         </q-item>
 
+        <q-item  class="bg-primary">
+          <q-item-section avatar>
+            <night-mode-switch :icon-only="true" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Dark mode </q-item-label>
+            <q-item-label caption>{{getIsDark ? 'on': 'off'}}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+
+
         <q-item clickable v-close-popup @click="handleNetworkClick(network.key)" v-for="network in networks" :key="network.label">
           <q-item-section avatar>
             <q-icon :name="network.icon" />
@@ -66,14 +79,17 @@
 import { mapGetters } from "vuex";
 import {notifyError} from '../../imports/notifications.js';
 import profilePic from "components/profile-pic";
+import nightModeSwitch from "components/night-mode-switch";
 export default {
   // name: 'ComponentName',
   components:{
-    profilePic
+    profilePic,
+    nightModeSwitch
   },
   data() {
     return {
       selected_network: null,
+      menu_open: false,
       networks: [
         {
           label: "Jungle",
@@ -104,12 +120,16 @@ export default {
       getActiveNetwork: "ual/getActiveNetwork",
       getSESSION: "ual/getSESSION",
       getIsCustodian: "group/getIsCustodian",
+      getIsDark: "user/getIsDark",
     })
   },
   methods:{
     handleLoginClick(){
       if(!!!this.getAccountName){
         this.$store.dispatch('ual/renderLoginModal')
+      }
+      else{
+        this.menu_open = !this.menu_open;
       }
       
     },
