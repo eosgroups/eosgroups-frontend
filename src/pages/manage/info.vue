@@ -117,7 +117,7 @@
 
     </div>
     
-    <notification-manager v-if="getAccountName == 'piecesnbitss'" />
+    <!-- <notification-manager v-if="getAccountName == 'piecesnbitss'" /> -->
    
     <!-- <pre>{{getActiveGroupConfig}}</pre> -->
  
@@ -133,14 +133,14 @@ import groupTags from "components/group-tags";
 
 
 import coreVersionManager from "components/core-version-manager";
-import notificationManager from "components/notification-manager";
+// import notificationManager from "components/notification-manager";
 
 export default {
   name: "PageIndex",
   components: {
     groupTags,
     coreVersionManager,
-    notificationManager
+    // notificationManager
   },
   data() {
     return {

@@ -5,6 +5,7 @@
       
     </transition>
     <q-btn  @click="getInstanceIdToken" label="getToken" color="primary"/>
+    <div>{{receiver_token}}</div>
   </div>
 </template>
 
@@ -13,7 +14,8 @@ export default {
   // name: 'ComponentName',
   data () {
     return {
-      notifications_granted: false
+      notifications_granted: false,
+      receiver_token : ''
     }
   },
   computed:{
@@ -46,6 +48,7 @@ export default {
         .then(currentToken => {
           if (currentToken) {
             console.log(currentToken);
+            this.receiver_token = currentToken;
             // sendTokenToServer(currentToken);
             // updateUIForPushEnabled(currentToken);
           } else {
