@@ -45,9 +45,9 @@
           </q-item-section>
         </q-item>
 
-        <q-item  class="bg-primary">
+        <q-item  class="bg-primary" clickable v-close-popup @click="toggleNightMode">
           <q-item-section avatar>
-            <night-mode-switch :icon-only="true" />
+            <q-icon name="mdi-theme-light-dark" class="cursor-pointer" :class="{'rotate-180': getIsDark }" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Dark mode </q-item-label>
@@ -79,12 +79,12 @@
 import { mapGetters } from "vuex";
 import {notifyError} from '../../imports/notifications.js';
 import profilePic from "components/profile-pic";
-import nightModeSwitch from "components/night-mode-switch";
+
 export default {
   // name: 'ComponentName',
   components:{
-    profilePic,
-    nightModeSwitch
+    profilePic
+
   },
   data() {
     return {
@@ -132,6 +132,10 @@ export default {
         this.menu_open = !this.menu_open;
       }
       
+    },
+    toggleNightMode(){
+      this.$q.dark.toggle();
+      this.$store.commit('user/setIsDark', !this.getIsDark );
     },
     async handleNetworkClick(network_key){
       if(network_key == this.getActiveNetwork && !!this.getAccountName){
