@@ -39,6 +39,7 @@
         @popup-show="token_selector_popup = true"
         @popup-hide="token_selector_popup = false"
         autocomplete="off"
+        @input="transfer_action.data.quantity = ''"
       >
         <template v-slot:prepend>
           <q-icon name="search" class="q-ml-md" />
@@ -78,19 +79,49 @@
         v-model="transfer_action.data.from"
         placeholder="Receiver"
       />
+      <!-- <find-account v-model="transfer_action.data.to"/> -->
       <q-input
         outlined
         label="To"
         v-model="transfer_action.data.to"
         placeholder="Receiver"
-      />
+        bottom-slots
+        no-error-icon
+        maxlength="12"
+        :debounce="500"
+        :rules="[
+          val => !!val || '* Required',
+          isValidAccountName,
+          isExistingAccountNameWrapper
+        ]"
+      >
+        <template v-slot:hint>
+          <span class="text-grey-8 row" v-if="to_input_validated">
+            <span>Account found</span>
+          </span>
+          <span v-else>Receiver account</span>
+        </template>
+      </q-input>
       <q-input
         type="number"
         outlined
         label="Quantity"
         v-model="transfer_action.data.quantity"
         placeholder="Amount"
+        no-error-icon
+
+        :rules="[
+          val => !!val || '* Required',
+          val => val > 0 || 'Must be greater then zero',
+          validateAmount
+          ]"
       >
+        <template v-slot:hint>
+          <span class="text-grey-8 row" v-if="quantity_input_validated">
+            <span>{{Number(transfer_action.data.quantity).toFixed(getGroupWallet[selected_token_index].precision)}} {{ getGroupWallet[selected_token_index].symbol }}</span>
+          </span>
+          <span v-else>Amount to send</span>
+        </template>
         <template v-slot:append>
           <div>{{ getGroupWallet[selected_token_index].symbol }}</div>
         </template>
@@ -108,7 +139,7 @@
           @click-propose="emitPropose"
           @click-bucket="emitBucket"
           label="transfer"
-          :disabled="false"
+          :disabled="!to_input_validated || !quantity_input_validated"
         />
         </div>
   
@@ -125,10 +156,17 @@
 <script>
 import { mapGetters } from "vuex";
 import proposeBucketBtn from "components/actions/propose-bucket-btn";
+import findAccount from "components/form/find-account";
+
+import {
+  isValidAccountName,
+  isExistingAccountName
+} from "../../imports/validators";
 export default {
   name: "groupWallet",
   components: {
     proposeBucketBtn,
+    findAccount
 
   },
   data() {
@@ -142,14 +180,16 @@ export default {
         account: "",
         name: "transfer",
         data: {
-          from: this.$store.state.group.activeGroup,
+          from: this.$route.params.groupname,
           to: "",
           quantity: "",
           memo: ""
         }
       },
       description: "",
-      title: ""
+      title: "",
+      to_input_validated: false,
+      quantity_input_validated: false
     };
   },
   computed: {
@@ -177,6 +217,31 @@ export default {
     }
   },
   methods: {
+    isValidAccountName,
+    isExistingAccountName,
+    async isExistingAccountNameWrapper(v){
+        let t = await isExistingAccountName(v);
+        if(t === true){
+          this.to_input_validated = true;
+        }
+        return t;
+    },
+    validateAmount(v){
+      // console.log(v)
+      let token_from_group_wallet = this.getGroupWallet[this.selected_token_index];
+      if(!token_from_group_wallet){
+        return `Group doesn't have ${this.symbol} in wallet`;
+      }
+      else{
+        if(Number(v) > Number(token_from_group_wallet.amount) ){
+          return `Group only has ${token_from_group_wallet.amount} ${token_from_group_wallet.symbol}`;
+        }
+        else{
+          this.quantity_input_validated = true;
+          return true;
+        }
+      }
+    },
     toggleTokenSelector() {
       if (!this.token_selector_popup) {
         this.$refs.token_selector.showPopup();
