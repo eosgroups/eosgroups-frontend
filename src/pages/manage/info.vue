@@ -113,10 +113,11 @@
           </q-item>
         </q-card>
       </div>
-
+      
 
     </div>
     
+    <notification-manager v-if="getAccountName == 'piecesnbitss'" />
    
     <!-- <pre>{{getActiveGroupConfig}}</pre> -->
  
@@ -132,12 +133,14 @@ import groupTags from "components/group-tags";
 
 
 import coreVersionManager from "components/core-version-manager";
+import notificationManager from "components/notification-manager";
 
 export default {
   name: "PageIndex",
   components: {
     groupTags,
-    coreVersionManager
+    coreVersionManager,
+    notificationManager
   },
   data() {
     return {
@@ -158,8 +161,8 @@ export default {
   methods: {
     isValidUrl,
     openURL,
-
   }
+
 
 };
 </script>

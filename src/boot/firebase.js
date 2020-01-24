@@ -18,7 +18,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-console.log(firebase);
+//console.log(firebase);
 
 const messaging = firebase.messaging();
 messaging.usePublicVapidKey(PublicVapidKey);
@@ -27,17 +27,17 @@ navigator.serviceWorker.register('./statics/service-workers/firebase-messaging-s
 .then((registration) => {
   messaging.useServiceWorker(registration);
 
-  if(true){
-    Notification.requestPermission().then(permission => {
-      if (permission === "granted") {
-        console.log("Notification permission granted.");
-        // TODO(developer): Retrieve an Instance ID token for use with FCM.
-        getInstanceIdToken();
-      } else {
-        console.log("Unable to get permission to notify.");
-      }
-    });
-  }
+  // if(true){
+  //   Notification.requestPermission().then(permission => {
+  //     if (permission === "granted") {
+  //       console.log("Notification permission granted.");
+  //       // TODO(developer): Retrieve an Instance ID token for use with FCM.
+  //       getInstanceIdToken();
+  //     } else {
+  //       console.log("Unable to get permission to notify.");
+  //     }
+  //   });
+  // }
 
 });
 
@@ -97,5 +97,6 @@ messaging.onTokenRefresh(() => {
 
 export default ({ Vue }) => {
   // something to do
+  Vue.prototype.$messaging = messaging;
 
 };
