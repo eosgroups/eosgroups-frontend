@@ -18,6 +18,7 @@
     </div>
 
     <q-carousel
+    
       v-model="step"
       keep-alive
       :navigation="false"
@@ -37,6 +38,7 @@
           <!-- account input -->
           <div class="rounded-borders overflow-hidden">
             <q-input
+              :dark="false"
               ref="accountinput"
               autocomplete="off"
               outlined
@@ -118,6 +120,7 @@
           <div class="row">
             <div class="text-grey-6">
               <q-toggle
+              :dark="false"
                 v-model="voice_only"
                 left-label
                 :disable="true"
@@ -128,6 +131,7 @@
               </div>
               </q-toggle>
               <q-tooltip
+              content-class="bg-secondary"
                 :delay="500"
                 anchor="center right"
                 self="center left"
