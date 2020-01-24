@@ -77,11 +77,12 @@ export async function waitForAuthenticatorToLoad({}, authenticator) {
 export async function attemptAutoLogin({state, commit, dispatch}){
   let {accountName, authenticatorName, timestamp}= state.SESSION;
   if(accountName && authenticatorName){
-    commit("setAccountName", accountName);
+    //commit("setAccountName", accountName);
     let authenticator = state.UAL.authenticators.find(a => a.getStyle().text == authenticatorName);
     authenticator.init();
     await dispatch('waitForAuthenticatorToLoad', authenticator);
     if(authenticator.initError){
+      
       console.log(`Attempt to auto login with authenticator ${authenticatorName} failed because it's not available anymore.`);
       commit('setSESSION', {accountName:null, authenticatorName: null});
       return;
@@ -92,6 +93,7 @@ export async function attemptAutoLogin({state, commit, dispatch}){
       commit("setActiveAuthenticator", authenticator);
       notifySuccess({message:`Welcome back ${accountName}, you are connected to ${state.SESSION.network} with ${authenticatorName}.`});
     }).catch(e =>{
+      //commit("setAccountName", null);
       commit('setSESSION', {accountName:null, authenticatorName: null});
       console.log('auto login error', e, e.cause);
     });

@@ -34,10 +34,10 @@
                   @hide="menu_visible = false"
                 >
                   <q-list style="min-width: 100px" class="primary-hover-list">
-                    <q-item clickable @click="" v-close-popup>
+                    <q-item clickable v-close-popup>
                       <q-item-section>New Custodian</q-item-section>
                     </q-item>
-                    <q-item clickable @click="" v-close-popup>
+                    <q-item clickable v-close-popup>
                       <q-item-section>Remove Custodian</q-item-section>
                     </q-item>
                   </q-list>
