@@ -107,7 +107,7 @@
 
       <q-scroll-area :style="`height:calc(100% - 60px); margin-top: 60px; `" class="overflow-hidden">
 
-        <transition tag="div" appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutLeft" mode="out-in">
+        <transition tag="div" appear enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight" mode="out-in">
           <management-menu v-if="menu_mode=='management'" key="management_menu"/>
           <members-menu v-if="menu_mode=='members'" key="members_menu"/>
         </transition>
@@ -157,14 +157,14 @@
       </q-scroll-area>
     </q-drawer>
 
-    <q-page-container class=" text-black  overflow-hidden" style="padding-bottom:80px">
-      <transition
+    <q-page-container class=" text-black  overflow-hidden" style="padding-bottom:0px">
+      <!-- <transition
         appear
         enter-active-class="animated fadeInRight"
         mode="out-in"
-      >
+      > -->
         <router-view />
-      </transition>
+      <!-- </transition> -->
       <q-page-scroller
         position="bottom-right"
         :scroll-offset="150"
@@ -247,12 +247,12 @@ export default {
       handler(newVal, oldVal) {
         if (newVal =="members") {
           console.log(`/members/${this.$route.params.groupname}/dashboard`)
-          this.$router.push(`/members/${this.$route.params.groupname}/dashboard`).catch(err => {});
-          notifyInfo({message: `you switched to members menu.`})
+          // this.$router.push(`/members/${this.$route.params.groupname}/dashboard`).catch(err => {});
+          // notifyInfo({message: `you switched to members menu.`})
         } else {
           //this.$store.dispatch('user/loggedOutRoutine');
           this.$router.push(`/manage/${this.$route.params.groupname}`).catch(err => {});
-          notifyInfo({message: `you switched to management menu.`})
+          // notifyInfo({message: `you switched to management menu.`})
         }
       }
     },

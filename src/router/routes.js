@@ -32,7 +32,7 @@ const routes = [
       { path: 'wallet', component: () => import('pages/manage/wallet.vue') },
       { path: 'resources', component: () => import('pages/manage/resources.vue') },
       { path: 'thresholds', component: () => import('pages/manage/thresholds.vue') },
-      { path: 'modules', component: () => import('pages/manage/modules.vue') },
+      { path: 'modules', component: () => import('pages/manage/modules.vue') }
     ]
   },
 
@@ -42,7 +42,7 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/manage/info.vue') },
       { path: 'dashboard', component: () => import('pages/members/dashboard.vue') },
-      { path: 'vote', component: () => import('pages/members/vote.vue') },
+      { path: 'elections', component: () => import('pages/members/elections.vue') },
       { path: 'register', component: () => import('pages/members/register.vue') },
 
     ]
