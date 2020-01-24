@@ -126,13 +126,17 @@ module.exports = function (ctx) {
       // analyze: true,
       // extractCSS: false,
       extendWebpack (cfg) {
-        cfg.plugins.push( 
+        cfg.module.rules.push({
+          test: /\.pug$/,
+          loader: 'pug-plain-loader'
+        })
+        cfg.plugins.push(
           new CopyWebpackPlugin([
-              { context: `${__dirname}/src/statics/manifests`,from:'*.*', to:'', toType: 'dir'}
+            { context: `${__dirname}/src/statics/manifests`, from: '*.*', to: '', toType: 'dir' }
 
-            ]
-           ) 
-        );
+            ])
+        )
+
       }
     },
 
