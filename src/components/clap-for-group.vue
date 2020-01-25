@@ -92,9 +92,9 @@ export default {
       };
       let res = await this.$store.dispatch("ual/transact", { actions: [action], disable_signing_overlay: true });
       if(res && res.transactionId && res.status == "executed"){
+        this.$store.commit('group/setClaps', this.getActiveGroupConfig.claps+this.clap_amount);
         this.clap_modal = false;
         this.clap_amount = 5000;
-        this.$store.commit('group/setClaps', this.getActiveGroupConfig.claps+this.clap_amount);
       }
       else{
         return false;
