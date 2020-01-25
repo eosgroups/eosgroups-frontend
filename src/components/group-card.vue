@@ -5,7 +5,7 @@
       class="full-height"
       :style="{ backgroundColor: group.ui.hexcolor }"
     >
-      <!-- <clap-for-group class="absolute"/> -->
+      
       <q-tab-panels v-model="view_mode"/>
       <q-tab-panel name="main" class="no-padding full-height">
       <div class="column justify-between full-height overflow-hidden">
@@ -67,12 +67,11 @@
 </template>
 
 <script>
-import clapForGroup from "components/clap-for-group";
+
 import groupTags from "components/group-tags";
 export default {
   // name: 'ComponentName',
   components: {
-    clapForGroup,
     groupTags
   },
   props: {

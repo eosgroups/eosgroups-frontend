@@ -92,6 +92,9 @@ export function setGroupAccount(state, payload){
 export function setActiveGroupConfig(state, payload){
     state.activeGroupConfig = payload;
 }
+export function setClaps(state, payload){
+    state.activeGroupConfig.claps = payload;
+}
 
 export function setCoreConfig(state, payload){
     state.coreConfig = payload;

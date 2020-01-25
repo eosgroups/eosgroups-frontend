@@ -116,7 +116,8 @@
       
 
     </div>
-    
+    <clap-for-group class="absolute"/>
+
     <!-- <notification-manager v-if="getAccountName == 'piecesnbitss'" /> -->
    
     <!-- <pre>{{getActiveGroupConfig}}</pre> -->
@@ -130,6 +131,7 @@ import { mapGetters } from "vuex";
 import {openURL} from "quasar";
 import {isValidUrl} from "../../imports/validators.js";
 import groupTags from "components/group-tags";
+import clapForGroup from "components/clap-for-group";
 
 
 import coreVersionManager from "components/core-version-manager";
@@ -140,6 +142,7 @@ export default {
   components: {
     groupTags,
     coreVersionManager,
+    clapForGroup
     // notificationManager
   },
   data() {
