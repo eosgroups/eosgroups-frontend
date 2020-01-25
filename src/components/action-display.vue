@@ -6,7 +6,7 @@
           <q-item-section avatar>
             <q-icon
               :name="getIconForAction(deserialized_action.name).name"
-              color="secondary"
+              
               :class="getIconForAction(deserialized_action.name).class ? getIconForAction(deserialized_action.name).class: ''"
             />
           </q-item-section>
