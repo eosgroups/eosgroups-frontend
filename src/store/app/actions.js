@@ -20,9 +20,11 @@ export async function fetchGroups ({ state, commit, rootGetters }) {
         code: state.config.groups_contract,
         scope: state.config.groups_contract,
         table: "groups",
+        key_type: "i64",
+        index_position: 2,
         limit: -1
       });
-      if(res && res){
+      if(res){
         console.log('fetched groups',res.rows);
 
         res = res.rows;
