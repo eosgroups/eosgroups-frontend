@@ -37,21 +37,10 @@ export async function loadGroupRoutine ({ dispatch, commit, rootGetters }, paylo
     }
     const c = groupconfig.ui.hexcolor[0]=='#' ? groupconfig.ui.hexcolor : `#${groupconfig.ui.hexcolor}`;
     setBrand('primary', c);
-
-    // Loading.show({
-    //   spinnerColor: 'white',
-    //   messageColor: 'white',
-    //   customClass: 'bg-primary',
-    //   message: 'Updated message'
-    // })
-    // Loading.hide();
-    
-    
     commit('setActiveGroupConfig', groupconfig);
     commit('setActiveGroup', groupname);
 
     dispatch('fetchCoreConfig', groupname);
-
     dispatch('fetchAccount', groupname);
     dispatch('fetchCustodians', groupname);
 
@@ -63,7 +52,6 @@ export async function loadGroupRoutine ({ dispatch, commit, rootGetters }, paylo
     dispatch('fetchThresholdLinks', groupname);
     dispatch('fetchTokensOwnedByScope', {groupname: groupname, scope: groupname});
     dispatch('fetchCoreState', groupname);
-    
 }
 
 export async function fetchCoreConfig ({ commit, rootState, rootGetters }, groupname) {

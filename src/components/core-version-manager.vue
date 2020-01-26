@@ -71,6 +71,7 @@ export default {
   methods:{
     async getCurrentCodeHash() {
       this.is_loading = true;
+      console.log(this.getActiveGroup)
       let url = 'https://jungle2.cryptolions.io/v1/chain/get_raw_abi';
       //let res = await this.$eos.rpc.get_raw_code_and_abi(this.getActiveGroup);
       let res = await this.$axios({
@@ -80,7 +81,7 @@ export default {
           account_name: this.getActiveGroup
         }
       })
-      console.log('fetched code hash for', this.getActiveGroup)
+      console.log('fetched code hash for', this.getActiveGroup, res.data.code_hash);
       this.is_loading = false;
       this.current_code_hash = res.data.code_hash;
       this.current_abi_hash = res.data.abi_hash;
@@ -176,6 +177,11 @@ export default {
 
 
       let res = await this.$store.dispatch("ual/transact", {actions: [system_propose_action, group_propose_action], disable_signing_overlay: true });
+      if(res && res.transactionId && res.status == "executed"){
+        setTimeout(()=>{
+          this.$store.dispatch('group/fetchProposals', {groupname: this.getActiveGroup, scope: this.getActiveGroup});
+        },1500);
+      }
       this.is_loading = false;
     }
 

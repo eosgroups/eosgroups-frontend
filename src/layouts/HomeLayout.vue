@@ -69,6 +69,10 @@ export default {
     openURL
 
   },
+  mounted(){
+    //reset group
+    this.$store.commit('group/setCoreConfig', false);
+  },
   beforeMount(){
     setBrand('primary', '#7DC6EC');
     this.$q.addressbarColor.set(getBrand('secondary'));
