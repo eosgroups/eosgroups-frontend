@@ -9,17 +9,11 @@ import {
   Loading
 } from 'quasar'
 
-// // default options
-// Loading.show()
 
-// // fully customizable
-// Loading.show({
-//   spinner: QSpinnerGears,
-//   // other props
-// })
-
-// Loading.hide()
-
+export async function resetStore ({  commit }, payload) {
+  commit('setCoreConfig', false);
+  commit('setCustodians', []);
+}
 
 export async function loadGroupRoutine ({ dispatch, commit, rootGetters }, payload) {
     // Loading.show({

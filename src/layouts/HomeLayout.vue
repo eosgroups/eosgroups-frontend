@@ -71,7 +71,8 @@ export default {
   },
   mounted(){
     //reset group
-    this.$store.commit('group/setCoreConfig', false);
+    this.$store.dispatch('group/resetStore');
+
   },
   beforeMount(){
     setBrand('primary', '#7DC6EC');
