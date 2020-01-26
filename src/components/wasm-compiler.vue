@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     async loadRemoteWasm(url){
+      url = url+'?t='+new Date().getTime();
       let res = await this.$axios.get(url, {
           responseType: 'arraybuffer'
       })
@@ -65,6 +66,7 @@ export default {
       return res;
     },
     async loadRemoteAbi(url){
+      url = url+'?t='+new Date().getTime();
       let res = await this.$axios.get(url, {
           responseType: 'text',
           transformResponse: [data => data]

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <q-card dark class="overflow-hidden">
+    <q-card class="overflow-hidden">
       <!-- expand-icon-class="display-none" -->
       <q-expansion-item 
-        dark 
+         
         class="bg-secondary" 
         v-model="bucket_opened" 
         :switch-toggle-side="false" 
@@ -31,8 +31,8 @@
           </q-item-section>
 
           <q-item-section>
-            <div class="text-weight-light text-h6">Action Bucket</div>
-            <q-item-label caption class="gt-xs">The bucket holds multiple actions to propose at once.</q-item-label>
+            <div class="text-weight-light text-h6 text-white">Action Bucket</div>
+            <q-item-label caption class="gt-xs text-grey-6">The bucket holds multiple actions to propose at once.</q-item-label>
           </q-item-section>
 
           <q-item-section side @click.stop>
@@ -73,11 +73,11 @@
           transition-next="scale"
         >
           <q-tab-panel name="bucket_list" class="overflow-hidden no-padding">
-            <div class="bg-white text-secondary">
+            <div >
               <q-list class="primary-hover-list" separator>
                 <q-item v-if="!getActionBucket.length" >
-                  <q-item-section class="text-grey">
-                    Bucket is empty
+                  <q-item-section>
+                    <q-item-label>Bucket is empty</q-item-label>
                   </q-item-section>
                 </q-item>
 
@@ -87,22 +87,23 @@
                     leave-active-class="animated zoomOut"
                   >
 
-                    <q-item v-for="(action,i) in getActionBucket" :key="action.unique_id" clickable class="cursor-default" style="border-bottom:1px solid #D1D1D1">
+                    <q-item v-for="(action,i) in getActionBucket" :key="action.unique_id" clickable class="cursor-default" style="border-bottom:1px solid grey">
                       <q-item-section side >
                         <q-badge>
                           <div class="q-pa-xs drag_handle">{{i+1}}</div>
                         </q-badge>
                       </q-item-section>
                       <q-item-section >
-                        <div class="row items-center q-gutter-xs">
-                          <div>{{action.account}} > {{action.name}}</div>
-                          <authorization-display :authorization="action.authorization" class="text-caption text-grey-5"/>
-                        </div>
+                        <q-item-label>
+                          {{action.account}} > {{action.name}}
+                          
+                        </q-item-label>
 
                       <q-item-label caption>{{action.data}}</q-item-label>
                       </q-item-section>
                       <q-item-section side >
                         <div class="row">
+                          <authorization-display :authorization="action.authorization" class="text-caption text-grey-5"/>
                           <threshold-badge :contract="action.account" :action_name="action.name" class="q-mr-sm"/>
                           <q-btn icon="remove" unelevated dense size="sm" color="negative"  @click="$store.commit('bucket/removeFromActionBucketByIndex', i)">
                             <q-tooltip :delay="400" content-class="bg-secondary">Delete</q-tooltip>
