@@ -80,7 +80,7 @@ export default {
           account_name: this.getActiveGroup
         }
       })
-      console.log(this.getActiveGroup, res.data)
+      console.log('fetched code hash for', this.getActiveGroup)
       this.is_loading = false;
       this.current_code_hash = res.data.code_hash;
       this.current_abi_hash = res.data.abi_hash;
@@ -180,16 +180,21 @@ export default {
     }
 
   },
-  watch:{
-      getActiveGroup:{
-        handler: function(newv, oldv){
-          if(newv && newv != oldv){
-            this.getCurrentCodeHash();
-          }
-        },
-        immediate: true
-      },
-  }
+  mounted(){
+    if(this.getActiveGroup){
+      this.getCurrentCodeHash();
+    }
+  },
+  // watch:{
+  //     getActiveGroup:{
+  //       handler: function(newv, oldv){
+  //         if(newv && newv != oldv){
+  //           this.getCurrentCodeHash();
+  //         }
+  //       },
+  //       immediate: false
+  //     },
+  // }
 
 }
 </script>
