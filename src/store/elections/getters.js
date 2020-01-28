@@ -31,6 +31,16 @@ export function getUserVotes (state) {
 export function getUserStakes (state) {
     return state.userStakes;
 }
+export function getUserCandidateStake (state, getters, rootState, rootGetters) {
+    let conf =getters.getcandidateStakeConfig;
+    if(conf && state.userStakes){
+        return state.userStakes.find(s=> s.symbol == conf.symbol && s.contract == conf.contract );
+    }
+    else{
+        return null;
+    }
+    
+}
 export function getcandidateStakeConfig (state, getters, rootState, rootGetters) {
     let conf = getters.getElectionsConfig;
     if(conf){

@@ -2,11 +2,25 @@
   <div >
     <q-card>
       <q-card-section>
-        
+        <div class="row">
+        <q-item class="no-padding">
+          <q-item-section>
+            <q-item-label>Candidate since</q-item-label>
+            <q-item-label caption>{{getIsCandidate.registered}}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section>
+            <q-item-label>Your stake</q-item-label>
+            <q-item-label caption v-if="getUserCandidateStake">{{getUserCandidateStake.quantity}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        </div>
 
         <div class="row justify-end q-mt-md q-pb-xs">
           <q-btn :label="getIsCandidate.is_active ? 'pause campaign' : 'start campaign'" color="primary" @click="pauseCampaign" />
-          <q-btn label="unregister" color="primary" @click="unregCand" />
+          <q-btn label="unregister" color="primary" @click="unregCand" class="q-ml-md"/>
         </div>
         
       </q-card-section>
@@ -35,7 +49,8 @@ export default {
       getUserStakes: "elections/getUserStakes",
       getElectionsContract: "elections/getElectionsContract",
       getcandidateStakeConfig: "elections/getcandidateStakeConfig",
-      getIsCandidate: "elections/getIsCandidate"
+      getIsCandidate: "elections/getIsCandidate",
+      getUserCandidateStake: "elections/getUserCandidateStake"
 
     })
   },
