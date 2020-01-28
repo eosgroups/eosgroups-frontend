@@ -19,12 +19,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="`/members/${getActiveGroup}/vote`">
+        <q-item v-if="getChildByModuleName('elections')" clickable :to="`/members/${getActiveGroup}/elections`">
           <q-item-section avatar>
             <q-icon name="mdi-vote" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Vote</q-item-label>
+            <q-item-label>Elections</q-item-label>
             <!-- <q-item-label caption>mining stats</q-item-label> -->
           </q-item-section>
         </q-item>
@@ -43,6 +43,7 @@ export default {
   computed: {
     ...mapGetters({
       getActiveGroup: "group/getActiveGroup",
+      getChildByModuleName: "group/getChildByModuleName",
     })
   },
 

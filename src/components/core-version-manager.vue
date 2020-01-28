@@ -169,7 +169,7 @@ export default {
       ]
       let group_propose_options= {
           return_action: true,
-          title: "Core Contracts update",
+          title: "Core Contract update",
           description: `update the groups core contract. new code hash: ${this.new_code_hash}`,
           actions: approve_and_execute
       }

@@ -13,6 +13,7 @@ import {
 export async function resetStore ({  commit }, payload) {
   commit('setCoreConfig', false);
   commit('setCustodians', []);
+  commit('setChildAccounts', false);
 }
 
 export async function loadGroupRoutine ({ dispatch, commit, rootGetters }, payload) {
@@ -37,6 +38,8 @@ export async function loadGroupRoutine ({ dispatch, commit, rootGetters }, paylo
     dispatch('fetchCoreConfig', groupname);
     dispatch('fetchAccount', groupname);
     dispatch('fetchCustodians', groupname);
+
+    dispatch('fetchChildAccounts', groupname);
 
     dispatch('fetchProposals', {groupname: groupname, scope: groupname});
     dispatch('fetchProposals', {groupname: groupname, scope: "cancelled"});
@@ -111,6 +114,12 @@ export async function fetchChildAccounts ({ commit, rootState, rootGetters }, gr
   });
   if(res && res.rows.length){
     commit('setChildAccounts', res.rows);
+    //REGISTER MODULES IN STORES
+    let elections = res.rows.find(m => m.module_name = 'elections');
+    if(elections){
+      commit('elections/setElectionsContract', elections.account_name, {root: true});
+    }
+
     return res.rows;
   }
   else{

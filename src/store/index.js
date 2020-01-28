@@ -7,6 +7,7 @@ import app from './app';
 import user from './user';
 import group from './group';
 import bucket from './bucket';
+import elections from './elections';
 
 Vue.use(Vuex)
 
@@ -22,7 +23,8 @@ export default function (/* { ssrContext } */) {
       app,
       user,
       group,
-      bucket
+      bucket,
+      elections
     },
     plugins: [
       createPersistedState({
