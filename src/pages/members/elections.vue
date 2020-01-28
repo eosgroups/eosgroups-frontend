@@ -1,10 +1,15 @@
 <template>
   <q-page padding class="constrain-page-width">
    <page-header title="Elections"/>
-
-   <q-tabs v-model="selected_tab" class="bg-secondary text-white" align="left">
+   <q-tabs v-model="selected_tab" class="bg-secondary text-white" align="left" indicator-color="primary">
       <q-tab label="Vote" name="vote" />
-      <q-tab label="my candidacy" name="manage candidacy" />
+      <div v-if="getIsMember">
+        <q-tab v-if="getIsCandidate" label="my candidacy" name="manage candidacy">
+          <q-badge v-if="!getIsCandidate.is_active" color="primary" floating>paused</q-badge>
+        </q-tab>
+        <q-tab v-else label="register as candidate" name="register candidacy" />
+      </div>
+
    </q-tabs>
 
    <q-tab-panels v-model="selected_tab" animated class="fit bg-transparent q-mt-md" transition-prev="fade" transition-next="fade">
@@ -14,8 +19,12 @@
      </q-tab-panel>
 
 
+     <q-tab-panel name="register candidacy" class="fit overflow-hidden no-padding">
+       <register-candidate class="q-ma-xs" @navigate="selected_tab = $event"/>
+     </q-tab-panel>
+
      <q-tab-panel name="manage candidacy" class="fit overflow-hidden no-padding">
-       <register-candidate />
+       <manage-candidacy class="q-ma-xs" @navigate="selected_tab = $event"/>
      </q-tab-panel>
    </q-tab-panels>
 
@@ -38,6 +47,7 @@ import pageHeader from "components/page-header";
 import listUserVotes from "components/modules/elections/list-user-votes";
 import listCandidates from "components/modules/elections/list-candidates";
 import registerCandidate from "components/modules/elections/register-candidate";
+import manageCandidacy from "components/modules/elections/manage-candidacy";
 
 export default {
   name: "vote",
@@ -45,7 +55,8 @@ export default {
     pageHeader,
     listUserVotes,
     listCandidates,
-    registerCandidate
+    registerCandidate,
+    manageCandidacy
   },
   data() {
     return {
@@ -58,6 +69,8 @@ export default {
       getElectionsContract: "elections/getElectionsContract",
       getElectionsConfig: "elections/getElectionsConfig",
       getElectionsState: "elections/getElectionsState",
+      getIsCandidate: "elections/getIsCandidate",
+      getIsMember: "user/getIsMember"
     })
   },
   methods: {

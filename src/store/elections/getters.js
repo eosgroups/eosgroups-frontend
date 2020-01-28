@@ -3,7 +3,7 @@ export function getElectionsContract (state) {
 }
 
 export function getElectionsConfig (state) {
-    return state.electionsConfig;
+    return state.electionsConfig.conf;
 }
 
 export function getElectionsState (state) {
@@ -30,4 +30,21 @@ export function getUserVotes (state) {
 }
 export function getUserStakes (state) {
     return state.userStakes;
+}
+export function getcandidateStakeConfig (state, getters, rootState, rootGetters) {
+    let conf = getters.getElectionsConfig;
+    if(conf){
+        let res = conf.cand_min_stake;
+        let [amount, symbol] = res.quantity.split(" ");
+        let p = amount.split('.')[1];
+        let precision = p ? p.length : 0;
+        res.amount = Number(amount);
+        res.symbol = symbol;
+        res.precision = precision;
+        return res;
+    }
+    else{
+        return false;
+    }
+    
 }

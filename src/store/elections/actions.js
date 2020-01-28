@@ -96,8 +96,17 @@ export async function fetchUserStakes ({ commit, getters, rootGetters }, payload
     });
     console.log('bbbbbbbbb',res)
     if(res && res.rows.length){
+      let r = res.rows.map(r=>{
+          r = r.balance;
+          let [amount, symbol] = r.quantity.split(' ');
+          let p = amount.split('.')[1];
+          r.symbol = symbol;
+          r.amount = Number(amount);
+          r.precision = p ? p.length : 0;
+          return r;
+      })
       console.log(`fetched stakes from ${user}`, res.rows );
-      commit('setUserStakes', res.rows[0]);
+      commit('setUserStakes', r);
 
     }
 }
