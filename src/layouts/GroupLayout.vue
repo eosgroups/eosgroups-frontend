@@ -55,8 +55,6 @@
       :mini="miniState"
       @mouseover="miniState = false"
       @mouseout="miniState = false"
-
-      
     >
       <q-list class="absolute-top" >
         <q-item clickable style="height:60px" v-ripple:primary>
@@ -252,6 +250,7 @@ export default {
       handler(newVal, oldVal) {
         if (newVal =="members") {
           console.log(`/members/${this.$route.params.groupname}/dashboard`)
+          if (this.$route.path.split('/')[1] === 'members') return
           this.$router.push(`/members/${this.$route.params.groupname}/dashboard`).catch(err => {});
           notifyInfo({message: `you switched to members menu.`})
         } else {
