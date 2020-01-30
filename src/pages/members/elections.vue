@@ -31,9 +31,6 @@
    </q-tab-panels>
 
    
-
-
-
   <pre>{{getElectionsConfig}}</pre>
   <pre>{{getElectionsState}}</pre>
 
@@ -79,10 +76,11 @@ export default {
 
   },
   mounted(){
-    this.$store.dispatch("elections/loadElectionsRoutine");
+
   },
-  // watch: {
-  // }
+  watch: {
+    'getElectionsContract' () { this.$store.dispatch("elections/loadElectionsRoutine")}
+  }
 
 };
 </script>
