@@ -29,7 +29,6 @@ navigator.serviceWorker.register('./statics/service-workers/firebase-messaging-s
 
 // messaging.onMessage(function(payload) {
 //   //messsage handling when app focused
-//   alert('bbbbbbbbbbb')
 //   console.log( payload);
 //   // ...
 // });

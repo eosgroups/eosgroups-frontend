@@ -60,6 +60,13 @@ export default {
   mounted(){
     this.$store.dispatch('app/initRoutine');
   },
+  created(){
+    this.$messaging.onMessage(function(payload) {
+      //messsage handling when app focused
+      console.log( payload);
+      // ...
+    });
+  },
 
 
   watch: {

@@ -135,11 +135,7 @@ export default {
   // navigator.serviceWorker.addEventListener('message', event => {
   //   console.log(event.data);
   // });
-    this.$messaging.onMessage(function(payload) {
-      //messsage handling when app focused
-      console.log( payload);
-      // ...
-    });
+
   }
 
 }

@@ -321,6 +321,23 @@ export async function propose({ state, rootState, dispatch, commit }, payload) {
 
     let block_time = res.transaction.processed.block_time.split('.')[0];
     commit('setCustodianLastActive', {custodian: rootState.ual.accountName, block_time: block_time});
+    /*
+    try{
+      let url = rootState.app.config.api.url+'/push_msg';
+      let data = {
+        action: propose,
+        group: state.activeGroup,
+        proposer: rootState.ual.accountName,
+        img: state.activeGroupConfig.ui.logo
+      }
+      this._vm.$axios.post(url, data);
+    }
+    catch(e){
+      console.log('error occured');
+    }
+
+
+    */
 
     if(propose_payload.actions[0].account==state.activeGroup){
       let action_name = propose_payload.actions[0].name;
