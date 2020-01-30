@@ -1,16 +1,19 @@
 <template lang="pug">
-  q-card(style="min-height:100px;")
-    .row(v-if="getUserVotes").items-center
+  div.relative-position.q-pl-sm
+    h6.no-margin My Votes
+    .row(v-if="getUserVotes" style="min-height:110px;")
       .col
         .row
           q-card.col-auto.q-ma-sm.q-pa-sm(selectable v-for="candidate of getVoting" :key="candidate.cand")
-              .row.justify-center
-                q-avatar(size="xl")
-                  img(:src="'https://i.pravatar.cc/100/?u=' + candidate.cand")
-              p.q-pt-sm {{candidate.cand}}
-      .col-auto.q-ma-sm.pulse
+            .absolute-top-right(style="right:-5px; top:-5px;")
+              q-btn(icon="close" size="xs" color="red" round @click="candidate.vote = false")
+            .row.justify-center
+              q-avatar(size="xl")
+                img(:src="'https://i.pravatar.cc/100/?u=' + candidate.cand")
+            p.q-pt-sm.no-margin {{candidate.cand}}
+      .col-auto.q-mr-sm.pulse
         .row.justify-center
-          h6.no-margin {{getVoting.length}}/{{getElectionsConfig.max_votes}}
+          h6.no-margin.q-pb-sm {{getVoting.length}}/{{getElectionsConfig.max_votes}}
         q-btn(color="green" size="md" label="update vote" icon="mdi-vote" stack @click="issueVotes()")
     </template>
 
