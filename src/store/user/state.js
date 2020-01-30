@@ -14,5 +14,8 @@ export default {
   },
   minifyCustodians: false,
   isDark: false,
-  isMember: false
+  isMember: false,
+
+  currentFCMToken:'',
+  topicSubscriptions:[]
 }

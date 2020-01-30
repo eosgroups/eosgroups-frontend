@@ -33,7 +33,7 @@
                   :label-value="clap_amount/10000 +' EOS'"
                   color="primary"
                 />
-                <q-input :value="clap_amount/10000" outlined dense readonly>
+                <q-input :value="clap_amount/10000" outlined dense :readonly="true">
                   <template v-slot:append>
                     EOS
                   </template>

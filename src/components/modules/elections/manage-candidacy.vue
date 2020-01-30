@@ -2,20 +2,29 @@
   <div >
     <q-card>
       <q-card-section>
-        <div class="row">
-        <q-item class="no-padding">
-          <q-item-section>
-            <q-item-label>Candidate since</q-item-label>
-            <q-item-label caption>{{getIsCandidate.registered}}</q-item-label>
-          </q-item-section>
-        </q-item>
+        <div class="row items-center">
 
-        <q-item>
-          <q-item-section>
-            <q-item-label>Your stake</q-item-label>
-            <q-item-label caption v-if="getUserCandidateStake">{{getUserCandidateStake.quantity}}</q-item-label>
-          </q-item-section>
-        </q-item>
+          <q-item class="">
+            <q-item-section>
+              <q-item-label>Candidate since</q-item-label>
+              <q-item-label caption>{{getIsCandidate.registered}}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item class="">
+            <q-item-section>
+              <q-item-label>My stake</q-item-label>
+              <q-item-label caption v-if="getUserCandidateStake">{{getUserCandidateStake.quantity}}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item class="">
+            <q-item-section>
+              <q-item-label>My votes</q-item-label>
+              <q-item-label caption >{{getIsCandidate.total_votes}}</q-item-label>
+            </q-item-section>
+          </q-item>
+
         </div>
 
         <div class="row justify-end q-mt-md q-pb-xs">

@@ -16,5 +16,8 @@
             "logo": "./statics/images/tokens/jungle.png"
         }
     
-    ]
+    ],
+    "api":{
+        "url": "http://localhost:3333"
+    }
 }

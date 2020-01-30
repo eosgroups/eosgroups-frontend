@@ -61,6 +61,17 @@
         </q-card>
       </div>
 
+      <div  class="col-xs-12">
+        <q-card>
+          
+          <div class="row justify-between items-center">
+            <clap-for-group />
+            <group-notification-manager />
+          </div>
+          
+        </q-card>
+      </div>
+
       <div v-if="getCoreConfig" class="col-xs-12">
         <q-card class="primary-hover-list">
            <core-version-manager />
@@ -116,9 +127,7 @@
       
 
     </div>
-    <clap-for-group class="absolute"/>
 
-    <!-- <notification-manager v-if="getAccountName == 'piecesnbitss'" /> -->
    
     <!-- <pre>{{getActiveGroupConfig}}</pre> -->
  
@@ -132,18 +141,20 @@ import {openURL} from "quasar";
 import {isValidUrl} from "../../imports/validators.js";
 import groupTags from "components/group-tags";
 import clapForGroup from "components/clap-for-group";
+import groupNotificationManager from "components/group-notification-manager";
 
 
 import coreVersionManager from "components/core-version-manager";
-// import notificationManager from "components/notification-manager";
+
 
 export default {
   name: "PageIndex",
   components: {
     groupTags,
     coreVersionManager,
-    clapForGroup
-    // notificationManager
+    clapForGroup,
+    groupNotificationManager
+
   },
   data() {
     return {

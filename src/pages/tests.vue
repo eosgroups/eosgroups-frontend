@@ -1,16 +1,15 @@
 <template>
   <q-page padding>
-    <notification-manager  />
+    <group-notification-manager  />
   </q-page>
 </template>
 
 <script>
-import notificationManager from "components/notification-manager";
+import groupNotificationManager from "components/group-notification-manager";
 export default {
 
   components: {
-
-    notificationManager
+    groupNotificationManager
   },
   // name: 'PageName',
 }

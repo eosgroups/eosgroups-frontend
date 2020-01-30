@@ -39,3 +39,20 @@ export function setIsMember(state, payload){
     state.isMember = payload;
 }
 
+export function setCurrentFCMToken(state, payload){
+    state.currentFCMToken = payload;
+}
+
+export function addTopicSubsciption(state, payload){
+    if(!state.topicSubscriptions.includes(payload)){
+        state.topicSubscriptions.push(payload);
+    }
+}
+
+export function removeTopicSubsciption(state, payload){
+    let index = state.topicSubscriptions.findIndex(ts => ts == payload)
+    if(index > -1){
+        state.topicSubscriptions.splice(index, 1);
+    }
+}
+

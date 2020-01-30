@@ -86,9 +86,6 @@
 
           <q-tab-panel name="Elections" class="overflow-hidden">
             <page-header title="Elections" />
-            <p>
-              No election contract linked.
-            </p>
             <action-proposer>
               <template slot-scope="scope">
                 <link-child-account @propose="scope.propose" @addtobucket="scope.addtobucket"  module_name="elections" :parent="getActiveGroup" />
@@ -187,7 +184,7 @@ var testtree = [
         label: "Modules",
         icon: "view_module",
         children: [
-          { label: "Token" },
+          // { label: "Token" },
           { label: "Elections" },
           
         ]

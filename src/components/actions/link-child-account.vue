@@ -1,9 +1,14 @@
 <template>
   <div>
     <div class="">
-      {{action.data.module_name}}
-          {{getChildByModuleName(action.data.module_name)}}
+
+
+          <div v-if="!!getChildByModuleName(this.module_name)">
+            linked account {{getChildByModuleName(this.module_name).account_name}}
+          </div>
+          <!-- {{getChildByModuleName(this.module_name)}} -->
           <q-input
+            v-else
             outlined
             placeholder="Account"
             bottom-slots
@@ -125,9 +130,9 @@ export default {
     }
 
   },
-  mounted(){
+  async mounted(){
     if(!this.getChildAccounts){
-      this.$store.dispatch("group/fetchChildAccounts", this.getActiveGroup)
+      await this.$store.dispatch("group/fetchChildAccounts", this.getActiveGroup);
     };
     if(this.account != ''){
       this.action.data.account = this.account;

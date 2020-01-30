@@ -94,7 +94,6 @@ export async function fetchUserStakes ({ commit, getters, rootGetters }, payload
       table: "stake",
       limit: -1
     });
-    console.log('bbbbbbbbb',res)
     if(res && res.rows.length){
       let r = res.rows.map(r=>{
           r = r.balance;

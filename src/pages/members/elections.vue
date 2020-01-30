@@ -5,7 +5,9 @@
       <q-tab label="Vote" name="vote" />
       <div v-if="getIsMember">
         <q-tab v-if="getIsCandidate" label="my candidacy" name="manage candidacy">
-          <q-badge v-if="!getIsCandidate.is_active" color="primary" floating>paused</q-badge>
+          <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut" appear>
+            <q-badge v-if="!getIsCandidate.is_active" color="primary" floating>paused</q-badge>
+          </transition>
         </q-tab>
         <q-tab v-else label="register as candidate" name="register candidacy" />
       </div>

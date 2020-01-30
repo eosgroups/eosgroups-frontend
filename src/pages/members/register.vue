@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="constrain-page-width">
-   <page-header title="Register"/>
+   <page-header title="Member Registration"/>
    <q-btn v-if="!getIsMember" label="reg" color="primary" @click="regmember" />
    <q-btn v-else label="unreg" color="primary" @click="unregmember" />
    <div>

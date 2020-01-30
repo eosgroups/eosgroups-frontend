@@ -19,7 +19,7 @@
     "eosjs": "^20.0.3",
     "eosjs2": "^1.0.0",
     "file-saver": "^2.0.2",
-    "firebase": "^7.7.0",
+    "firebase": "6.6.2",
     "highlightjs": "^9.12.0",
     "json-pretty-html": "^1.1.6",
     "quasar": "^1.5.9",

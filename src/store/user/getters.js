@@ -32,3 +32,12 @@ export function getIsMember(state){
   return state.isMember;
 }
 
+
+export function getCurrentFCMToken(state){
+  return state.currentFCMToken;
+}
+export function getTopicSubscriptions(state){
+  return state.topicSubscriptions;
+}
+
+
