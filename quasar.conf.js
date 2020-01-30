@@ -100,8 +100,8 @@ module.exports = function (ctx) {
         'QCircularProgress',
         'QMarkupTable',
         'QFab',
-        'QFabAction'
-
+        'QFabAction',
+        'QPageSticky'
       ],
 
       directives: [

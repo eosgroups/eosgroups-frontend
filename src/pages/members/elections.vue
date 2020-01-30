@@ -29,9 +29,6 @@
    </q-tab-panels>
 
    
-
-
-  <pre>{{getAccountName}}</pre>
   <pre>{{getElectionsConfig}}</pre>
   <pre>{{getElectionsState}}</pre>
 
