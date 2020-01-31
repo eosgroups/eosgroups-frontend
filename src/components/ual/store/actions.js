@@ -10,7 +10,7 @@ import { TokenPocket } from 'ual-token-pocket';
 import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
 
 export async function initUAL({ state, commit, dispatch, getters }, network) {
-  let appName="eosgroups";
+  let appName="daclify";
   let chains = [state.networks[getters.getActiveNetwork].config];
   console.log('init ual with', chains)
   let authenticators = [

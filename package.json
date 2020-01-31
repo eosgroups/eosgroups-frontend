@@ -1,8 +1,8 @@
 {
-  "name": "eosgroups",
+  "name": "daclify",
   "version": "0.0.1",
   "description": "Manage eosio accounts in group and serve your community as a DAC.",
-  "productName": "Eosgroups",
+  "productName": "Daclify",
   "cordovaId": "org.cordova.quasar.app",
   "author": "",
   "private": true,
