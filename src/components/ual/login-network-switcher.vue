@@ -35,7 +35,7 @@
 
       <q-list dark class="bg-secondary" separator >
 
-        <q-item v-if="getAccountName" clickable v-close-popup @click="$store.dispatch('ual/logout')" class="bg-primary">
+        <q-item v-if="getAccountName" clickable v-close-popup @click="$store.dispatch('ual/logout')" class="bg-secondary">
           <q-item-section avatar>
             <q-icon name="mdi-account-off" />
           </q-item-section>
@@ -45,7 +45,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item  class="bg-primary" clickable v-close-popup @click="toggleNightMode">
+        <q-item  class="bg-secondary" clickable v-close-popup @click="toggleNightMode">
           <q-item-section avatar>
             <q-icon name="mdi-theme-light-dark" class="cursor-pointer" :class="{'rotate-180': getIsDark }" />
           </q-item-section>
