@@ -1,11 +1,17 @@
 <template>
   <q-page padding class="constrain-page-width">
    <page-header title="Member Registration"/>
-   <q-btn v-if="!getIsMember" label="reg" color="primary" @click="regmember" />
-   <q-btn v-else label="unreg" color="primary" @click="unregmember" />
-   <div>
-   <q-checkbox v-model="agree_terms" label="I have read and I agree to the user terms." />
-   </div>
+   <q-card>
+     <q-card-section>
+       <div class="row justify-end">
+        <q-btn v-if="!getIsMember" label="register" color="primary" @click="regmember" />
+        <q-btn v-else label="unregister" color="primary" @click="unregmember" />
+       </div>
+      <!-- <div>
+      <q-checkbox v-model="agree_terms" label="I have read and I agree to the user terms." />
+      </div> -->
+     </q-card-section>
+   </q-card>
 
   </q-page>
 </template>

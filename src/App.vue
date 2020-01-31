@@ -15,7 +15,7 @@ import { EOSIOAuth } from 'ual-eosio-reference-authenticator';
 
 
 
-const appName = 'eosgroups';
+const appName = 'daclify';
 // const chains = [{
 //     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
 //     rpcEndpoints: [{
@@ -80,6 +80,7 @@ export default {
       immediate: true,
       handler(newVal, oldVal) {
         if(newVal && newVal != oldVal){
+          console.log('call logged in routine')
           this.$store.dispatch('user/loggedInRoutine', {accountname: this.getAccountName});
         }
         else{
