@@ -59,7 +59,8 @@ export default {
       getElectionsContract: "elections/getElectionsContract",
       getcandidateStakeConfig: "elections/getcandidateStakeConfig",
       getIsCandidate: "elections/getIsCandidate",
-      getUserCandidateStake: "elections/getUserCandidateStake"
+      getUserCandidateStake: "elections/getUserCandidateStake",
+      getElectionsConfig: "elections/getElectionsConfig"
 
     })
   },

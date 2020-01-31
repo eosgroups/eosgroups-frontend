@@ -79,8 +79,8 @@ export default {
     getAccountName: {
       immediate: true,
       handler(newVal, oldVal) {
-        if(newVal && newVal != oldVal){
-          console.log('call logged in routine')
+        if(newVal){
+          console.log(`call logged in routine for ${newVal}`);
           this.$store.dispatch('user/loggedInRoutine', {accountname: this.getAccountName});
         }
         else{

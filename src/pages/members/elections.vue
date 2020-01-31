@@ -77,12 +77,30 @@ export default {
 
   },
   mounted(){
-    this.$store.dispatch("group/fetchChildAccounts", this.getActiveGroup);
+    //this.$store.dispatch("group/fetchChildAccounts", this.getActiveGroup);
 
   },
-  watch: {
-    'getElectionsContract' () { this.$store.dispatch("elections/loadElectionsRoutine")},
-    'getAccountName'() {this.$store.dispatch("elections/loadElectionsRoutine")}
+  // watch: {
+  //   'getElectionsContract' () { this.$store.dispatch("elections/loadElectionsRoutine")},
+  //   'getAccountName'() {this.$store.dispatch("elections/loadElectionsRoutine")}
+  // }
+  watch:{
+    getElectionsContract: {
+      immediate: true,
+      handler(newVal, oldVal) {
+        if(newVal){
+          this.$store.dispatch("elections/loadElectionsRoutine")
+        }
+      }
+    },
+    // getAccountName: {
+    //   immediate: true,
+    //   handler(newVal, oldVal) {
+    //     if(newVal){
+    //       this.$store.dispatch("elections/loadElectionsRoutine")
+    //     }
+    //   }
+    // },
   }
 
 };

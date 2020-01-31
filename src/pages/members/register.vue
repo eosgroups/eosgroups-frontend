@@ -3,7 +3,9 @@
    <page-header title="Member Registration"/>
    <q-card>
      <q-card-section>
-       <div class="row justify-end">
+       <div class="row justify-between items-center">
+        <div v-if="!getIsMember">You are not a member of this group</div>
+        <div v-else>You are a member</div>
         <q-btn v-if="!getIsMember" label="register" color="primary" @click="regmember" />
         <q-btn v-else label="unregister" color="primary" @click="unregmember" />
        </div>
