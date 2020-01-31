@@ -37,8 +37,8 @@
     //-   q-btn(icon="mdi-vote" label="confirm Votes" color="green" size="lg")
     //- .row.justify-center
     //-   q-btn(size="xl" @click="issueVotes()") Update Votes
-    .bg-blue candidates
-      div {{getCandidates}}
+    //- .bg-blue candidates
+    //-   div {{getCandidates}}
     
   </div>
 </template>

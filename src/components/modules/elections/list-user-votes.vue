@@ -1,7 +1,7 @@
 <template lang="pug">
   div.relative-position.q-pl-sm
     h6.no-margin My Votes
-    .row(v-if="getUserVotes" style="min-height:110px;")
+    .row(v-if="getVoting" style="min-height:110px;")
       .col
         .row
           q-card.col-auto.q-ma-sm.q-pa-sm(selectable v-for="candidate of getVoting" :key="candidate.cand")
@@ -14,7 +14,7 @@
             p.q-pt-sm.no-margin {{candidate.cand}}
       .col-auto.q-mr-sm.pulse
         .row.justify-center
-          h6.no-margin.q-pb-sm {{getVoting.length}}/{{getElectionsConfig.max_votes}}
+          h6.no-margin.q-pb-sm(v-if="getElectionsConfig") {{getVoting.length}}/{{getElectionsConfig.max_votes}}
         q-btn(color="green" size="md" label="update vote" icon="mdi-vote" stack @click="issueVotes()")
     </template>
 

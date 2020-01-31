@@ -69,17 +69,20 @@ export default {
       getElectionsConfig: "elections/getElectionsConfig",
       getElectionsState: "elections/getElectionsState",
       getIsCandidate: "elections/getIsCandidate",
-      getIsMember: "user/getIsMember"
+      getIsMember: "user/getIsMember",
+      getActiveGroup: "group/getActiveGroup",
     })
   },
   methods: {
 
   },
   mounted(){
+    this.$store.dispatch("group/fetchChildAccounts", this.getActiveGroup);
 
   },
   watch: {
-    'getElectionsContract' () { this.$store.dispatch("elections/loadElectionsRoutine")}
+    'getElectionsContract' () { this.$store.dispatch("elections/loadElectionsRoutine")},
+    'getAccountName'() {this.$store.dispatch("elections/loadElectionsRoutine")}
   }
 
 };
