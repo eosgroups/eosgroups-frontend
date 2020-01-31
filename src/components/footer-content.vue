@@ -23,7 +23,7 @@
     <div :class="colsetup">
       <div class="q-pa-sm">
         <div class="text-h6 text-weight-light q-mb-md">Sponsors & Partners</div>
-        <!-- <img  src="statics/vectors/eosdac-rec-white.svg" style="height:36px" class="cursor-pointer" @click="openURL('https://eosdac.io')"> -->
+        <q-img  src="https://i.ibb.co/cYGz2xq/36450.png" style="width:80px" contain class="cursor-pointer" @click="openURL('https://boid.com')" />
       </div>
     </div>
    

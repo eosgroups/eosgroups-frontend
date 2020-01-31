@@ -8,8 +8,8 @@
         </q-toolbar-title>
 
         <q-tabs shrink stretch class="q-mr-sm " indicator-color="primary" align="right">
-          <q-route-tab  label="pricing" to="/mine" />
-          <q-route-tab  label="docs" to="/docs/getting-started" />
+          <!-- <q-route-tab  label="pricing" to="/mine" /> -->
+          <!-- <q-route-tab  label="docs" to="/docs/getting-started" /> -->
         </q-tabs>
         <login-network-switcher />
 
