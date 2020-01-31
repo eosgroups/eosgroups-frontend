@@ -137,23 +137,25 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable to="/preferences">
+          <!-- <q-item clickable >
             <q-item-section avatar>
               <q-icon  name="mdi-tune" class=""/>
             </q-item-section>
             <q-item-section>
               <q-item-label>Preferences</q-item-label>
+              <q-item-label caption>stay tuned</q-item-label>
             </q-item-section>
-          </q-item>
+          </q-item> -->
 
-          <q-item clickable >
+          <!-- <q-item clickable >
             <q-item-section avatar>
               <q-icon  name="mdi-school" />
             </q-item-section>
             <q-item-section>
               <q-item-label>Documentation</q-item-label>
+              <q-item-label caption>stay tuned</q-item-label>
             </q-item-section>
-          </q-item>
+          </q-item> -->
 
         </q-list>
       </q-scroll-area>
