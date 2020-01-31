@@ -260,7 +260,13 @@ export async function fetchTokensOwnedByScope ({ state, commit }, payload) {
         t.loading = false;
         return t;
       })
-      commit('setGroupWallet', res.rows);
+      if(scope == groupname){
+        commit('setGroupWallet', res.rows);
+      }
+      else{
+        return res.rows
+      }
+      
     }
     else{
       console.log(`fetched tokens owned by ${scope} for group ${groupname} faild`);

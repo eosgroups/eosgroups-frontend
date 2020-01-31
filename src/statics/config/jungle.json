@@ -18,6 +18,6 @@
     
     ],
     "api":{
-        "url": "https://api.daclify.com"
+        "url": "http://api.daclify.com"
     }
 }
