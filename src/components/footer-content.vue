@@ -8,13 +8,13 @@
         
         <div class="text-h6 q-mb-md">
           <img  src="~assets/daclify-logo.svg" style="height:14px" class="cursor-pointer"/>
-          <router-link to="/mine" tag="a" class="text-link text-caption" style="display:block">
+          <router-link to="/" tag="a" class="text-link text-caption" style="display:block">
             Pricing
           </router-link>
-          <router-link to="/schedule" tag="a" class="text-link text-caption" style="display:block">
+          <router-link to="/" tag="a" class="text-link text-caption" style="display:block">
             Upgrade To DAC
           </router-link>
-          <router-link to="/docs/getting-started" tag="a" class="text-link text-caption" style="display:block">
+          <router-link to="/" tag="a" class="text-link text-caption" style="display:block">
             Documentation
           </router-link>
         </div>
@@ -46,7 +46,7 @@
   
   <q-separator class="q-mt-lg"/>
 
-  <div class="row justify-end">© Daclify 2019</div>
+  <div class="row justify-end">© Daclify {{new Date().getFullYear()}}</div>
   </div>
   
 
