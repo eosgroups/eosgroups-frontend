@@ -65,6 +65,12 @@ export default {
       }
       else if (Notification.permission === "granted") {
         console.log('ssssssssssssss')
+        if(!this.getCurrentFCMToken){
+            let token = await this.getNewInstanceIdToken();
+            if(token){
+              this.$store.commit("user/setCurrentFCMToken", token);
+            }
+        }
         await this.subscribeToTopic(this.getCurrentFCMToken, this.getActiveGroup);
         
       }
@@ -127,6 +133,7 @@ export default {
   },
   mounted(){
     if(Notification.permission === "granted"){
+      console.log("notifications granted");
       this.browser_notifications_granted = true;
     }
 

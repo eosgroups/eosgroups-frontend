@@ -1,7 +1,7 @@
 <template>
   <q-page padding class="constrain-page-width">
    <page-header title="Internal Accounting"/>
-      <q-card class="">
+      <q-card v-if="getCoreConfig" class="">
         <div class="row justify-between q-mb-md q-py-sm">
           <q-item>
             <q-item-section avatar>
