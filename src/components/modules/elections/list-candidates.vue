@@ -22,6 +22,8 @@
         div(style="height:40vh;")
           q-scroll-area(style="height:100%;")
             .row
+
+
               candidate(
                 v-for="(candidate,index) of candiates" 
                 :key="candidate.cand" 
@@ -53,7 +55,7 @@ export default {
   components: { profilePic, candidate, candidateProfile },
   data() {
     return {
-      viewMode:'grid',
+      viewMode:'list',
       sortBy:'rep',
       pendingUserVotes:null,
       highlightedCand:null,

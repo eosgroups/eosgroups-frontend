@@ -4,14 +4,14 @@
     .row(v-if="getVoting" style="min-height:110px;")
       .col
         .row
-          q-card.col-auto.q-ma-sm.q-pa-sm(selectable v-for="candidate of getVoting" :key="candidate.cand")
-            .absolute-top-right(style="right:-5px; top:-5px;")
-              q-btn(size="xs" color="red-4" round @click="candidate.vote = false")
-                q-icon(name="close" size="xs")
-            .row.justify-center
-              q-avatar(size="xl")
-                img(:src="'https://i.pravatar.cc/100/?u=' + candidate.cand")
-            p.q-pt-sm.no-margin {{candidate.cand}}
+            q-card.col-auto.q-ma-sm.q-pa-sm(selectable v-for="candidate of getVoting" :key="candidate.cand")
+              .absolute-top-right(style="right:-5px; top:-5px;")
+                q-btn(size="xs" color="red-4" round @click="candidate.vote = false")
+                  q-icon(name="close" size="xs")
+              .row.justify-center
+                q-avatar(size="xl")
+                  img(:src="'https://i.pravatar.cc/100/?u=' + candidate.cand")
+              p.q-pt-sm.no-margin {{candidate.cand}}
       .col-auto.q-mr-sm.pulse
         .row.justify-center
           h6.no-margin.q-pb-sm(v-if="getElectionsConfig") {{getVoting.length}}/{{getElectionsConfig.max_votes}}

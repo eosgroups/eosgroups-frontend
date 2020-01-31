@@ -1,6 +1,6 @@
 <template>
   <q-page padding class="constrain-page-width">
-   <page-header title="My Tokens"/>
+   <page-header title="Internal Accounting"/>
       <q-card class="">
         <div class="row justify-between q-mb-md q-py-sm">
           <q-item>
