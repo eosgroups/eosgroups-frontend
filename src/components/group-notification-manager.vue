@@ -34,6 +34,7 @@ export function isSubscribedForTopic(){
 
 
 import { mapGetters } from "vuex";
+import {notifyError, notifySuccess} from '../imports/notifications.js';
 export default {
   name: 'notificationManager',
   data () {
@@ -107,9 +108,10 @@ export default {
       })
       console.log(res);
       if(res.status == 200){
-        var notification = new Notification(`Notifications enabled for group ${topic_name}`,{
-          icon: this.getActiveGroupConfig.ui.logo
-        });
+        notifySuccess({message:`Notifications enabled`});
+        // var notification = new Notification(`Notifications enabled for group ${topic_name}`,{
+        //   icon: this.getActiveGroupConfig.ui.logo
+        // });
         this.$store.commit("user/addTopicSubsciption", topic_name);
       }
       this.api_call_waiting=false;
@@ -122,9 +124,10 @@ export default {
       })
       console.log(res);
       if(res.status == 200){
-        var notification = new Notification(`Notifications disabled for group ${topic_name}`,{
-          icon: this.getActiveGroupConfig.ui.logo
-        });
+        notifySuccess({message:`Notifications disabled`});
+        // var notification = new Notification(`Notifications disabled for group ${topic_name}`,{
+        //   icon: this.getActiveGroupConfig.ui.logo
+        // });
         this.$store.commit("user/removeTopicSubsciption", topic_name);
       }
       this.api_call_waiting=false;
