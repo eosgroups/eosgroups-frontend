@@ -13,7 +13,7 @@
                   q-tab(label="Registered" name="registeredMS")
                   q-tab(label="Reputation" name="rep")
               .col 
-                q-btn( style="height:100%" flat :icon="toggleOrderIcon" @click="toggleOrder()")  
+                q-btn.no-border-radius( style="height:100%" flat :icon="toggleOrderIcon" @click="toggleOrder()")
           .col-auto.gt-xs
             p.no-margin View Mode:
             q-tabs(active-bg-color="primary" active-color="white" v-model="viewMode" align="right" indicator-color="transparent")
@@ -29,8 +29,9 @@
                 :candidate="candidate"
                 :clickable="selectableMember(candidate.cand)" 
                 :viewMode="viewMode"
-                :class="{'col-12':viewMode === 'list','col-xs-12 col-sm-6':viewMode === 'grid'}"
-                )
+                :class="{'col-12':viewMode === 'list','col-xs-12 col-sm-6':viewMode === 'grid'}")
+        q-dialog(v-model="showInfoModal")
+          candidateProfile
                 
     //- q-page-sticky(:offset="[20,20]" )
     //-   q-btn(icon="mdi-vote" label="confirm Votes" color="green" size="lg")
@@ -46,12 +47,10 @@
 import { mapGetters } from "vuex";
 import profilePic from "components/profile-pic"
 import candidate from "components/modules/elections/candidate"
+import candidateProfile from "components/modules/elections/candidate-profile"
 export default {
   name: "listCandidates",
-  components: {
-    profilePic,
-    candidate
-  },
+  components: { profilePic, candidate, candidateProfile },
   data() {
     return {
       viewMode:'grid',
@@ -59,7 +58,8 @@ export default {
       pendingUserVotes:null,
       highlightedCand:null,
       initialVotes:null,
-      listOrder:true
+      listOrder:true,
+      showInfoModal:false
     };
   },
   computed: {
@@ -79,7 +79,6 @@ export default {
       if (!this.getCandidates) return []
       return this.getCandidates.map(cand => { 
         this.$set(cand,'vote',false)
-        console.log('USER VOTES',this.getUserVotes)
         if (this.getUserVotes) {
           const voting = this.getUserVotes.votes.find(el => cand.cand === el)
           if (voting) this.$set(cand,'vote',true)
@@ -115,6 +114,9 @@ export default {
     }
   },
   methods: {
+    displayCustodianInfo(custodian){
+
+    },
     toggleOrder(){
       if (this.listOrder) this.listOrder = false
       else this.listOrder = true
@@ -127,7 +129,6 @@ export default {
       else return true
     },
     highlightCandidate(cand){
-      console.log(cand)
       this.highlightedCand = cand
     },
     async fetchcandidates(electioncontract){
@@ -137,6 +138,16 @@ export default {
     }
   },
   watch: {
+    showInfoModal(val){
+      if (!val) this.highlightedCand = null
+    },
+    highlightedCand:{
+      immediate:true,
+      handler(newVal, oldVal) {
+        if (!newVal) return this.showInfoModal = false
+        else return this.showInfoModal = true
+      }
+    },
     getElectionsContract: {
       immediate: true,
       handler(newVal, oldVal) {

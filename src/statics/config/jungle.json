@@ -18,6 +18,6 @@
     
     ],
     "api":{
-        "url": "http://api.daclify.com:3333"
+        "url": "http://api.daclify.com"
     }
 }
