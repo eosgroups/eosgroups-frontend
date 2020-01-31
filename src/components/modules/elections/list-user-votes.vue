@@ -64,9 +64,7 @@ export default {
       };
 
       let res = await this.$store.dispatch("ual/transact", { actions: [action] });
-      if(res && res.transactionId && res.status == "executed"){
-        this.$store.commit('user/setIsMember', true);
-      }
+      this.$store.dispatch("elections/fetchUserVotes",{voter:this.getAccountName});
     },
     async fetchUserVotes(){
       if(!this.getUserVotes && this.getAccountName && this.getElectionsContract){
