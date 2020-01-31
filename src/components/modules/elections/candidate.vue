@@ -1,7 +1,7 @@
 <template lang="pug">
-  div(@click="$emit('click')")
-    q-item(:clickable="clickable" :disabled="!candidate.active"
-    :class="{selected:!clickable}" :v-ripple="candidate.active")
+  div
+    q-item(:clickable="clickable"
+    :class="{selected:!clickable}" :v-ripple="candidate.active" @click="$emit('click')")
       q-item-section(avatar)
         q-avatar(size="xl")
           img(:src="'https://i.pravatar.cc/100/?u=' + candidate.cand")

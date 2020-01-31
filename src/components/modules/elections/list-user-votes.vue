@@ -6,7 +6,8 @@
         .row
           q-card.col-auto.q-ma-sm.q-pa-sm(selectable v-for="candidate of getVoting" :key="candidate.cand")
             .absolute-top-right(style="right:-5px; top:-5px;")
-              q-btn(icon="close" size="xs" color="red" round @click="candidate.vote = false")
+              q-btn(size="xs" color="red-4" round @click="candidate.vote = false")
+                q-icon(name="close" size="xs")
             .row.justify-center
               q-avatar(size="xl")
                 img(:src="'https://i.pravatar.cc/100/?u=' + candidate.cand")
