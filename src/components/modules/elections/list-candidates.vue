@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.q-ma-sm 
+  div.q-ma-sm
     .row
       .col(v-if="candiates")
         h6.no-margin Member Candidates
