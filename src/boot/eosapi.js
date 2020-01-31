@@ -1,6 +1,6 @@
 import { JsonRpc, Api, Serialize } from "eosjs";
-// var VConsole = require("vconsole");
-// var vConsole = new VConsole();
+var VConsole = require("vconsole");
+var vConsole = new VConsole();
 
 
 const rpc = new JsonRpc("https://jungle.eosdac.io"); //api.main.alohaeos.com, eos.greymass.com, jungle2.cryptolions.io jungle.eosdac.io
