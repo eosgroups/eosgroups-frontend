@@ -26,13 +26,6 @@ navigator.serviceWorker.register('./statics/service-workers/firebase-messaging-s
   messaging.useServiceWorker(registration);
 });
 
-
-// messaging.onMessage(function(payload) {
-//   //messsage handling when app focused
-//   console.log( payload);
-//   // ...
-// });
-
 // Callback fired if Instance ID token is updated.
 messaging.onTokenRefresh(() => {
   messaging.getToken().then((refreshedToken) => {

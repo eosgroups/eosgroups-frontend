@@ -19,6 +19,15 @@
           </q-item-section>
         </q-item>
 
+        <q-item clickable :to="`/members/${getActiveGroup}/my-tokens`">
+          <q-item-section avatar>
+            <q-icon name="mdi-currency-usd" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>My Tokens</q-item-label>
+          </q-item-section>
+        </q-item>
+
         <q-item v-if="getChildByModuleName('elections')" clickable :to="`/members/${getActiveGroup}/elections`">
           <q-item-section avatar>
             <q-icon name="mdi-vote" />
