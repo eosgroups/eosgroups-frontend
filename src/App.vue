@@ -34,7 +34,7 @@ const chains = [{
 }];
 
 import { mapGetters } from "vuex";
-
+import {notifyError, notifySuccess} from './imports/notifications.js';
 export default {
   name: 'App',
   components:{ual},
@@ -53,17 +53,23 @@ export default {
   },
   computed: {
     ...mapGetters({
+      getActiveGroup: "group/getActiveGroup",
       getAccountName: "ual/getAccountName",
       getIsDark: "user/getIsDark"
     })
   },
   mounted(){
     this.$store.dispatch('app/initRoutine');
+
   },
   created(){
-    this.$messaging.onMessage(function(payload) {
+    this.$messaging.onMessage((payload) =>{
       //messsage handling when app focused
       console.log( payload);
+      if(payload.data.type ="propose" && !payload.notification.body.includes(this.getAccountName)){
+        this.$store.dispatch('group/fetchProposals', {groupname: this.getActiveGroup, scope: this.getActiveGroup});
+        notifySuccess({message:`${payload.notification.body}`});
+      }
       // ...
     });
   },
