@@ -96,9 +96,7 @@ export default {
           if (cand.rep > 40) return 'amber-7'
           if (cand.rep > 20) return 'yellow-7'
           return 'red'
-
         })())
-
         return cand
       })
       .filter(cand => {
