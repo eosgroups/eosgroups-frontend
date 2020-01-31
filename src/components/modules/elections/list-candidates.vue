@@ -60,14 +60,14 @@ export default {
       pendingUserVotes:null,
       highlightedCand:null,
       initialVotes:null,
-      listOrder:true,
+      listOrder:false,
       showInfoModal:false
     };
   },
   computed: {
     toggleOrderIcon(){
-      if (this.listOrder) return 'keyboard_arrow_down'
-      else return 'keyboard_arrow_up'
+      if (this.listOrder) return 'keyboard_arrow_up'
+      else return 'keyboard_arrow_down'
     },
     ...mapGetters({
       getElectionsContract: "elections/getElectionsContract",
