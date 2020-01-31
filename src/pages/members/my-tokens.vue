@@ -1,7 +1,43 @@
 <template>
   <q-page padding class="constrain-page-width">
    <page-header title="My Tokens"/>
+      <q-card class="">
+        <div class="row justify-between q-mb-md q-py-sm">
+          <q-item>
+            <q-item-section avatar>
+              <q-icon v-if="getCoreConfig.conf.withdrawals" name="check" color="positive" />
+              <q-icon v-else name="close" color="negative" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-h6 text-weight-light">Withdrawals</q-item-label>
+              <q-item-label caption>{{getCoreConfig.conf.withdrawals?'enabled':'disabled'}}</q-item-label>
+            </q-item-section>
+          </q-item>
 
+          <q-item>
+            <q-item-section avatar>
+              <q-icon v-if="getCoreConfig.conf.deposits" name="check" color="positive" />
+              <q-icon v-else name="close" color="negative" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-h6 text-weight-light">Deposits</q-item-label>
+              <q-item-label caption>{{getCoreConfig.conf.deposits?'enabled':'disabled'}}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section avatar>
+              <q-icon v-if="getCoreConfig.conf.internal_transfers" name="check" color="positive" />
+              <q-icon v-else name="close" color="negative" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-h6 text-weight-light">Internal Transfers</q-item-label>
+              <q-item-label caption>{{getCoreConfig.conf.internal_transfers?'enabled':'disabled'}}</q-item-label>
+            </q-item-section>
+          </q-item>
+
+        </div>
+      </q-card>
       <transition-group
         appear
         enter-active-class="animated zoomIn"
@@ -13,12 +49,15 @@
           v-for="token in myTokens" :key="token.symbol+token.contract"
           class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-4"
         >
-          <user-balance-card :token="token" />
+          <user-balance-card :token="token" @updatebalance="getTokens()" />
 
         </div>
       </transition-group>
-<!-- {{myTokens}}
-{{getCoreConfig}} -->
+      <div class="row justify-center" v-if="is_loading">
+        <q-spinner color="primary" size="60px" />
+      </div>
+
+<!-- {{getCoreConfig}} -->
   </q-page>
 </template>
 
@@ -58,6 +97,7 @@ export default {
       }
 
     },
+
 
   },
   watch: {
