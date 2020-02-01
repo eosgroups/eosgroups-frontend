@@ -10,20 +10,18 @@
               .col-auto
                 q-tabs(:switch-indicator="false" shrink active-bg-color="primary" active-color="white" v-model="sortBy" align="left" indicator-color="transparent")
                   q-tab(label="Votes" name="total_votes")
-                  q-tab(label="Registered" name="registeredMS")
+                  //- q-tab(label="Registered" name="registeredMS")
                   q-tab(label="Reputation" name="rep")
               .col 
                 q-btn.no-border-radius( style="height:100%" flat :icon="toggleOrderIcon" @click="toggleOrder()")
           .col-auto.gt-xs
             p.no-margin View Mode:
-            q-tabs(active-bg-color="primary" active-color="white" v-model="viewMode" align="right" indicator-color="transparent")
-              q-tab(icon="apps" name="grid")
-              q-tab(icon="view_list" name="list")
-        div(style="height:40vh;")
-          q-scroll-area(style="height:100%;")
+            q-tabs( style="width:110px;" active-bg-color="primary" active-color="white" v-model="viewMode" align="right" indicator-color="transparent")
+              q-tab(icon="apps" name="grid" style="width:20px;")
+              q-tab(icon="view_list" name="list" style="width:20px;") 
+        div(style="flex-grow:1; height:55vh;")
+          q-scroll-area(style="height:100%; flex-grow:1;")
             .row
-
-
               candidate(
                 v-for="(candidate,index) of candiates" 
                 :key="candidate.cand" 
@@ -100,13 +98,13 @@ export default {
         return cand
       })
       .filter(cand => {
-        // return true
-        if (!this.getElectionsConfig) return true
-        if(this.getElectionsConfig.allow_self_vote === 0) {
-          if (cand.cand === this.getAccountName) return false
-          else return true
-        }
-        else return true
+        return true
+        // if (!this.getElectionsConfig) return true
+        // if(this.getElectionsConfig.allow_self_vote === 0) {
+        //   if (cand.cand === this.getAccountName) return false
+        //   else return true
+        // }
+        // else return true
       }).sort((a, b) => {   
         if (this.listOrder) return (a[this.sortBy] - b[this.sortBy])
         else return (b[this.sortBy] - a[this.sortBy])   
@@ -114,6 +112,14 @@ export default {
     }
   },
   methods: {
+    DisableCustodian(){
+      if (!this.getElectionsConfig) return true
+      if(this.getElectionsConfig.allow_self_vote === 0) {
+        if (cand.cand === this.getAccountName) return false
+        else return true
+      }
+      else return true
+    },
     displayCustodianInfo(custodian){
 
     },

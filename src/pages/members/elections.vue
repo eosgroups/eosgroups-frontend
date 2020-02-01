@@ -31,8 +31,8 @@
    </q-tab-panels>
 
    
-  <pre>{{getElectionsConfig}}</pre>
-  <pre>{{getElectionsState}}</pre>
+  <!-- <pre>{{getElectionsConfig}}</pre>
+  <pre>{{getElectionsState}}</pre> -->
 
    
    
