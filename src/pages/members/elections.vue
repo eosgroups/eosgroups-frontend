@@ -15,7 +15,7 @@
    </q-tabs>
 
    <q-tab-panels v-model="selected_tab" animated class="fit bg-transparent q-mt-md" transition-prev="fade" transition-next="fade">
-     <q-tab-panel name="vote" class="fit overflow-hidden no-padding" style="min-height:300px" >
+     <q-tab-panel name="vote" class="fit overflow-hidden no-padding" >
       <list-user-votes />
       <list-candidates />
      </q-tab-panel>

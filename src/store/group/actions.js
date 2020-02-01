@@ -5,15 +5,16 @@ import { colors } from 'quasar';
 // destructuring to keep only what is needed
 const { setBrand } = colors;
 
-import {
-  Loading
-} from 'quasar'
+// import {
+//   Loading
+// } from 'quasar'
 
 
 export async function resetStore ({  commit }, payload) {
   commit('setCoreConfig', false);
   commit('setCustodians', []);
   commit('setChildAccounts', false);
+  commit('elections/setElectionsContract', false, {root: true});
 }
 
 export async function loadGroupRoutine ({ dispatch, commit, rootGetters }, payload) {

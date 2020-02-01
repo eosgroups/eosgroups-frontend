@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.relative-position.q-pl-sm
+  div.overflow-hidden.relative-position.q-pl-sm
     h6.no-margin My Votes
     .row(v-if="getVoting" style="min-height:110px;")
       .col

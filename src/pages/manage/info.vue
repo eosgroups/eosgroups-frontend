@@ -124,6 +124,12 @@
           </q-item>
         </q-card>
       </div>
+
+      <div v-if="getElectionsContract" class="col-xs-12 col-sm-6 col-lg-4">
+        <q-card class="primary-hover-list">
+          <new-election-timer />
+        </q-card>
+      </div>
       
 
     </div>
@@ -143,6 +149,7 @@ import groupTags from "components/group-tags";
 import clapForGroup from "components/clap-for-group";
 import groupNotificationManager from "components/group-notification-manager";
 
+import newElectionTimer from "components/modules/elections/new-election-timer";
 
 import coreVersionManager from "components/core-version-manager";
 
@@ -153,7 +160,8 @@ export default {
     groupTags,
     coreVersionManager,
     clapForGroup,
-    groupNotificationManager
+    groupNotificationManager,
+    newElectionTimer
 
   },
   data() {
@@ -169,7 +177,8 @@ export default {
       getCoreConfig: "group/getCoreConfig",
       getCoreState: "group/getCoreState",
       getNumberCustodians: "group/getNumberCustodians",
-      getSelectedBlockExplorer: "user/getSelectedBlockExplorer"
+      getSelectedBlockExplorer: "user/getSelectedBlockExplorer",
+      getElectionsContract: "elections/getElectionsContract",
     })
   },
   methods: {
