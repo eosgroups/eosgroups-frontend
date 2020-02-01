@@ -1,7 +1,7 @@
 export async function loggedInRoutine ({ dispatch }, payload) {
 
   dispatch('fetchAccount', payload.accountname);
-  dispatch('fetchIsMember', payload.accountname);//only when on group page !!!!!!!!!!!!!!!!!!
+  //dispatch('fetchIsMember', payload.accountname);
 
 }
 

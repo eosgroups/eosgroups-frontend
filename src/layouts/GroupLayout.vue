@@ -262,6 +262,14 @@ export default {
         }
       }
     },
+    getAccountName:{
+      immediate: false,
+      handler(newV, oldV){
+        if(newV){
+          this.$store.dispatch('group/fetchIsMember', this.getAccountName)
+        }
+      }
+    }
   }
 };
 </script>
