@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mr-md">
+  <div class="q-mr-md" v-if="!notifications_not_supported">
     <!-- mdi-bell mdi-bell-off -->
     <!-- {{getTopicSubscriptions}}
     {{isSubscribedForTopic}} -->
@@ -40,7 +40,8 @@ export default {
   data () {
     return {
       browser_notifications_granted: false,
-      api_call_waiting: false
+      api_call_waiting: false,
+      notifications_not_supported: false
     }
   },
   computed:{
@@ -91,13 +92,16 @@ export default {
     },
 
     async getNewInstanceIdToken() {
-      let new_token = await this.$messaging.getToken().catch(err => {
-          console.log("An error occurred while retrieving token. ", err);
-          return false;
-        });
-      if(!new_token){alert("Error getting token"); return;}
-      console.log('new token', new_token)
-      return new_token;
+      if(this.$messaging){
+        let new_token = await this.$messaging.getToken().catch(err => {
+            console.log("An error occurred while retrieving token. ", err);
+            return false;
+          });
+        if(!new_token){alert("Error getting token"); return;}
+        console.log('new token', new_token)
+        return new_token;
+      }
+
     },
 
     async subscribeToTopic(token, topic_name){
@@ -135,10 +139,16 @@ export default {
 
   },
   mounted(){
-    if(Notification.permission === "granted"){
-      console.log("notifications granted");
-      this.browser_notifications_granted = true;
+    if(this.$messaging){
+      if(Notification.permission === "granted"){
+        console.log("notifications granted");
+        this.browser_notifications_granted = true;
+      }
     }
+    else{
+      this.notifications_not_supported = true;
+    }
+
 
   },
   created(){

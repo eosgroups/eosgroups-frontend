@@ -18,30 +18,37 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const messaging = firebase.messaging();
-messaging.usePublicVapidKey(PublicVapidKey);
+let messaging;
+if (firebase.messaging.isSupported()){
+  messaging = firebase.messaging();
+  messaging.usePublicVapidKey(PublicVapidKey);
 
-navigator.serviceWorker.register('./statics/service-workers/firebase-messaging-sw.js')
-.then((registration) => {
-  messaging.useServiceWorker(registration);
-});
 
-// Callback fired if Instance ID token is updated.
-messaging.onTokenRefresh(() => {
-  messaging.getToken().then((refreshedToken) => {
-    console.log('Token refreshed.', refreshedToken);
-    // Indicate that the new Instance ID token has not yet been sent to the
-    // app server.
-    // setTokenSentToServer(false);
-    // Send Instance ID token to app server.
-    // sendTokenToServer(refreshedToken);
-    // ...
-  }).catch((err) => {
-    console.log('Unable to retrieve refreshed token ', err);
-    // showToken('Unable to retrieve refreshed token ', err);
+
+  navigator.serviceWorker.register('./statics/service-workers/firebase-messaging-sw.js')
+  .then((registration) => {
+    messaging.useServiceWorker(registration);
   });
-});
 
+  // Callback fired if Instance ID token is updated.
+  messaging.onTokenRefresh(() => {
+    messaging.getToken().then((refreshedToken) => {
+      console.log('Token refreshed.', refreshedToken);
+      // Indicate that the new Instance ID token has not yet been sent to the
+      // app server.
+      // setTokenSentToServer(false);
+      // Send Instance ID token to app server.
+      // sendTokenToServer(refreshedToken);
+      // ...
+    }).catch((err) => {
+      console.log('Unable to retrieve refreshed token ', err);
+      // showToken('Unable to retrieve refreshed token ', err);
+    });
+  });
+}
+else{
+  messaging = false;
+}
 
 
 export default ({ Vue }) => {

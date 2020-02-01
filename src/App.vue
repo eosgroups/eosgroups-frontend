@@ -63,15 +63,17 @@ export default {
 
   },
   created(){
-    this.$messaging.onMessage((payload) =>{
-      //messsage handling when app focused
-      console.log( payload);
-      if(payload.data.type ="propose" && !payload.notification.body.includes(this.getAccountName)){
-        this.$store.dispatch('group/fetchProposals', {groupname: this.getActiveGroup, scope: this.getActiveGroup});
-        notifySuccess({message:`${payload.notification.body}`});
-      }
-      // ...
-    });
+    if(this.$messaging){
+      this.$messaging.onMessage((payload) =>{
+        //messsage handling when app focused
+        console.log( payload);
+        if(payload.data.type ="propose" && !payload.notification.body.includes(this.getAccountName)){
+          this.$store.dispatch('group/fetchProposals', {groupname: this.getActiveGroup, scope: this.getActiveGroup});
+          notifySuccess({message:`${payload.notification.body}`});
+        }
+        // ...
+      });
+    }
   },
 
 
