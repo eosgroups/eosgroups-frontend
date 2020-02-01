@@ -1,7 +1,7 @@
 <template lang="pug">
   div.q-ma-sm
     .row
-      .col(v-if="candiates")
+      .col(v-if="candidates")
         h6.no-margin Member Candidates
         .row.justify-between
           .col-auto
@@ -23,16 +23,23 @@
           q-scroll-area(style="height:100%; flex-grow:1;")
             .row
               candidate(
-                v-for="(candidate,index) of candiates" 
+                v-for="(candidate,index) of candidates" 
                 :key="candidate.cand" 
                 @click="highlightCandidate(candidate.cand)" 
                 :candidate="candidate"
                 :clickable="selectableMember(candidate.cand)" 
                 :viewMode="viewMode"
+                :voteMax="voteMax"
                 :class="{'col-12':viewMode === 'list','col-xs-12 col-sm-6':viewMode === 'grid'}")
-        q-dialog(v-model="showInfoModal")
-          candidateProfile
-                
+
+        
+      .col.gt-sm
+        div(style="flex-grow:1; height:65vh;")
+          q-scroll-area(style="height:100%; flex-grow:1;")
+            candidateProfile(:profile="highlightedProfile" @close="showInfoModal = false")
+
+    q-dialog(v-model="showInfoModal")
+      candidateProfile(:profile="highlightedProfile" @close="showInfoModal = false" closeBtn)
     //- q-page-sticky(:offset="[20,20]" )
     //-   q-btn(icon="mdi-vote" label="confirm Votes" color="green" size="lg")
     //- .row.justify-center
@@ -75,8 +82,16 @@ export default {
       getElectionsState: "elections/getElectionsState",
       getCandidates: "elections/getCandidates",
     }),
-    candiates(){
-      if (!this.getCandidates) return []
+    voteMax(){
+      if (!this.getCandidates || !this.getElectionsConfig) return false
+      console.log('votemax')
+      const totalVotes = this.getCandidates.filter(el => el.vote)
+      console.log('TOTAL VOTES',totalVotes)
+      if (this.getElectionsConfig.max_votes <= totalVotes.length) return true
+      else return false
+    },
+    candidates(){
+      if (!this.getCandidates) return 
       return this.getCandidates.map(cand => { 
         this.$set(cand,'vote',false)
         if (this.getUserVotes) {
@@ -109,17 +124,13 @@ export default {
         if (this.listOrder) return (a[this.sortBy] - b[this.sortBy])
         else return (b[this.sortBy] - a[this.sortBy])   
       })
+    },
+    highlightedProfile(){
+      if (!this.candidates) return {cand:"hello"}
+      return this.candidates.find(el => el.cand === this.highlightedCand)
     }
   },
   methods: {
-    DisableCustodian(){
-      if (!this.getElectionsConfig) return true
-      if(this.getElectionsConfig.allow_self_vote === 0) {
-        if (cand.cand === this.getAccountName) return false
-        else return true
-      }
-      else return true
-    },
     displayCustodianInfo(custodian){
 
     },
@@ -150,8 +161,14 @@ export default {
     highlightedCand:{
       immediate:true,
       handler(newVal, oldVal) {
-        if (!newVal) return this.showInfoModal = false
-        else return this.showInfoModal = true
+        if (this.$q.screen.gt.sm) {
+          
+        }
+        else {
+          if (!newVal) return this.showInfoModal = false
+          else return this.showInfoModal = true
+        }
+
       }
     },
     getElectionsContract: {
