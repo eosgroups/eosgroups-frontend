@@ -1,7 +1,7 @@
 <template>
   <div >
-    <q-card>
-      <q-card-section>
+    <q-card >
+      <q-card-section >
         <div class="row items-center">
 
           <q-item class="">
