@@ -149,7 +149,7 @@ export default {
     getImAliveStats(){
       if(this.getCoreConfig && this.getCoreConfig.conf.inactivate_cust_after_sec){
         let last_active = new Date(this.custodian.last_active+".000+00:00").getTime();
-        let now = new Date().getTime();
+        let now = new Date().getTime(); 
 
         let imalive_period = this.getCoreConfig.conf.inactivate_cust_after_sec*1000;
 
