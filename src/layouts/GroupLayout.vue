@@ -161,7 +161,7 @@
       </q-scroll-area>
     </q-drawer>
 
-    <q-page-container class=" text-black  overflow-hidden" style="padding-bottom:80px">
+    <q-page-container class=" text-black  overflow-hidden" style="padding-bottom:0px">
       <transition
         appear
         enter-active-class="animated fadeInRight"
