@@ -125,8 +125,9 @@ export default {
       getFavouriteGroups: "user/getFavouriteGroups"
     }),
     getGroupsWithFilter() {
-      let res = this.getGroups.filter(g=> g.state > 0);
+      let res = this.getGroups;
       if (!res) return [];
+      res = res.filter(g=> g.state > 0);
       if (this.tabfilter == "all") {
         // return res;
       } else if (this.tabfilter == "favourites") {

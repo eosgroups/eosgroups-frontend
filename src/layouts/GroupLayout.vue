@@ -209,6 +209,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      getAccountName: "ual/getAccountName",
       getActiveGroup: "group/getActiveGroup",
       getActiveGroupConfig: "group/getActiveGroupConfig",
       getCoreConfig: "group/getCoreConfig"
@@ -263,10 +264,12 @@ export default {
       }
     },
     getAccountName:{
-      immediate: false,
+      immediate: true,
       handler(newV, oldV){
+        
         if(newV){
-          this.$store.dispatch('group/fetchIsMember', this.getAccountName)
+          console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+          this.$store.dispatch('user/fetchIsMember', this.getAccountName)
         }
       }
     }
