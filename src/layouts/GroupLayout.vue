@@ -266,9 +266,7 @@ export default {
     getAccountName:{
       immediate: true,
       handler(newV, oldV){
-        
         if(newV){
-          console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
           this.$store.dispatch('user/fetchIsMember', this.getAccountName)
         }
       }

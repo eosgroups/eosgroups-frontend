@@ -21,8 +21,9 @@
         <q-btn label="new" color="primary" @click="newElection" :loading="is_transacting" :disabled="!enable_new_election_btn" />
       </q-item-section>
     </q-item>
-    <q-tooltip>
+    <q-tooltip content-class="bg-secondary">
       <div>Total Election Count: {{getElectionsState.election_count}}</div>
+      <div v-if="computedNewElectionStats">New Election {{secondsToDhms(computedNewElectionStats.time_left/1000)|| 'NOW'}}</div>
     </q-tooltip>
     <!-- {{computedNewElectionStats}} -->
   </div>
@@ -30,6 +31,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import {secondsToDhms} from "../../../imports/helpers.js";
 export default {
   // name: 'ComponentName',
   data () {
@@ -77,6 +79,7 @@ export default {
   },
 
   methods:{
+    secondsToDhms,
     async newElection(){
       this.is_transacting = true;
       let action = {
@@ -88,8 +91,11 @@ export default {
       };
       let res = await this.$store.dispatch("ual/transact", { actions: [action], disable_signing_overlay: true });
       if(res && res.transactionId && res.status == "executed"){
-        this.$store.dispatch("group/loadGroupRoutine", {groupname: this.getActiveGroup});
-        this.$store.dispatch("elections/loadElectionsRoutine", this.getElectionsContract);
+        setTimeout(()=>{
+          this.$store.dispatch("group/loadGroupRoutine", {groupname: this.getActiveGroup});
+          this.$store.dispatch("elections/loadElectionsRoutine", this.getElectionsContract);
+        }, 1000);
+
       }
       else{
         return false;
