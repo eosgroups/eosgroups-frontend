@@ -7,7 +7,7 @@
       <div class="q-pa-sm">
         
         <div class="text-h6 q-mb-md">
-          <img  src="~assets/daclify-logo.svg" style="height:14px" class="cursor-pointer"/>
+          <img  src="~assets/daclify-logo-filled.svg" style="height:24px" class="cursor-pointer q-mt-sm"/>
           <router-link to="/" tag="a" class="text-link text-caption" style="display:block">
             Pricing
           </router-link>
