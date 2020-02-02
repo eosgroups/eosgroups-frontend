@@ -22,6 +22,9 @@
     </div>
 
     <div class="center-page-content q-pa-md">
+      <div class="row justify-center">
+        <img src="~assets/daclify-d-transparent.svg" style="width:300px" />
+      </div>
       <!-- <comparison-table /> -->
     </div>
 
