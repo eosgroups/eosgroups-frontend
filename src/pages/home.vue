@@ -21,14 +21,11 @@
       </q-parallax>
     </div>
 
-    <!-- <div style="height:1000px">
-      <q-card>
-        <q-card-section>
+    <div class="center-page-content q-pa-md">
+      <!-- <comparison-table /> -->
+    </div>
 
-        manage wallet in group, manage contracts, proxy accounts, collect charitiy account,
-        </q-card-section>
-      </q-card>
-    </div> -->
+
 
   </q-page>
 </template>
@@ -37,13 +34,14 @@
 
 <script>
 import { mapGetters } from "vuex";
-import splitBtn from "components/split-btn"
-
+import splitBtn from "components/split-btn";
+import comparisonTable from "components/home/comparison-table";
 
 export default {
   name: "PageIndex",
   components: {
-    splitBtn
+    splitBtn,
+    comparisonTable
     
   },
   data() {
