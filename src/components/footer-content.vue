@@ -44,7 +44,7 @@
     </div>
   </div>
   
-  <q-separator class="q-mt-lg"/>
+  <q-separator dark class="q-mt-lg"/>
 
   <div class="row justify-end">© Daclify {{new Date().getFullYear()}}</div>
   </div>

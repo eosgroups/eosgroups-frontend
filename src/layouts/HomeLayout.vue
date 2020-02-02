@@ -31,7 +31,6 @@
 
 
     <q-footer class="bg-secondary footer-border-top"  >
-     
       <footer-content />
     </q-footer>
   </q-layout>
@@ -83,6 +82,6 @@ export default {
 
 <style>
 .footer-border-top{
-  border-top: 5px solid  var(--q-color-primary)
+  border-top: 5px solid  var(--q-color-primary) !important;
 }
 </style>
