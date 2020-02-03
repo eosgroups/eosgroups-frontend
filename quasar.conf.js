@@ -108,7 +108,8 @@ module.exports = function (ctx) {
         'Ripple',
         'ClosePopup',
         'TouchHold',
-        'TouchSwipe'
+        'TouchSwipe',
+        'ScrollFire'
       ],
 
       // Quasar plugins

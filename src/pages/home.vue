@@ -20,12 +20,28 @@
         </div>
       </q-parallax>
     </div>
+    <div class="center-page-content q-pa-md text-white">
+      <h5>Home page is in development</h5>
+      <p class="invisible" v-scroll-fire="(el)=>{makeVisible(el, 'fadeIn')}">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
-    <div class="center-page-content q-pa-md">
+    
+      <!-- <comparison-table style="max-width:700px"/> -->
+      
+      
       <div class="row justify-center">
-        <img src="~assets/daclify-d-transparent.svg" style="width:300px" />
+        <img src="~assets/daclify-d-transparent.svg"  style="width:300px;" class="invisible" v-scroll-fire="(el)=>{makeVisible(el, 'fadeInDown')}"/>
       </div>
-      <!-- <comparison-table /> -->
+      <div class="row justify-center">
+        <img src="~assets/daclify-d-transparent.svg"  style="width:300px;" class="invisible" v-scroll-fire="(el)=>{makeVisible(el, 'fadeInUp')}"/>
+      </div>
+      <div class="row justify-between ">
+        <img src="~assets/daclify-d-transparent.svg"  style="width:30px;" class="invisible" v-scroll-fire="(el)=>{makeVisible(el, 'fadeInLeft')}"/>
+        <img src="~assets/daclify-d-transparent.svg"  style="width:30px;" class="invisible" v-scroll-fire="(el)=>{makeVisible(el, 'fadeInRight')}"/>
+      </div>
+      <div class="row justify-center">
+        <img src="~assets/daclify-d-transparent.svg"  style="width:300px;" class="invisible" v-scroll-fire="(el)=>{makeVisible(el, 'fadeInUp')}"/>
+      </div>
+      
     </div>
 
 
@@ -60,7 +76,10 @@ export default {
     })
   },
   methods: {
-    dologin() {}
+    makeVisible (el, animation) {
+      el.classList.add("animated", animation, "v-enter-to");
+      el.classList.remove('invisible');
+    }
   }
 };
 </script>
