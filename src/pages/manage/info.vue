@@ -43,11 +43,7 @@
 
             <div class="text-weight-light row justify-between items-center">
             <div>
-              <q-btn :disabled="!isValidUrl(getActiveGroupConfig.meta.url)" label="website" icon="link" color="primary" @click="openURL(getActiveGroupConfig.meta.url)">
-                <q-tooltip content-class="bg-secondary">
-                  {{getActiveGroupConfig.meta.url}}
-                </q-tooltip>
-              </q-btn>
+              <group-links :links="getActiveGroupConfig.meta.links" />
             </div>
               <q-item>
                   <q-item-section >
@@ -144,8 +140,8 @@
 <script>
 import { mapGetters } from "vuex";
 import {openURL} from "quasar";
-import {isValidUrl} from "../../imports/validators.js";
 import groupTags from "components/group-tags";
+import groupLinks from "components/group-links";
 import clapForGroup from "components/clap-for-group";
 import groupNotificationManager from "components/group-notification-manager";
 
@@ -158,6 +154,7 @@ export default {
   name: "PageIndex",
   components: {
     groupTags,
+    groupLinks,
     coreVersionManager,
     clapForGroup,
     groupNotificationManager,
@@ -182,7 +179,6 @@ export default {
     })
   },
   methods: {
-    isValidUrl,
     openURL,
   }
 
