@@ -247,14 +247,14 @@ export default {
       }
     },
     async activateGroup(){
-      // alert('creating groups is disabled');
-      // return;
+      alert('Creating groups is disabled. Daclify is making the last core changes to prepare for mainnet! Sorry no timelines avaiable!');
+      return;
       this.deploycontract(this.new_group_account_name);
 
     },
     async createGroup(){
-      // alert('creating groups is disabled');
-      // return false;
+      alert('Creating groups is disabled. Daclify is making the last core changes to prepare for mainnet! Sorry no timelines avaiable!');
+      return false;
       this.step="request_signature";
       let create_group = {
         account: this.getAppConfig.groups_contract,

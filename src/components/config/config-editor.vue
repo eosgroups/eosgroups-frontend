@@ -22,8 +22,9 @@
             :accordion="true"
           >
             <template v-slot:default-header="prop">
-              <div class="row items-center">
+              <div  class="row items-center">
                 <q-icon
+                  v-if="prop.node.icon"
                   :name="prop.node.icon"
                   color=""
                   size="28px"
