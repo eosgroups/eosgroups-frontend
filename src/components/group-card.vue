@@ -48,18 +48,33 @@
           </div>
           <div>
             <q-btn
+              v-if="getUiUrl.startsWith('.')"
               label="Visit Group"
-              :to="`./manage/${group.groupname}`"
+              :to="getUiUrl"
               flat
               size="sm"
               text-color="white"
               :style="{ backgroundColor: group.ui.hexcolor }"
             />
+            <q-btn
+              v-else
+              label="Visit Group"
+              @click="openURL(getUiUrl)"
+              icon="link"
+              flat
+              size="sm"
+              text-color="white"
+              :style="{ backgroundColor: group.ui.hexcolor }"
+            >
+            <q-tooltip content-class="bg-secondary" :delay="500" anchor="center left" self="center right" :offset="[10, 10]">
+              {{getUiUrl}}
+            </q-tooltip>
+            </q-btn>
           </div>
         </div>
       </div>
       </q-tab-panel>
-      </q-tab-panels>
+
 
       <!-- {{group}} -->
     </q-card>
@@ -67,7 +82,8 @@
 </template>
 
 <script>
-
+import { openURL } from "quasar";
+import { isValidUrl } from "../imports/validators.js";
 import groupTags from "components/group-tags";
 export default {
   // name: 'ComponentName',
@@ -86,6 +102,20 @@ export default {
     return {
       view_mode: 'main'
     };
+  },
+  computed:{
+    getUiUrl(){
+      let res = `./manage/${this.group.groupname}`;
+      if(this.group.ui.custom_ui_url){
+        if(isValidUrl(this.group.ui.custom_ui_url)){
+          res = this.group.ui.custom_ui_url;
+        }
+      }
+      return res;
+    }
+  },
+  methods:{
+    openURL
   }
 };
 </script>
