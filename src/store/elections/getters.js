@@ -14,6 +14,7 @@ export function getCandidates (state) {
     return state.candidates;
 }
 
+
 export function getIsCandidate (state, getters, rootState, rootGetters) {
     let accountname = rootGetters["ual/getAccountName"];
     if(state.candidates && state.candidates.length && accountname){

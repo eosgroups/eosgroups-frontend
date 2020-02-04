@@ -4,6 +4,10 @@
     <q-item clickable >
       <q-item-section avatar>
         <q-icon name="mdi-alarm-multiple" color="primary" size="xl"/>
+        <q-tooltip content-class="bg-secondary" :delay="500" anchor="center right" self="center left" :offset="[10, 10]">
+          <div>Total Election Count: {{getElectionsState.election_count}}</div>
+          <div v-if="computedNewElectionStats">New Election {{secondsToDhms(computedNewElectionStats.time_left/1000)|| `NOW`}}</div>
+        </q-tooltip>
       </q-item-section>
       <q-item-section>
         <q-item-label class="text-weight-light text-h5 text-grey-7">New Election</q-item-label>
@@ -21,10 +25,7 @@
         <q-btn label="new" color="primary" @click="newElection" :loading="is_transacting" :disabled="!enable_new_election_btn" />
       </q-item-section>
     </q-item>
-    <q-tooltip content-class="bg-secondary">
-      <div>Total Election Count: {{getElectionsState.election_count}}</div>
-      <div v-if="computedNewElectionStats">New Election {{secondsToDhms(computedNewElectionStats.time_left/1000)|| 'NOW'}}</div>
-    </q-tooltip>
+
     <!-- {{computedNewElectionStats}} -->
   </div>
 </template>

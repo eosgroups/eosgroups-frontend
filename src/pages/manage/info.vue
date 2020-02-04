@@ -91,6 +91,26 @@
         </q-card>
       </div>
 
+      <div v-if="getElectionsState" class="col-xs-12 col-sm-6 col-lg-4">
+        <q-card class="primary-hover-list">
+          <q-item clickable>
+            <q-item-section avatar>
+              <q-icon name="mdi-account-card-details" color="primary" size="xl"/>
+              <q-tooltip content-class="bg-secondary" :delay="500"  anchor="center right" self="center left" :offset="[10, 10]">
+                <div>Active Candidates: {{getElectionsState.active_candidate_count}}</div>
+                <div>Inactive Candidates: {{getElectionsState.inactive_candidate_count}}</div>
+              </q-tooltip>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label class="text-weight-light text-h5 text-grey-7">Candidates</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+              <q-item-label class=" text-h5 text-grey-7">{{getElectionsState.active_candidate_count}}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-card>
+      </div>
+
       <div v-if="getCoreConfig && getCoreConfig.conf.member_registration" class="col-xs-12 col-sm-6 col-lg-4">
         <q-card class="primary-hover-list">
           <q-item clickable >
@@ -176,6 +196,7 @@ export default {
       getNumberCustodians: "group/getNumberCustodians",
       getSelectedBlockExplorer: "user/getSelectedBlockExplorer",
       getElectionsContract: "elections/getElectionsContract",
+      getElectionsState: "elections/getElectionsState"
     })
   },
   methods: {
