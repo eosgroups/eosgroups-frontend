@@ -16,6 +16,8 @@ export async function resetStore ({  commit }, payload) {
   commit('setChildAccounts', false);
   commit('elections/setElectionsContract', false, {root: true});
   commit('elections/setCandidates', false, {root: true});
+  commit('elections/setElectionsState', false, {root: true});
+  commit('elections/setElectionsConfig', false, {root: true});
 }
 
 export async function loadGroupRoutine ({ dispatch, commit, rootGetters }, payload) {
