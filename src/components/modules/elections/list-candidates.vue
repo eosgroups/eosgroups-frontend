@@ -20,6 +20,12 @@
           />
         </transition-group>
       </template>
+      <template v-slot:after>
+        <div>
+          <span>#{{candidates.length}}</span>
+          <q-tooltip :delay="250" content-class="bg-primary">{{candidates.length}} Active Candidates</q-tooltip>
+        </div>
+      </template>
     </q-input>
     <transition-group appear enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
       <candidate v-for="cand in candidates" :candidate="cand" :key="cand.cand" />
@@ -56,7 +62,7 @@ export default {
 
     candidates() {
       if (!this.getCandidates) return;
-      let res = this.getCandidates;
+      let res = this.getCandidates.filter(c=> c.is_active);
       if(this.searchfilter.length){
         res = res.filter(c => c.cand.includes(this.searchfilter) );
       }

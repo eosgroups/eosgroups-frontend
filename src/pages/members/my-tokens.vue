@@ -39,7 +39,7 @@
         </div>
       </q-card>
       <q-card  v-if="!myTokens.length">
-        <q-card-section class="text-weight-light">You don't own token in this group</q-card-section>
+        <q-card-section class="text-weight-light">You don't own tokens in this group</q-card-section>
       </q-card>
       <transition-group
         appear

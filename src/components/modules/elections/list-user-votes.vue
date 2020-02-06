@@ -32,14 +32,14 @@
 
         <div class="row justify-between items-center q-mt-sm">
           <div class="rounded-borders bg-secondary text-white q-px-sm">{{`${getNewVotes.length}/${getElectionsConfig.max_votes}`}}</div>
-          <q-btn label="vote" icon="mdi-vote" color="primary" :loading="getIsTransacting" @click="castNewVotes"/>
+          <q-btn label="vote" icon="mdi-vote" color="primary" :loading="getIsTransacting" @click="castNewVotes" :disabled="!didVotesChange"/>
         </div>
       </q-card-section>
     </q-card>
 
   <transition tag="div" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <div v-if="show_fixed_votes" class="my-votes-fixed rounded-borders-bottom row items-center bg-primary q-pl-xs q-pr-md q-py-sm">
-      <q-btn label="vote" icon="mdi-vote" class="q-mr-lg" color="secondary" :loading="getIsTransacting" @click="castNewVotes"/>
+      <q-btn label="vote" icon="mdi-vote" class="q-mr-lg" color="secondary" :loading="getIsTransacting" @click="castNewVotes" :disabled="!didVotesChange"/>
       
         <transition-group
           appear
@@ -48,7 +48,7 @@
           class="row"
         >
           <div v-for="vote in getNewVotes" :key="`f${vote}`">
-            <profile-pic :account="vote" tooltip :size="30" style="margin-left:-10px" class="shadow-2"/>
+            <profile-pic :account="vote" tooltip :size="30" style="margin-left:-13px" class="shadow-2"/>
           </div>
           <div v-if="getNewVotes && getNewVotes.length ==0"  class="text-caption q-pr-sm" key="no_votes">No votes</div>
         </transition-group>
@@ -69,7 +69,7 @@ export default {
   },
   data() {
     return {
-      show_fixed_votes: true
+      show_fixed_votes: false
     };
   },
   computed: {
