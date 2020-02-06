@@ -1,46 +1,74 @@
-<template lang="pug">
-  div.overflow-hidden.relative-position.q-pl-sm
-    h6.no-margin My Votes
-    .row(v-if="getVoting" style="min-height:110px;")
-      .col
-        transition-group.row(appear enter-active-class="animated zoomIn" leave-active-class="animated zoomOut")
-          q-card.col-auto.q-ma-sm.q-pa-sm(selectable v-for="(candidate,index) of getVoting" :key="candidate.cand" :class="{pending:pendingVote(candidate.cand)}")
-            .absolute-top-right(style="right:-5px; top:-5px;")
-              q-btn(size="xs" color="red-4" round @click="candidate.vote = false")
-                q-icon(name="close" size="xs")
-            .row.justify-center
-              q-avatar(size="xl")
-                img(:src="'https://i.pravatar.cc/100/?u=' + candidate.cand")
-            p.q-pt-sm.no-margin {{candidate.cand}}
-      .col-auto.q-mr-sm.pulse
-        .row.justify-center
-          h6.no-margin.q-pb-sm(v-if="getElectionsConfig") {{getVoting.length}}/{{getElectionsConfig.max_votes}}
-        div
-          q-btn(color="info" size="md" label="update votes" :disable="!votesPending" icon="mdi-vote" stack @click="issueVotes()")
-          q-tooltip(v-if="!votesPending")
-            h6.no-margin add or remove votes first
-          .row
-            q-btn.full-width(color="red" flat size="sm" label="reset" :disable="!votesPending" icon="refresh"  @click="resetVotes()")
+<template>
+  <div>
+    <q-card class="q-mb-md" v-intersection="onIntersection">
+      <q-card-section>
+        <div v-if="getNewVotes && getNewVotes.length ==0"  class="text-caption" key="no_votes">No votes</div>
+        <transition-group
+          appear
+          enter-active-class="animated zoomIn"
+          leave-active-class="animated zoomOut"
+          class="row q-gutter-sm"
+          tag="div"
+        >
+          <q-card
+            v-for="vote in getNewVotes"
+            :key="vote"
+            :class="$q.dark.isActive ? `bg-secondary` : ``"
+          >
+            <q-item>
+              <q-item-section side>
+                <profile-pic :size="30" :account="vote" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ vote }}</q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-icon name="close" color="negative" class="cursor-pointer"/>
+              </q-item-section>
+            </q-item>
+          </q-card>
+          
+        </transition-group>
 
+        <div class="row justify-end q-mt-sm">
+          <q-btn label="vote" icon="mdi-vote" color="primary" :loading="getIsTransacting" @click="castNewVotes"/>
+        </div>
+      </q-card-section>
+    </q-card>
+
+  <transition tag="div" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+    <div v-if="show_fixed_votes" class="my-votes-fixed rounded-borders-bottom row items-center bg-primary q-pl-xs q-pr-md q-py-sm">
+      <q-btn label="vote" icon="mdi-vote" class="q-mr-lg" color="secondary" :loading="getIsTransacting" @click="castNewVotes"/>
+      
+        <transition-group
+          appear
+          enter-active-class="animated zoomIn"
+          leave-active-class="animated zoomOut"
+          class="row"
+        >
+          <div v-for="vote in getNewVotes" :key="`f${vote}`">
+            <profile-pic :account="vote" tooltip :size="30" style="margin-left:-10px" class="shadow-2"/>
+          </div>
+          <div v-if="getNewVotes && getNewVotes.length ==0"  class="text-caption q-pr-sm" key="no_votes">No votes</div>
+        </transition-group>
+    </div>
+  </transition>
+
+  </div>
 </template>
-
-<style lang="scss">
-  .pending{
-    box-shadow: 0px 0px 10px 3px $info;
-  }
-</style>
 
 <script>
 import { mapGetters } from "vuex";
+import profilePic from "components/profile-pic";
 
 export default {
   name: "listUserVotes",
   components: {
-
+    profilePic
   },
   data() {
     return {
-
+      show_fixed_votes: true
     };
   },
   computed: {
@@ -51,78 +79,89 @@ export default {
       getElectionsState: "elections/getElectionsState",
       getUserVotes: "elections/getUserVotes",
       getCandidates: "elections/getCandidates",
+      getIsTransacting: "ual/getIsTransacting",
     }),
-    getVoting(){
-      if (!this.getCandidates) return []
-      return this.getCandidates.filter(el => el.vote)
+    getNewVotes() {
+      if (this.getCandidates) {
+        return this.getCandidates.filter(c => c.vote).map(nv => nv.cand);
+      }
     },
-    votesPending(){
-      if(!this.getUserVotes) return false
-      if (this.pendingVotes.length > 0) return true
-      if (this.getVoting.length != this.getUserVotes.votes.length) return true
-      return false
-    },
-    pendingVotes(){
-      if(!this.getUserVotes) return []
-      let currentVotes = this.getVoting.map(el => el.cand)
-      let chainVotes = this.getUserVotes.votes
-      let difference = currentVotes.filter(x => !chainVotes.includes(x))
-      if (difference) return difference
-      else return []
+    didVotesChange() {
+      if (this.getNewVotes && this.getUserVotes) {
+        let newVotes = this.getNewVotes;
+        let oldVotes = this.getUserVotes.votes;
+        if (newVotes.length != oldVotes.length) {
+          return true;
+        } else {
+          let difference = this.getNewVotes.filter(x => !oldVotes.includes(x));
+          return !!difference.length;
+        }
+      }
     }
   },
   methods: {
-    resetVotes(){
-      this.getCandidates.map(cand => {
-        if (this.getUserVotes.votes.some(el => el === cand.cand)) cand.vote = true
-        else cand.vote = false
-        return cand
-      })
+    async fetchUserVotes() {
+      if (
+        !this.getUserVotes &&
+        this.getAccountName &&
+        this.getElectionsContract
+      ) {
+        await this.$store.dispatch("elections/fetchUserVotes", {
+          voter: this.getAccountName
+        });
+      }
     },
-    pendingVote(name){
-      return this.pendingVotes.some(el => el === name)
-    },
-    voteList(){
-      return this.getVoting.map(el => el.cand).sort()
-    },
-    async issueVotes(){
+    async castNewVotes(){
       let action = {
         account: this.getElectionsContract,
         name: "vote",
         data: {
           voter: this.getAccountName,
-          new_votes:this.voteList()
+          new_votes:this.getNewVotes
         }
       };
-      let res = await this.$store.dispatch("ual/transact", { actions: [action] });
-      this.$store.dispatch("elections/fetchUserVotes",{voter:this.getAccountName});
-    },
-    async fetchUserVotes(){
-      if(!this.getUserVotes && this.getAccountName && this.getElectionsContract){
-        await this.$store.dispatch("elections/fetchUserVotes",{voter:this.getAccountName});
+      let res = await this.$store.dispatch("ual/transact", { actions: [action], disable_signing_overlay: true });
+      if(res && res.transactionId && res.status == "executed"){
+        setTimeout(()=>{
+          this.$store.dispatch("elections/fetchUserVotes",{voter:this.getAccountName});
+        },1000);
       }
-      
+    },
+    onIntersection(el) {
+      console.log(el);
+      if (!el.isIntersecting) {
+        this.show_fixed_votes = true;
+      } else {
+        this.show_fixed_votes = false;
+      }
     }
   },
-  mounted(){
 
-  },
   watch: {
     getAccountName: {
       immediate: true,
       handler(newVal, oldVal) {
         if (newVal) {
-          if(newVal != oldVal){
+          if (newVal != oldVal) {
             this.fetchUserVotes();
           }
-        }
-        else{
+        } else {
           this.$store.commit("elections/setUserVotes", false);
         }
       }
-    },
-
+    }
   }
-
 };
 </script>
+<style>
+.my-votes-fixed {
+  /* position: fixed;
+  z-index: 99;
+  width: 100%;
+  top:60px;
+   */
+  z-index: 99;
+  position: fixed;
+  top: 60px;
+}
+</style>

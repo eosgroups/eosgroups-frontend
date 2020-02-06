@@ -1,6 +1,10 @@
 <template>
           <q-avatar :size="`${size}px`" round :class="$q.dark.isActive ? 'bg-secondary' :'bg-grey-3'">
-            <q-img v-if="account" class="fit" src="~assets/test_avatar.jpg" spinner-color="primary" :spinner-size="`${size*0.8}px`" />
+            <q-img v-if="account" :class="{'cursor-pointer': tooltip}"  class="fit" :src="`https://i.pravatar.cc/100/?u=${account}`" spinner-color="primary" :spinner-size="`${size*0.8}px`">
+              <q-tooltip v-if="tooltip" :delay="250" content-class="bg-secondary">
+                {{account}}
+              </q-tooltip>
+            </q-img>
             <q-icon v-else name="person" color="primary" :size="`${size*0.8}px`"/>
             <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
               <q-icon
@@ -35,7 +39,7 @@ export default {
     },
     iconColor:{
       type: String,
-      default: 'blue'
+      default: 'primary'
     },
     iconBackground:{
       type: String,
@@ -44,6 +48,10 @@ export default {
     account:{
       type: String,
       default: ""
+    },
+    tooltip:{
+      type: Boolean,
+      default: false
     }
   },
   data () {

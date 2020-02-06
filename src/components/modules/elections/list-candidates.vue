@@ -1,192 +1,100 @@
-<template lang="pug">
-  div.q-ma-sm
-    .row
-      .col(v-if="candidates")
-        h6.no-margin Member Candidates
-        .row.justify-between
-          .col-auto
-            p.no-margin Sort By:
-            .row
-              .col-auto
-                q-tabs(:switch-indicator="false" shrink active-bg-color="primary" active-color="white" v-model="sortBy" align="left" indicator-color="transparent")
-                  q-tab(label="Votes" name="total_votes")
-                  //- q-tab(label="Registered" name="registeredMS")
-                  q-tab(label="Reputation" name="rep")
-              .col 
-                q-btn.no-border-radius( style="height:100%" flat :icon="toggleOrderIcon" @click="toggleOrder()")
-          .col-auto.gt-xs
-            p.no-margin View Mode:
-            q-tabs( style="width:110px;" active-bg-color="primary" active-color="white" v-model="viewMode" align="right" indicator-color="transparent")
-              q-tab(icon="apps" name="grid" style="width:20px;")
-              q-tab(icon="view_list" name="list" style="width:20px;") 
-        div(style="flex-grow:1; height:55vh;")
-          q-scroll-area(style="height:100%; flex-grow:1;")
-            .row
-              candidate(
-                v-for="(candidate,index) of candidates" 
-                :key="candidate.cand" 
-                @click="highlightCandidate(candidate.cand)" 
-                :candidate="candidate"
-                :clickable="selectableMember(candidate.cand)" 
-                :viewMode="viewMode"
-                :voteMax="voteMax"
-                :class="{'col-12':viewMode === 'list','col-xs-12 col-sm-6':viewMode === 'grid'}")
-
-        
-      .col.gt-sm
-        div(style="flex-grow:1; height:65vh;")
-          q-scroll-area(style="height:100%; flex-grow:1;")
-            candidateProfile(:profile="highlightedProfile" @close="showInfoModal = false")
-
-    q-dialog(v-model="showInfoModal")
-      candidateProfile(:profile="highlightedProfile" @close="showInfoModal = false" closeBtn)
-    //- q-page-sticky(:offset="[20,20]" )
-    //-   q-btn(icon="mdi-vote" label="confirm Votes" color="green" size="lg")
-    //- .row.justify-center
-    //-   q-btn(size="xl" @click="issueVotes()") Update Votes
-    //- .bg-blue candidates
-    //-   div {{getCandidates}}
-    
+<template>
+  <div>
+    <q-input placeholder="Find Candidate" outlined v-model.trim="searchfilter">
+      <template v-slot:prepend>
+        <q-icon name="search" class="cursor-pointer" />
+      </template>
+      <template v-slot:append>
+        <transition-group
+          appear
+          enter-active-class="animated fadeInRight"
+          leave-active-class="animated fadeOutRight"
+          tag="div"
+        >
+          <q-icon
+            v-if="searchfilter.length"
+            name="close"
+            key="has_filter"
+            @click="searchfilter = ''"
+            class="cursor-pointer"
+          />
+        </transition-group>
+      </template>
+    </q-input>
+    <transition-group appear enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+      <candidate v-for="cand in candidates" :candidate="cand" :key="cand.cand" />
+    </transition-group>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import profilePic from "components/profile-pic"
-import candidate from "components/modules/elections/candidate"
-import candidateProfile from "components/modules/elections/candidate-profile"
+import profilePic from "components/profile-pic";
+import candidate from "components/modules/elections/candidate";
+import candidateProfile from "components/modules/elections/candidate-profile";
 export default {
   name: "listCandidates",
-  components: { profilePic, candidate, candidateProfile },
+  components: {
+    profilePic,
+    candidate,
+    candidateProfile
+  },
   data() {
     return {
-      viewMode:'list',
-      sortBy:'rep',
-      pendingUserVotes:null,
-      highlightedCand:null,
-      initialVotes:null,
-      listOrder:false,
-      showInfoModal:false
+      searchfilter: ""
     };
   },
   computed: {
-    toggleOrderIcon(){
-      if (this.listOrder) return 'keyboard_arrow_up'
-      else return 'keyboard_arrow_down'
-    },
     ...mapGetters({
       getElectionsContract: "elections/getElectionsContract",
       getAccountName: "ual/getAccountName",
       getUserVotes: "elections/getUserVotes",
       getElectionsConfig: "elections/getElectionsConfig",
       getElectionsState: "elections/getElectionsState",
-      getCandidates: "elections/getCandidates",
+      getCandidates: "elections/getCandidates"
     }),
-    voteMax(){
-      if (!this.getCandidates || !this.getElectionsConfig) return false
-      console.log('votemax')
-      const totalVotes = this.getCandidates.filter(el => el.vote)
-      console.log('TOTAL VOTES',totalVotes)
-      if (this.getElectionsConfig.max_votes <= totalVotes.length) return true
-      else return false
-    },
-    candidates(){
-      if (!this.getCandidates) return 
-      return this.getCandidates.map(cand => { 
-        this.$set(cand,'vote',false)
+
+    candidates() {
+      if (!this.getCandidates) return;
+      let res = this.getCandidates;
+      if(this.searchfilter.length){
+        res = res.filter(c => c.cand.includes(this.searchfilter) );
+      }
+      return res.map(cand => {
+        this.$set(cand, "vote", false);
         if (this.getUserVotes) {
-          const voting = this.getUserVotes.votes.find(el => cand.cand === el)
-          if (voting) this.$set(cand,'vote',true)
+          const voting = this.getUserVotes.votes.find(uv => cand.cand === uv);
+          if (voting) {
+            cand.vote = true;
+          }
         }
-        this.$set(cand,'registeredPrint',new Date(cand.registered).toDateString())
-        this.$set(cand,'registeredMS',Date.parse(cand.registered))
-        if (cand.is_active === 1) this.$set(cand,'active',true)
-        else this.$set(cand,'active',false)
-        this.$set(cand,'rep',Math.floor(Math.random() * 100) + 1)
-        this.$set(cand,'repColor',(()=>{
-          if (cand.rep > 80) return 'green-4'
-          if (cand.rep > 60) return 'light-green'
-          if (cand.rep > 40) return 'amber-7'
-          if (cand.rep > 20) return 'yellow-7'
-          return 'red'
-        })())
-        return cand
-      })
-      .filter(cand => {
-        return true
-        // if (!this.getElectionsConfig) return true
-        // if(this.getElectionsConfig.allow_self_vote === 0) {
-        //   if (cand.cand === this.getAccountName) return false
-        //   else return true
-        // }
-        // else return true
-      }).sort((a, b) => {   
-        if (this.listOrder) return (a[this.sortBy] - b[this.sortBy])
-        else return (b[this.sortBy] - a[this.sortBy])   
-      })
-    },
-    highlightedProfile(){
-      if (!this.candidates) return {cand:"hello"}
-      return this.candidates.find(el => el.cand === this.highlightedCand)
+        return cand;
+      });
     }
   },
   methods: {
-    displayCustodianInfo(custodian){
-
-    },
-    toggleOrder(){
-      if (this.listOrder) this.listOrder = false
-      else this.listOrder = true
-    },
-    reputationColor(val) {
-
-    },
-    selectableMember(cand){
-      if (cand === this.highlightedCand) return false
-      else return true
-    },
-    highlightCandidate(cand){
-      this.highlightedCand = cand
-    },
-    async fetchcandidates(electioncontract){
-      if(!this.getCandidates){
-        this.$store.dispatch("elections/fetchCandidates", electioncontract);
+    async fetchcandidates() {
+      if (!this.getCandidates) {
+        this.$store.dispatch(
+          "elections/fetchCandidates",
+          this.getElectionsContract
+        );
       }
     }
   },
   watch: {
-    showInfoModal(val){
-      if (!val) this.highlightedCand = null
-    },
-    highlightedCand:{
-      immediate:true,
-      handler(newVal, oldVal) {
-        if (this.$q.screen.gt.sm) {
-          
-        }
-        else {
-          if (!newVal) return this.showInfoModal = false
-          else return this.showInfoModal = true
-        }
-
-      }
-    },
     getElectionsContract: {
       immediate: true,
       handler(newVal, oldVal) {
         if (newVal) {
-          if(newVal != oldVal){
-            this.fetchcandidates(this.getElectionsContract);
+          if (newVal != oldVal) {
+            this.fetchcandidates();
           }
         }
       }
     }
   }
-
 };
 </script>
 
-<style lang="sass">
-
-
-</style>
+<style lang="sass"></style>

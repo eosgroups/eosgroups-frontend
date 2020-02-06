@@ -1,84 +1,111 @@
-<template lang="pug">
-  div(:class="{disable:disable}")
-    q-item(:clickable="clickable && !disable"
-    :class="{selected:!clickable,disable:disable}" :v-ripple="clickable && !disable" @click="$emit('click')")
-      q-item-section(avatar)
-        q-avatar(size="xl")
-          img(:src="'https://i.pravatar.cc/100/?u=' + candidate.cand")
-      q-tooltip(v-if="disable")
-        h6.no-margin {{tooltipText}}
-      q-item-section()
-        .row.items-center
-          .col-auto.on-left(style="min-width:150px;")
-            q-item-label()
-              h6.no-margin {{candidate.cand}}
-          .col-auto
-            .row.justify-center.full-width.relative-position
-              .col
-                h5.no-margin.text-center {{candidate.rep}}
-                  q-circular-progress.q-ma-xs(:value="candidate.rep" size="35px" :thickness=".5" :color="candidate.repColor" track-color="grey" center-color="white")
-            .row.justify-center.full-width
-              .small Reputation
-      q-item-section(side)
-        .row.items-center
-          q-icon(name="mdi-vote" size="40px")
-          h5.no-margin {{candidate.total_votes}}
-        .row.justify-center.full-width
-          .small Votes
-      q-item-section(side)
-        q-checkbox(size="lg" v-model="candidate.vote" :disable="!candidate.active || disable || (voteMax && !candidate.vote)") 
-        q-tooltip(v-if="(voteMax && !candidate.vote)")
-          h6.no-margin You have reached the maximum number of votes for this group.
+<template>
+  <div class="q-mt-md">
+    <q-card class="candidate" :class="{'candidate-selected': candidate.vote}">
+      <q-expansion-item class="primary-hover-list">
+        <template v-slot:header>
+          <q-item-section avatar>
+            <profile-pic :size="60" :account="candidate.cand" :icon="getIsCustodian(candidate.cand) ? 'mdi-star' : ''"/>
+          </q-item-section>
+
+          <q-item-section>
+            <div class="row justify-between">
+              <q-item class="no-padding">
+                <q-item-section side></q-item-section>
+                <q-item-section>
+                  <q-item-label class="text-capitalize text-h6 text-weight-light">{{ candidate.cand }}</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-item>
+                <q-item-section side>
+                  <q-icon name="mdi-vote" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>Votes</q-item-label>
+                  <q-item-label caption>{{ candidate.total_votes }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </div>
+          </q-item-section>
+
+          <q-item-section side>
+            <div class="row items-center">
+              <q-checkbox :class="{'invisible': !(getElectionsConfig.allow_self_vote || getAccountName != candidate.cand)}" :value="candidate.vote" @input="updateVote" />
+            </div>
+          </q-item-section>
+        </template>
+          <q-separator />
+          <q-card-section>
+            {{candidate}}
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
+            eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
+            dolorum officiis modi facere maiores architecto suscipit iste
+            eveniet doloribus ullam aliquid.
+          </q-card-section>
+          <q-separator />
+          <q-card-section class="row">
+            {{candidate.registered}}
+          </q-card-section>
+
+      <!-- {{getElectionsConfig}} -->
+      </q-expansion-item>
+
+    </q-card>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import profilePic from "components/profile-pic"
+import profilePic from "components/profile-pic";
+import {notifyError, notifySuccess} from '../../../imports/notifications.js';
 export default {
   name: "listCandidates",
   components: {
     profilePic
   },
-  props:[
-    'candidate','viewMode','clickable','voteMax'
-  ],
+  props: {
+    candidate: {
+      type: Object,
+      default: () => {
+        return {};
+      }
+    }
+  },
   data() {
-    return {
-      tooltipText:null
-    };
+    return {};
   },
   computed: {
     ...mapGetters({
-      getElectionsState: "elections/getElectionsState",
       getAccountName: "ual/getAccountName",
-      getElectionsConfig: "elections/getElectionsConfig"
-    }),
-    disable(){
-      if (!this.getElectionsConfig || !this.candidate) return false
-      if(this.getElectionsConfig.allow_self_vote === 0) {
-        if (this.candidate.cand === this.getAccountName) {
-          this.tooltipText = "You can't vote for yourself"
-          return true
-        }
-        else return false
-      }
-      else return false
-    }
+      getElectionsState: "elections/getElectionsState",
+      getElectionsConfig: "elections/getElectionsConfig",
+      getCandidates: "elections/getCandidates",
+      getIsCustodian: "group/getIsCustodian"
+    })
   },
   methods: {
-
+    updateVote(e){
+      console.log(e)
+      if(e && this.getCandidates.filter(c => c.vote).length == this.getElectionsConfig.max_votes){
+        notifyError({message:'Maximum number of votes is '+this.getElectionsConfig.max_votes});
+        return;
+      }
+      else{
+        this.candidate.vote = e;
+      }
+      
+      // console.log(e)
+    }
   },
-  watch: {
-
-  }
-
+  watch: {}
 };
 </script>
 
-<style lang="scss" scoped>
-.text-overline {font-size: .95rem}
-.selected { background-color: $light-green-2;}
-.selected.q-item-label { color: white !important;}
-.disable { background-color:$grey-5;}
+<style>
+.candidate-selected{
+  border: 2px solid var(--q-color-primary) !important;
+}
+.candidate{
+  border: 2px solid transparent;
+  transition : border 500ms ease-out;
+}
 </style>

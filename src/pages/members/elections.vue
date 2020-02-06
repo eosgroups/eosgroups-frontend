@@ -14,21 +14,20 @@
 
    </q-tabs>
 
-   <q-tab-panels v-model="selected_tab" animated class="fit bg-transparent q-mt-md" transition-prev="fade" transition-next="fade">
-     <q-tab-panel name="vote" class="fit overflow-hidden no-padding" >
-      <list-user-votes />
+
+    <div v-if="selected_tab == 'vote'" class="q-pt-md">
+      <list-user-votes class="z-max"/>
       <list-candidates />
-     </q-tab-panel>
+    </div>
 
+    <div v-if="selected_tab == 'register candidacy'" class="q-pt-md">
+       <register-candidate  @navigate="selected_tab = $event"/>
+    </div>
 
-     <q-tab-panel name="register candidacy" class="fit overflow-hidden no-padding">
-       <register-candidate class="q-ma-xs" @navigate="selected_tab = $event"/>
-     </q-tab-panel>
+    <div v-if="selected_tab == 'manage candidacy'" class="q-pt-md">
+      <manage-candidacy @navigate="selected_tab = $event"/>
+    </div>
 
-     <q-tab-panel name="manage candidacy" class="fit overflow-hidden no-padding">
-       <manage-candidacy class="q-ma-xs" @navigate="selected_tab = $event"/>
-     </q-tab-panel>
-   </q-tab-panels>
 
    
   <!-- <pre>{{getElectionsConfig}}</pre>

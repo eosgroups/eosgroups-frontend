@@ -101,15 +101,15 @@ module.exports = function (ctx) {
         'QMarkupTable',
         'QFab',
         'QFabAction',
-        'QPageSticky'
+        'QPageSticky',
+        'QInfiniteScroll'
       ],
 
       directives: [
         'Ripple',
         'ClosePopup',
-        'TouchHold',
-        'TouchSwipe',
-        'ScrollFire'
+        'ScrollFire',
+        'Intersection'
       ],
 
       // Quasar plugins
