@@ -30,7 +30,8 @@
           
         </transition-group>
 
-        <div class="row justify-end q-mt-sm">
+        <div class="row justify-between items-center q-mt-sm">
+          <div class="rounded-borders bg-secondary text-white q-px-sm">{{`${getNewVotes.length}/${getElectionsConfig.max_votes}`}}</div>
           <q-btn label="vote" icon="mdi-vote" color="primary" :loading="getIsTransacting" @click="castNewVotes"/>
         </div>
       </q-card-section>
