@@ -22,6 +22,9 @@ export function removeCandidate (state, payload) {
 }
 export function addCandidate (state, payload) {
     let cand_template = { cand: payload, total_votes: 0, is_active: 1, registered: "Just now" };
+    if(state.candidates === false){
+        state.candidates = [];
+    }
     state.candidates.push(cand_template);
 
 }

@@ -25,11 +25,19 @@
             </q-item-section>
           </q-item>
 
+          <q-item v-if="getElectionsConfig && Number(getElectionsConfig.max_pay.quantity)">
+            <q-item-section>
+              <q-item-label>My pay</q-item-label>
+              <q-item-label caption >{{getIsCandidate.pay.quantity}}</q-item-label>
+            </q-item-section>
+          </q-item>
+
         </div>
 
         <div class="row justify-end q-mt-md q-pb-xs">
-          <q-btn :label="getIsCandidate.is_active ? 'pause campaign' : 'start campaign'" color="primary" @click="pauseCampaign" />
-          <q-btn label="unregister" color="primary" @click="unregCand" class="q-ml-md"/>
+          <!-- <q-btn label="update pay" color="primary" @click="" :loading="is_unregistering"/> -->
+          <q-btn :label="getIsCandidate.is_active ? 'pause campaign' : 'start campaign'" color="primary" @click="pauseCampaign" :loading="is_pausing" class="q-ml-md"/>
+          <q-btn label="unregister" color="primary" @click="unregCand" class="q-ml-md" :loading="is_unregistering"/>
         </div>
         
       </q-card-section>
@@ -48,6 +56,8 @@ export default {
   },
   data() {
     return {
+      is_pausing: false,
+      is_unregistering: false,
       quantity: ""
     };
   },
@@ -66,6 +76,7 @@ export default {
   },
   methods: {
     async unregCand(){
+      this.is_unregistering=true;
       let unreg = {
         account: this.getElectionsContract,
         name: "unregcand",
@@ -79,8 +90,10 @@ export default {
         this.$store.commit("elections/removeCandidate", this.getAccountName);
         this.$emit("navigate", "register candidacy");
       }
+      this.is_unregistering=false;
     },
     async pauseCampaign(){
+      this.is_pausing=true;
       let new_is_active = !!!this.getIsCandidate.is_active
       let pausecampaig = {
         account: this.getElectionsContract,
@@ -96,6 +109,7 @@ export default {
       if(res && res.transactionId && res.status == "executed"){
         this.$store.commit("elections/togglePauseCampaign", this.getAccountName);
       }
+      this.is_pausing=false;
     },
     async fetchUserStakes(){
       if(!this.getUserStakes && this.getAccountName){

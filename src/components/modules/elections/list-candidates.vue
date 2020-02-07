@@ -61,7 +61,7 @@ export default {
     }),
 
     candidates() {
-      if (!this.getCandidates) return;
+      if (!this.getCandidates) return [];
       let res = this.getCandidates.filter(c=> c.is_active);
       if(this.searchfilter.length){
         res = res.filter(c => c.cand.includes(this.searchfilter) );

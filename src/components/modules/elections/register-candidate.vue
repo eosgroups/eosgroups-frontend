@@ -9,7 +9,7 @@
           </template>
         </q-input>
         <div class="row justify-end q-mt-md q-pb-xs">
-          <q-btn label="register" color="primary" @click="regCand" />
+          <q-btn label="register" color="primary" @click="regCand" :loading="is_registering"/>
         </div>
         
       </q-card-section>
@@ -31,7 +31,8 @@ export default {
   },
   data() {
     return {
-      quantity: ""
+      quantity: "",
+      is_registering: false
     };
   },
   computed: {
@@ -46,6 +47,7 @@ export default {
   },
   methods: {
     async regCand(){
+      this.is_registering =true;
       let dummy = 0;
       dummy = dummy.toFixed(this.getcandidateStakeConfig.precision)+ " "+this.getcandidateStakeConfig.symbol;
 
@@ -90,6 +92,7 @@ export default {
       else{
         return false;
       }
+      this.is_registering=false;
 
     },
     async fetchUserStakes(){

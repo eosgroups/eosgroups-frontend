@@ -31,7 +31,7 @@
         </transition-group>
 
         <div class="row justify-between items-center q-mt-sm">
-          <div class="rounded-borders bg-secondary text-white q-px-sm">{{`${getNewVotes.length}/${getElectionsConfig.max_votes}`}}</div>
+          <div v-if="getElectionsConfig" class="rounded-borders bg-secondary text-white q-px-sm">{{`${getNewVotes.length}/${getElectionsConfig.max_votes}`}}</div>
           <q-btn label="vote" icon="mdi-vote" color="primary" :loading="getIsTransacting" @click="castNewVotes" :disabled="!didVotesChange"/>
         </div>
       </q-card-section>
@@ -86,11 +86,14 @@ export default {
       if (this.getCandidates) {
         return this.getCandidates.filter(c => c.vote).map(nv => nv.cand);
       }
+      else{
+        return [];
+      }
     },
     didVotesChange() {
-      if (this.getNewVotes && this.getUserVotes) {
+      if (this.getNewVotes) {
         let newVotes = this.getNewVotes;
-        let oldVotes = this.getUserVotes.votes;
+        let oldVotes = this.getUserVotes ? this.getUserVotes.votes : [];
         if (newVotes.length != oldVotes.length) {
           return true;
         } else {
