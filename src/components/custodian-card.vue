@@ -4,7 +4,7 @@
       <!-- <pre>{{getImAliveStats}}</pre> -->
       <q-item>
         <q-item-section avatar>
-          <profile-pic :size="60"  account=""/> <!--  icon="mdi-star" iconColor="primary" -->
+          <profile-pic :size="60"  :account="custodian.account"/> <!--  icon="mdi-star" iconColor="primary" -->
         </q-item-section>
 
         <q-item-section>
@@ -19,7 +19,7 @@
 <div v-if="!minify">
       <q-tabs  v-model="active_tab" class="text-primary" dense align="left">
         <q-tab label="Info" name="info" />
-        <q-tab label="Profile" name="profile" />
+        <q-tab label="Profile" name="profile"  />
       </q-tabs>
       <q-separator />
 
@@ -147,6 +147,7 @@ export default {
       getCoreConfig: "group/getCoreConfig"
     }),
     getImAliveStats(){
+      let res = 0;
       if(this.getCoreConfig && this.getCoreConfig.conf.inactivate_cust_after_sec){
         let last_active = new Date(this.custodian.last_active+".000+00:00").getTime();
         let now = new Date().getTime(); 
@@ -155,9 +156,10 @@ export default {
 
         let inactive_for_ms = now - last_active;
         let perc = 100-(inactive_for_ms/imalive_period*100)
-         return perc >=0 ? perc : 0;
+         res = perc >=0 ? perc : 0;
 
       }
+      return res;
 
     }
   },

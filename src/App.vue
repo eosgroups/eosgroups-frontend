@@ -25,10 +25,10 @@ const appName = 'daclify';
 //     }]
 // }];
 const chains = [{
-    chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
+    chainId: '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840',
     rpcEndpoints: [{
         protocol: 'https',
-        host: 'jungle2.cryptolions.io',
+        host: 'jungle3.eossweden.org',
         port: 443,
     }]
 }];

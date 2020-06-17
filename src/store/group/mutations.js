@@ -18,6 +18,10 @@ export function setCustodians(state, payload){
     state.custodians = payload;
 }
 
+export function setAvatars(state, payload){
+    state.avatars = payload;
+}
+
 export function setCustodianLastActive(state, payload){
     let {custodian, block_time} = payload;
     let found_cust = state.custodians.find(c => c.account == custodian)

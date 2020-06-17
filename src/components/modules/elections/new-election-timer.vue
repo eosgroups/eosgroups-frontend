@@ -22,7 +22,7 @@
         </q-item-label>
       </q-item-section>
       <q-item-section side>
-        <q-btn label="new" color="primary" @click="newElection" :loading="is_transacting" :disabled="!enable_new_election_btn" />
+        <q-btn label="new" color="primary" @click="newElection" :class="enable_new_election_btn ? 'pulse' :''" :loading="is_transacting" :disabled="!enable_new_election_btn" />
       </q-item-section>
     </q-item>
 

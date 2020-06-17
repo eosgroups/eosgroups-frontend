@@ -12,7 +12,7 @@
         <q-item >
           <q-item-section>
             <q-item-label class="text-capitalize">No approvals</q-item-label>
-            <q-item-label caption>Require threshold x/x</q-item-label>
+            <q-item-label caption>Threshold not met</q-item-label>
           </q-item-section>
         </q-item>
       </div>
@@ -20,6 +20,7 @@
         class="custodian-card shadow-1"
         v-for="approver in approvals"
         :key="`a${approver}`"
+        :class="$q.dark.isActive ? `bg-secondary` : ``"
       >
         <q-item >
           <q-item-section avatar>

@@ -3,7 +3,7 @@ var VConsole = require("vconsole");
 var vConsole = new VConsole();
 
 
-const rpc = new JsonRpc("https://jungle.eosdac.io"); //api.main.alohaeos.com, eos.greymass.com, jungle2.cryptolions.io jungle.eosdac.io
+const rpc = new JsonRpc("https://jungle3.eossweden.org"); //api.main.alohaeos.com, eos.greymass.com, jungle2.cryptolions.io jungle.eosdac.io
 const api = new Api({
   rpc,
   textDecoder: new TextDecoder(),

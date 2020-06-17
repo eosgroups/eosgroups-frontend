@@ -72,7 +72,7 @@ export default {
     async getCurrentCodeHash() {
       this.is_loading = true;
       console.log(this.getActiveGroup)
-      let url = 'https://jungle2.cryptolions.io/v1/chain/get_raw_abi';
+      let url = 'https://jungle3.eossweden.org/v1/chain/get_raw_abi';
       //let res = await this.$eos.rpc.get_raw_code_and_abi(this.getActiveGroup);
       let res = await this.$axios({
         method: 'post',

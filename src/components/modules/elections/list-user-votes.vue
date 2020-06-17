@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-card class="q-mb-md" v-intersection="onIntersection">
-      <q-card-section>
-        <div v-if="getNewVotes && getNewVotes.length ==0"  class="text-caption" key="no_votes">No votes</div>
+    <q-card class="q-mb-md" v-intersection="onIntersection" >
+      <q-card-section class="column justify-between" style="min-height:150px">
+        <div v-if="getNewVotes && getNewVotes.length ==0"  class="text-caption" key="no_votes">You don't have active votes</div>
         <transition-group
           appear
           enter-active-class="animated zoomIn"
@@ -29,17 +29,18 @@
           </q-card>
           
         </transition-group>
+        
 
         <div class="row justify-between items-center q-mt-sm">
           <div v-if="getElectionsConfig" class="rounded-borders bg-secondary text-white q-px-sm">{{`${getNewVotes.length}/${getElectionsConfig.max_votes}`}}</div>
-          <q-btn label="vote" icon="mdi-vote" color="primary" :loading="getIsTransacting" @click="castNewVotes" :disabled="!didVotesChange"/>
+          <q-btn label="vote" icon="mdi-vote" color="primary" :class="didVotesChange ? 'pulse' :''" :loading="getIsTransacting" @click="castNewVotes" :disabled="!didVotesChange"/>
         </div>
       </q-card-section>
     </q-card>
 
   <transition tag="div" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
     <div v-if="show_fixed_votes" class="my-votes-fixed rounded-borders-bottom row items-center bg-primary q-pl-xs q-pr-md q-py-sm">
-      <q-btn label="vote" icon="mdi-vote" class="q-mr-lg" color="secondary" :loading="getIsTransacting" @click="castNewVotes" :disabled="!didVotesChange"/>
+      <q-btn label="vote" icon="mdi-vote" class="q-mr-lg" color="secondary" :class="didVotesChange ? 'pulse' :''" :loading="getIsTransacting" @click="castNewVotes" :disabled="!didVotesChange"/>
       
         <transition-group
           appear

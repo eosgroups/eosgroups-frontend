@@ -42,6 +42,18 @@ export function getIsCustodian(state) {
     };
 }
 
+export function getAvatar(state) {
+  return accountname => {
+      let avatar = state.avatars.find(c => accountname == c.account);
+      if(avatar && avatar.img_url){
+        return avatar.img_url;
+      }
+      else{
+        return false;
+      }
+  };
+}
+
 export function getProposals(state){
     return state.proposals;
 }

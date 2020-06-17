@@ -38,7 +38,7 @@ export async function loadGroupRoutine ({ dispatch, commit, rootGetters }, paylo
     setBrand('primary', c);
     commit('setActiveGroupConfig', groupconfig);
     commit('setActiveGroup', groupname);
-
+    dispatch('fetchAvatars', groupname);
     dispatch('fetchCoreConfig', groupname);
     dispatch('fetchAccount', groupname);
     dispatch('fetchCustodians', groupname);
@@ -274,6 +274,23 @@ export async function fetchTokensOwnedByScope ({ state, commit }, payload) {
     }
     else{
       console.log(`fetched tokens owned by ${scope} for group ${groupname} faild`);
+    }
+}
+
+export async function fetchAvatars ({ state, commit }, groupname) {
+  let res = await this._vm.$eos.rpc.get_table_rows({
+      json: true,
+      code: groupname,
+      scope: groupname,
+      table: "avatars",
+      limit: -1
+    });
+    if(res && res.rows){
+      console.log(`fetched avatars for group ${groupname}`, res.rows);
+      commit('setAvatars', res.rows);
+    }
+    else{
+      console.log(`fetching avatars for group ${groupname} failed`);
     }
 }
 

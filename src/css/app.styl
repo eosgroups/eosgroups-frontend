@@ -1,3 +1,23 @@
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+	}
+
+	70% {
+		transform: scale(1);
+	}
+
+	100% {
+		transform: scale(0.95);
+	}
+}
+.pulse {
+  animation: pulse 2s infinite;
+	-webkit-animation: pulse 2s infinite;
+	-moz-animation: pulse 2s infinite;
+	-o-animation: pulse 2s infinite;
+  transform-origin: center center;
+}
 
 @keyframes bounce {
   from, 20%, 53%, 80%, to {
@@ -21,7 +41,7 @@
 }
 
 .bounce {
-  	animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
 	-webkit-animation: bounce 2s infinite;
 	-moz-animation: bounce 2s infinite;
 	-o-animation: bounce 2s infinite;

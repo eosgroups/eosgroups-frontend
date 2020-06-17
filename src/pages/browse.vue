@@ -167,9 +167,9 @@ export default {
     }
 
     console.log(this.location_hash);
-    if (!this.getGroups || !this.getGroups.length) {
-      this.$store.dispatch("app/fetchGroups");
-    }
+    
+    this.$store.dispatch("app/fetchGroups");
+    
   },
   watch: {
     location_hash: {

@@ -1,6 +1,6 @@
 <template>
-          <q-avatar :size="`${size}px`" round :class="$q.dark.isActive ? 'bg-secondary' :'bg-grey-3'">
-            <q-img v-if="account" :class="{'cursor-pointer': tooltip}"  class="fit" :src="`https://i.pravatar.cc/100/?u=${account}`" spinner-color="primary" :spinner-size="`${size*0.8}px`">
+          <q-avatar :size="`${size}px`" :class="$q.dark.isActive ? 'bg-secondary' :'bg-grey-3'" >
+            <q-img v-if="profilepic" :class="{'cursor-pointer': tooltip}"  class="fit" :src="profilepic" spinner-color="primary" :spinner-size="`${size*0.8}px`">
               <q-tooltip v-if="tooltip" :delay="250" content-class="bg-secondary">
                 {{account}}
               </q-tooltip>
@@ -26,12 +26,18 @@
 </template>
 
 <script>
+import { isValidUrl } from "../imports/validators.js";
+import { mapGetters } from "vuex";
 export default {
   name: 'profilePic',
   props:{
     size:{
       type: Number,
       default: 20
+    },
+    border:{
+      type: String,
+      default: 'primary'
     },
     icon:{
       type: String,
@@ -56,6 +62,21 @@ export default {
   },
   data () {
     return {}
+  },
+  computed: {
+    ...mapGetters({
+      getAvatar: "group/getAvatar"
+    }),
+    profilepic(){
+      if(this.account){
+        let p = this.getAvatar(this.account);
+        if(isValidUrl(p) ){
+          return p;
+        }
+      }
+      
+
+    }
   }
 }
 </script>
