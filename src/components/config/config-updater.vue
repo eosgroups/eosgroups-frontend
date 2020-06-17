@@ -126,6 +126,7 @@ export default {
           .join("\n")}`,
         title: "Update group configuration"
       };
+      console.log(payload)
       return payload;
     },
     getBucketAction() {
@@ -141,6 +142,9 @@ export default {
       new_conf.withdrawals = !!new_conf.withdrawals;
       new_conf.internal_transfers = !!new_conf.internal_transfers;
       new_conf.deposits = !!new_conf.deposits;
+      new_conf.userterms = !!new_conf.userterms;
+      new_conf.r1 = !!new_conf.r1;
+      new_conf.r2 = !!new_conf.r2;
 
       let action = {
         account: this.$store.state.group.activeGroup,

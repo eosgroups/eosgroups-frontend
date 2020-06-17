@@ -263,6 +263,7 @@ export default {
         }
       }
     },
+    //fix this -> groupaccount isn't set yet
     getAccountName:{
       immediate: true,
       handler(newV, oldV){

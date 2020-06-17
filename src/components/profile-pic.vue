@@ -1,6 +1,7 @@
 <template>
           <q-avatar :size="`${size}px`" :class="$q.dark.isActive ? 'bg-secondary' :'bg-grey-3'" >
-            <q-img v-if="profilepic" :class="{'cursor-pointer': tooltip}"  class="fit" :src="profilepic" spinner-color="primary" :spinner-size="`${size*0.8}px`">
+            
+            <q-img v-if="profilepic" :class="{'cursor-pointer': tooltip}"  class="fit" :src="profilepic" spinner-color="primary" :spinner-size="`${size*0.8}px`" >
               <q-tooltip v-if="tooltip" :delay="250" content-class="bg-secondary">
                 {{account}}
               </q-tooltip>
@@ -20,7 +21,7 @@
                 </q-tooltip>
               </q-icon>
             </transition>
-
+            
             <!-- <q-badge floating color="negative">inactive</q-badge> -->
           </q-avatar>
 </template>

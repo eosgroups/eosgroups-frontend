@@ -26,7 +26,7 @@
             </q-tooltip>
           </q-btn>
           
-          <profile-pic v-if="getAccountName" :size="28"  :icon="getIsCustodian(getAccountName)?'mdi-star':''" iconColor="primary"  account="" class="q-mr-xs"/>
+          <profile-pic v-if="getAccountName" :size="28"  :icon="getIsCustodian(getAccountName)?'mdi-star':''" iconColor="primary"  :account="getAccountName" class="q-mr-xs"/>
           <div class="text-center">{{getAccountName ? getAccountName : 'login'}}</div>
           
         </div>
