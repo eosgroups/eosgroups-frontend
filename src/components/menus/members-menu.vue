@@ -10,6 +10,15 @@
           </q-item-section>
         </q-item>
 
+        <q-item clickable :to="`/members/${getActiveGroup}/profile/${getAccountName}`">
+          <q-item-section avatar>
+            <q-icon name="mdi-view-dashboard" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Profile</q-item-label>
+          </q-item-section>
+        </q-item>
+
         <q-item clickable :to="`/members/${getActiveGroup}/register`">
           <q-item-section avatar>
             <q-icon name="mdi-account-plus" />
@@ -52,6 +61,7 @@ export default {
   computed: {
     ...mapGetters({
       getActiveGroup: "group/getActiveGroup",
+      getAccountName: "ual/getAccountName",
       getChildByModuleName: "group/getChildByModuleName",
     })
   },

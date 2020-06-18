@@ -45,7 +45,8 @@ const routes = [
       { path: 'dashboard', component: () => import('pages/members/dashboard.vue') },
       { path: 'elections', component: () => import('pages/members/elections.vue') },
       { path: 'register', component: () => import('pages/members/register.vue') },
-      { path: 'my-tokens', component: () => import('pages/members/my-tokens.vue') }
+      { path: 'my-tokens', component: () => import('pages/members/my-tokens.vue') },
+      { path: 'profile/:accountname', component: () => import('pages/members/profile.vue') }
 
     ]
   },

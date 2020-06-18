@@ -295,6 +295,28 @@ export async function fetchAvatars ({ state, commit }, groupname) {
     }
 }
 
+export async function fetchProfile ({ state, commit, rootState, rootGetters }, accountname) {
+  let p = state.profiles.find(p=> p.account == accountname);
+  if(p) return p;
+
+  let res = await this._vm.$eos.rpc.get_table_rows({
+      json: true,
+      code:   rootState.group.activeGroup,
+      scope:   rootState.group.activeGroup,
+      lower_bound: accountname,
+      upper_bound: accountname,
+      table: "profiles",
+      limit: 1
+    });
+    if(res && res.rows.length){
+      if(res.rows[0].account == accountname){
+        console.log(`fetched profile for ${accountname}`, res.rows[0]);
+        commit('updateOrAddProfile', res.rows[0]);
+        return res.rows[0];
+      }
+    }
+}
+
 
 export async function propose({ state, rootState, dispatch, commit }, payload) {
   // return_action: false

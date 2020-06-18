@@ -37,6 +37,14 @@ export async function isExistingAccountName(v) {
   }
 }
 
+export function isHttps(v) {
+  v= v.toLowerCase();
+  if (v.startsWith('https://')) {
+    return true;
+  } else {
+    return "Url must be https://";
+  }
+}
 
 export function isValidUrl(v) {
   if (v == "") return false;

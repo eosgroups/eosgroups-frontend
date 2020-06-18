@@ -1,7 +1,7 @@
 <template>
           <q-avatar :size="`${size}px`" :class="$q.dark.isActive ? 'bg-secondary' :'bg-grey-3'" >
             
-            <q-img v-if="profilepic" :class="{'cursor-pointer': tooltip}"  class="fit" :src="profilepic" spinner-color="primary" :spinner-size="`${size*0.8}px`" >
+            <q-img v-if="profilepic" :class="{'cursor-pointer': tooltip}"  class="fit" :src="profilepic" spinner-color="primary" :spinner-size="`${size*0.8}px`" @load="$emit('loaded')" @error="$emit('error')" >
               <q-tooltip v-if="tooltip" :delay="250" content-class="bg-secondary">
                 {{account}}
               </q-tooltip>
@@ -12,11 +12,12 @@
                 v-if="icon"
                 :name="icon"
                 :color="iconColor"
-                class="absolute-bottom-right round hover-rotate"
+                class="absolute-bottom-right round hover-rotate cursor-pointer"
                 :class="iconBackground"
                 :size="`${size*0.4}px`"
+                @click="$emit('iconClick')"
               >
-                <q-tooltip :delay="400" content-class="bg-primary">
+                <q-tooltip v-if="tooltip" :delay="400" content-class="bg-primary">
                   Custodian
                 </q-tooltip>
               </q-icon>
@@ -56,6 +57,10 @@ export default {
       type: String,
       default: ""
     },
+    url:{
+      type: String,
+      default: ""
+    },
     tooltip:{
       type: Boolean,
       default: false
@@ -69,6 +74,9 @@ export default {
       getAvatar: "group/getAvatar"
     }),
     profilepic(){
+      if(this.url){
+        return this.url;
+      }
       if(this.account){
         let p = this.getAvatar(this.account);
         if(isValidUrl(p) ){

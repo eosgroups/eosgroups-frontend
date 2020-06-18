@@ -22,6 +22,28 @@ export function setAvatars(state, payload){
     state.avatars = payload;
 }
 
+export function updateAvatar(state, payload){
+    //{account: this.getAccountName, img_url: this.new_avatar}
+    let account = state.avatars.find(a => a.account == payload.account);
+    if(account){
+        account.img_url = payload.img_url;
+    }
+    else{
+        state.avatars.push(payload);
+    }
+}
+
+export function updateOrAddProfile(state, payload){
+    //{account: this.getAccountName, profile: this.profile}
+    let account = state.profiles.find(a => a.account == payload.account);
+    if(account){
+        account.profile = payload.profile;
+    }
+    else{
+        state.profiles.push(payload);
+    }
+}
+
 export function setCustodianLastActive(state, payload){
     let {custodian, block_time} = payload;
     let found_cust = state.custodians.find(c => c.account == custodian)

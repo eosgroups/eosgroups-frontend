@@ -17,6 +17,7 @@ export default {
   coreConfig: false,
   newCoreConfig: false, //!! used for detecting config changes
   childAccounts: false,
-  avatars: []
+  avatars: [],
+  profiles: []
   
 }
