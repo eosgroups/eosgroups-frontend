@@ -15,10 +15,24 @@
      </q-card-section>
    </q-card>
 
+
+    <q-markdown
+      :no-abbreviation="false"
+    >
+> This is a Blockquote
+> with a `token` and a [link](https://quasar.dev)
+
+> Blockquotes can also be nested...
+>> ...by using additional greater-than signs right next to each other...
+> > > ...or with spaces between arrows.
+    </q-markdown>
+
+
   </q-page>
 </template>
 
 <script>
+
 import { mapGetters } from "vuex";
 
 import pageHeader from "components/page-header";

@@ -89,7 +89,9 @@
         <q-tab-panel name="profile" class="overflow-hidden no-padding">
           <q-scroll-area :visible="true" :thumb-style="thumbStyle" style="height: 200px; width:100%">
             <div v-if="!profile_is_loading" class="q-px-md q-pb-md q-pt-xs">
+              <q-markdown>
               {{profile_data}}
+              </q-markdown>
             </div>
             <div v-else class="column justify-center items-center" style="height:200px">
               <q-spinner color="primary" size="40px"/>
@@ -167,7 +169,16 @@ export default {
     async getProfile() {
       this.profile_is_loading =true;
       await new Promise(resolve=>{setTimeout(resolve,1000)})
-      this.profile_data = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`
+      this.profile_data = `
+This is HTML abbreviation example.
+It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+This is HTML abbreviation example.
+It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+This is HTML abbreviation example.
+It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+This is HTML abbreviation example.
+It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
+*[HTML]: Hyper Text Markup Language`
       this.profile_is_loading = false;
     }
   },

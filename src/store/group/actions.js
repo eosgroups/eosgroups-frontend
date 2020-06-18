@@ -14,6 +14,7 @@ export async function resetStore ({  commit }, payload) {
   commit('setCoreConfig', false);
   commit('setCustodians', []);
   commit('setChildAccounts', false);
+  commit('setAvatars', []);
   commit('elections/setElectionsContract', false, {root: true});
   commit('elections/setCandidates', false, {root: true});
   commit('elections/setElectionsState', false, {root: true});

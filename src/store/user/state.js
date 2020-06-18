@@ -8,8 +8,8 @@ export default {
     net: 10
   },
   selectedBlockExplorer: {
-    base: 'https://jungle.eosq.app/',
-    trx: 'tx/',
+    base: 'https://jungle3.bloks.io/',
+    trx: 'transaction/',
     account: 'account/'
   },
   minifyCustodians: false,
