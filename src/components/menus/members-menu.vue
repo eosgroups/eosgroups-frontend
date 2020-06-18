@@ -1,7 +1,7 @@
 <template>
       <q-list class="primary-hover-list" :class="$q.dark.isActive? `bg-dark`:`bg-grey-3`"  :separator="!$q.dark.isActive">
 
-        <q-item clickable :to="`/members/${getActiveGroup}/dashboard`">
+        <q-item v-if="getIsMember" clickable :to="`/members/${getActiveGroup}/dashboard`">
           <q-item-section avatar>
             <q-icon name="mdi-view-dashboard" />
           </q-item-section>
@@ -10,7 +10,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="`/members/${getActiveGroup}/profile/${getAccountName}`">
+        <q-item  v-if="getIsMember" clickable :to="`/members/${getActiveGroup}/profile/${getAccountName}`">
           <q-item-section avatar>
             <q-icon name="mdi-face-profile" />
           </q-item-section>
@@ -28,7 +28,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable :to="`/members/${getActiveGroup}/my-tokens`">
+        <q-item v-if="getIsMember" clickable :to="`/members/${getActiveGroup}/my-tokens`">
           <q-item-section avatar>
             <q-icon name="mdi-currency-usd" />
           </q-item-section>
@@ -63,6 +63,7 @@ export default {
       getActiveGroup: "group/getActiveGroup",
       getAccountName: "ual/getAccountName",
       getChildByModuleName: "group/getChildByModuleName",
+      getIsMember: "user/getIsMember",
     })
   },
 

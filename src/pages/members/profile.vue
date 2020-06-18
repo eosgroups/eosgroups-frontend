@@ -31,7 +31,44 @@
           <update-profile-pic v-if="edit_avatar" @updated="edit_avatar=false" />
         </transition>
       </q-card-section>
-      <profile-data :account="account" />
+    </q-card>
+    <q-card v-if="profile_data">
+      <q-card-section class="q-mt-md"  >
+      <q-tabs  v-model="active_tab" class="text-primary" dense align="left">
+        <q-tab v-if="account == getAccountName" label="(Edit)" name="textedit"  />
+        <q-tab label="Profile" name="profiletext"  />
+        <q-tab label="Links" name="profilelinks" />
+        <q-tab label="Image Gallery" name="profilephotos" />
+        <q-tab label="Files" name="profilefiles" />
+        
+      </q-tabs>
+      <q-separator />
+      <q-tab-panels v-model="active_tab" animated transition-prev="fade" transition-next="fade">
+        <q-tab-panel name="textedit" class="overflow-hidden">
+          <text-edit :account="account" :profile_data="profile_data" />
+        </q-tab-panel>
+        <q-tab-panel name="profiletext" class="overflow-hidden">
+          <profile-text :account="account" :profile_data="profile_data" />
+        </q-tab-panel>
+        <q-tab-panel name="profilelinks" class="overflow-hidden">
+          <profile-links :account="account" :profile_data="profile_data" />
+        </q-tab-panel>
+        <q-tab-panel name="profilefiles" class="overflow-hidden">
+          <profile-files :account="account" :profile_data="profile_data" />
+        </q-tab-panel>
+        <q-tab-panel name="profilephotos" class="overflow-hidden">
+          <profile-photos :account="account" :profile_data="profile_data" />
+        </q-tab-panel>
+      </q-tab-panels>
+      
+      <div class="row justify-between">
+        <div v-if="profile_data" class="text-caption">Last Updated {{profile_data.last_update}}</div>
+        <div v-if="profile_data" class="text-caption">
+            <q-btn label="update" color="primary" />
+        </div>
+      </div>
+      <!-- {{profile_data}} -->
+      </q-card-section>
     </q-card>
   </q-page>
 </template>
@@ -40,18 +77,28 @@
 import { mapGetters } from "vuex";
 import profilePic from "components/profile-pic";
 import updateProfilePic from "components/update-profile-pic";
-import profileData from "components/profile-data";
+import profileText from "components/profile_data/profile-text";
+import profileLinks from "components/profile_data/profile-links";
+import profileFiles from "components/profile_data/profile-files";
+import profilePhotos from "components/profile_data/profile-photos";
+import textEdit from "components/profile_data/text-edit";
 export default {
   name: "profile",
   components: {
     profilePic,
     updateProfilePic,
-    profileData
+    profileText,
+    profileLinks,
+    profileFiles,
+    profilePhotos,
+    textEdit
   },
   data() {
     return {
+      profile_data: null,
       account: null,
       edit_avatar: false,
+      active_tab:"profiletext"
 
     };
   },
@@ -70,9 +117,12 @@ export default {
   watch: {
     "$route.params.accountname": {
       immediate: true,
-      handler(newVal, oldVal) {
+      async handler(newVal, oldVal) {
         if (newVal && newVal != oldVal) {
           this.account = newVal;
+          this.profile_data = await this.$store.dispatch("group/fetchProfile", this.account);
+          //console.log(this.profile_data)
+
           
         } else {
           //this.$store.dispatch('user/loggedOutRoutine');

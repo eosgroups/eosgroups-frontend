@@ -1,0 +1,44 @@
+<template>
+  <div>
+    <div v-for="(f,i) in profile_data.profile.files" :key="i"></div>
+    <pre>{{profile_data.profile.files}}</pre>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+import fileLink from "components/file-link";
+export default {
+  // name: 'ComponentName',
+  name: "profileFiles",
+  components:{
+
+  },
+  props:{
+    account:{
+      type: String,
+      default:""
+    },
+    profile_data: {
+      type: Object,
+      default:()=>{return {} }
+    }
+  },
+  components: {
+    fileLink
+  },
+  data() {
+    return {
+    };
+  },
+  computed: {
+    ...mapGetters({
+      getAccountName: "ual/getAccountName",
+      getActiveGroup: "group/getActiveGroup",
+
+      // getActiveGroupConfig: "group/getActiveGroupConfig",
+      // getNumberCustodians: "group/getNumberCustodians"
+    })
+  }
+}
+</script>
