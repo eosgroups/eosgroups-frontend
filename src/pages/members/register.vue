@@ -6,8 +6,8 @@
        <div class="row justify-between items-center">
         <div v-if="!getIsMember">You are not a member of this group</div>
         <div v-else>You are a member</div>
-        <q-btn v-if="!getIsMember" label="register" color="primary" @click="regmember" />
-        <q-btn v-else label="unregister" color="primary" @click="unregmember" />
+        <q-btn v-if="!getIsMember" label="register" color="primary" @click="regmember" :loading="is_transacting" />
+        <q-btn v-else label="unregister" color="primary" @click="unregmember" :loading="is_transacting" />
        </div>
       <!-- <div>
       <q-checkbox v-model="agree_terms" label="I have read and I agree to the user terms." />
@@ -44,7 +44,8 @@ export default {
   },
   data() {
     return {
-      agree_terms: false
+      agree_terms: false,
+      is_transacting: false
     };
   },
   computed: {
@@ -65,11 +66,12 @@ export default {
           actor: this.getAccountName
         }
       };
-
-      let res = await this.$store.dispatch("ual/transact", { actions: [action] });
+      this.is_transacting = true;
+      let res = await this.$store.dispatch("ual/transact", { actions: [action], disable_signing_overlay: true });
       if(res && res.transactionId && res.status == "executed"){
         this.$store.commit('user/setIsMember', true);
       }
+      this.is_transacting = false;
 
     },
     async unregmember(){
@@ -80,11 +82,12 @@ export default {
           actor: this.getAccountName
         }
       };
-
-      let res = await this.$store.dispatch("ual/transact", { actions: [action] });
+      this.is_transacting = true;
+      let res = await this.$store.dispatch("ual/transact", { actions: [action], disable_signing_overlay: true  });
       if(res && res.transactionId && res.status == "executed"){
         this.$store.commit('user/setIsMember', false);
       }
+      this.is_transacting = false;
 
     }
   }

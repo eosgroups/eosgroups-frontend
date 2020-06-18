@@ -38,7 +38,10 @@ export async function fetchIsMember ({ commit, rootState, rootGetters }, account
     if(res && res.rows.length){
       if(res.rows[0].account == accountname){
         console.log('fetched isMember', res.rows[0]);
-        commit('setIsMember', res.rows[0]);
+        if(rootState.ual.accountName == accountname){
+          commit('setIsMember', res.rows[0]);
+        }
+        return res.rows[0];
       }
     }
 }

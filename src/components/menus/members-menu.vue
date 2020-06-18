@@ -12,7 +12,7 @@
 
         <q-item clickable :to="`/members/${getActiveGroup}/profile/${getAccountName}`">
           <q-item-section avatar>
-            <q-icon name="mdi-view-dashboard" />
+            <q-icon name="mdi-face-profile" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Profile</q-item-label>

@@ -167,7 +167,7 @@
         enter-active-class="animated fadeInRight"
         mode="out-in"
       >
-        <router-view />
+        <router-view v-if="getActiveGroup" />
       </transition>
       <q-page-scroller
         position="bottom-right"
