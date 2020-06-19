@@ -8,7 +8,7 @@
       animated
       control-color="primary"
       navigation
-      padding
+      
       arrows
       height="350px"
     >
