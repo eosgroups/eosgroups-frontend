@@ -1,5 +1,6 @@
 <template>
   <div>
+    <q-btn label="test" color="primary" />
     {{src}}
   </div>
 </template>
