@@ -2,6 +2,7 @@
   <div>
     <q-btn label="test" color="primary" @click="getUserBalance()" :loading="is_loading"></q-btn>
     <pre>{{res}}</pre>
+    {{is_loading}}
     
   </div>
 </template>
