@@ -1,27 +1,26 @@
 <template>
   <div>
-    {{component}}
-    <component :is="" />
+    {{link}}
+    <test />
   </div>
 </template>
 
 <script>
-export default {
-  // name: 'ComponentName',
+
+module.exports = {
+  // name: 'externalComponent',
+
   data () {
     return {
-      link: "https://raw.githubusercontent.com/CRONEOS/croneos-frontend/master/src/components/main-logo.vue",
+      link: "fff",
       component: ''
     }
   },
   methods:{
-    async loadComponent(){
-      return await import(this.link); 
-    }
+
   },
   async mounted(){
-    this.component = await this.loadComponent();
-    console.log(this.component)
+
   }
 }
 </script>

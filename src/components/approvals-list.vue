@@ -24,7 +24,7 @@
       >
         <q-item >
           <q-item-section avatar>
-            <profile-pic :size="42" icon="check" iconColor="positive" account=""  />
+            <profile-pic :size="42" icon="check" iconColor="positive" :account="approver"  />
           </q-item-section>
 
           <q-item-section style="margin-left:-7px">

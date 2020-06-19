@@ -62,9 +62,9 @@
         </q-tab-panel>
       </q-tab-panels>
       
-      <div class="row justify-between">
+      <div class="row justify-between items-center">
         <div v-if="profile_data" class="text-caption text-grey">
-          <date-string prepend="updated" :date="profile_data.last_update" />
+          <date-string prepend="Updated" :date="profile_data.last_update" />
         </div>
         <div v-if="profile_data" class="text-caption">
             <q-btn label="update" color="primary" />
@@ -72,7 +72,8 @@
       </div>
       <!-- {{profile_data}} -->
       </q-card-section>
-    </q-card>
+    </q-card> 
+    <!-- <external-component src="https://raw.githubusercontent.com/CRONEOS/croneos-frontend/master/src/components/main-logo.vue" /> -->
   </q-page>
 </template>
 
@@ -85,7 +86,8 @@ import profileLinks from "components/profile_data/profile-links";
 import profileFiles from "components/profile_data/profile-files";
 import profilePhotos from "components/profile_data/profile-photos";
 import textEdit from "components/profile_data/text-edit";
-import dateString from "components/date-string"
+import dateString from "components/date-string";
+
 export default {
   name: "profile",
   components: {
@@ -96,7 +98,8 @@ export default {
     profileFiles,
     profilePhotos,
     textEdit,
-    dateString
+    dateString,
+  
   },
   data() {
     return {
