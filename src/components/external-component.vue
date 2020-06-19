@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn label="test" color="primary" />
+    <q-btn label="test" color="primary"></q-btn>
     {{src}}
   </div>
 </template>

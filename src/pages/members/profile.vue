@@ -100,6 +100,7 @@ export default {
     textEdit,
     dateString,
     externalComponent: window.httpVueLoader("https://raw.githubusercontent.com/eosgroups/eosgroups-frontend/master/src/components/external-component.vue")
+    // externalComponent: window.httpVueLoader("https://raw.githack.com/eosgroups/eosgroups-frontend/master/src/components/external-component.vue")
   
   },
   data() {
