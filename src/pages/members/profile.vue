@@ -34,12 +34,13 @@
     </q-card>
     <q-card v-if="profile_data">
       <q-card-section class="q-mt-md"  >
+        <!-- {{profile_data}} -->
       <q-tabs  v-model="active_tab" class="text-primary" dense align="left">
         <q-tab v-if="account == getAccountName" label="(Edit)" name="textedit"  />
-        <q-tab label="Profile" name="profiletext"  />
-        <q-tab label="Links" name="profilelinks" />
-        <q-tab label="Image Gallery" name="profilephotos" />
-        <q-tab label="Files" name="profilefiles" />
+        <q-tab :label="`Profile`" name="profiletext"  />
+        <q-tab :label="`Links (${profile_data.profile.links.length})`" name="profilelinks" />
+        <q-tab :label="`Gallery (${profile_data.profile.photos.length})`" name="profilephotos" />
+        <q-tab :label="`Files (${profile_data.profile.files.length})`" name="profilefiles" />
         
       </q-tabs>
       <q-separator />
