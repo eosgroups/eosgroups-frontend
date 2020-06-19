@@ -27,26 +27,34 @@ module.exports = {
     }
   },
   methods:{
-    async fetchBalance(){
-      this.is_loading = true;
-      let res = await this.$eos.rpc.get_table_rows({
-        json: true,
-        code: this.token.contract,
-        scope: this.account,
-        table: "accounts",
-        lower_bound: this.account,
-        upper_bound: this.account,
-        limit: 1
-      }).catch(e => false);
-      if(res){
-        this.res = res
-      }
-      else{
-        return [];
-      }
-      this.is_loading = false;
-      
+
+  async getUserBalance() {
+    let query = {
+      json: true,
+      code: this.token.contract,
+      scope: this.account,
+      table: "accounts",
+      limit: 1,
+    };
+    let r = (await this.$eos.rpc.get_table_rows(query)).rows[0];
+    if (!r) {
+      r = {
+        balance: `0 ${symbol}`,
+        amount: 0,
+        symbol: symbol,
+        precision: this.tokens.get(symbol).precision,
+        contract: tokencontract,
+      };
+    } else {
+      r.amount = parseFloat(r.balance.split(" ")[0]);
+      r.symbol = symbol;
+      r.precision = this.tokens.get(symbol).precision;
+      r.contract = tokencontract;
+
     }
+    this.res = r;
+  }
+
 
   },
   async mounted(){

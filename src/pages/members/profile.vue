@@ -73,7 +73,7 @@
       <!-- {{profile_data}} -->
       </q-card-section>
     </q-card> 
-    <external-component  src="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"/>
+    <external-component  account="piecesnbits1" />
   </q-page>
 </template>
 
