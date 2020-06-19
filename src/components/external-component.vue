@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn label="test" color="primary" @click="fetchBalance()"></q-btn>
+    <q-btn label="test" color="primary" @click="fetchBalance()" :loading="is_loading"></q-btn>
     <pre>{{res}}</pre>
     
   </div>
@@ -22,11 +22,13 @@ module.exports = {
   },
   data () {
     return {
-      res: "no"
+      res: "no",
+      is_loading: false,
     }
   },
   methods:{
     async fetchBalance(){
+      this.is_loading = true;
       let res = await this.$eos.rpc.get_table_rows({
         json: true,
         code: this.token.contract,
@@ -42,6 +44,7 @@ module.exports = {
       else{
         return [];
       }
+      this.is_loading = false;
       
     }
 
