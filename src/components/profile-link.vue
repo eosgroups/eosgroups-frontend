@@ -2,7 +2,7 @@
   <div>
     <router-link class="text-link" :to="constructlink">
       {{account}}
-      <q-tooltip content-class="bg-primary">
+      <q-tooltip content-class="bg-primary" :delay="500">
         Visit profile
       </q-tooltip>
     </router-link>

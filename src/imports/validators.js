@@ -63,6 +63,13 @@ export function isValidSymbol(v) {
     return "Token symbol can only have letters A-Z";
   }
 }
+export function isYouTubeUrl(url) {
+  var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+  if(url.match(p)){
+      return true;
+  }
+  return "This is not a valid youtube link";
+}
 
 export async function isAvailableSymbol(v) {
   v = v.toUpperCase();

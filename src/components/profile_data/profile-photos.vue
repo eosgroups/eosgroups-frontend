@@ -1,7 +1,6 @@
 <template>
   <div>
-
-<q-carousel
+    <q-carousel
       v-model="slide"
       transition-prev="slide-right"
       transition-next="slide-left"
@@ -11,49 +10,62 @@
       navigation
       padding
       arrows
-      height="300px"
-
+      height="350px"
     >
-      <q-carousel-slide v-for="(photo,i) in profile_data.profile.photos" :key="i"  :name="i" class="column no-wrap">
-        <!-- <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap"> -->
-          <q-img class="rounded-borders col-6 full-height" contain :src="photo.url" >
-            <div class="absolute-bottom text-subtitle1 text-center">
-              {{photo.caption}}
+      <q-carousel-slide
+        v-for="(photo, i) in profile_data.profile.photos"
+        :key="i"
+        :name="i"
+        class="column no-wrap"
+      >
+        <q-video
+          v-if="isYouTubeUrl(photo.url)===true"
+          class="absolute-full"
+          :src="photo.url"
+        />
+        <q-img
+          v-else
+          class="rounded-borders col-6 full-height"
+          contain
+          :src="photo.url"
+        >
+          <div class="absolute-bottom text-subtitle1 text-center">
+            {{ photo.caption }}
+          </div>
+          <template v-slot:error>
+            <div class="absolute-full flex flex-center bg-negative text-white">
+              Cannot load image
             </div>
-            <template v-slot:error>
-              <div class="absolute-full flex flex-center bg-negative text-white">
-                Cannot load image
-              </div>
-            </template>
-          </q-img>
-
+          </template>
+        </q-img>
 
         <!-- </div> -->
       </q-carousel-slide>
     </q-carousel>
-    
+
     <!-- <pre>{{profile_data.profile.links}}</pre> -->
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import {isYouTubeUrl} from "../../imports/validators"
 export default {
   // name: 'ComponentName',
   name: "profilePhotos",
-  props:{
-    account:{
+  props: {
+    account: {
       type: String,
-      default:""
+      default: ""
     },
     profile_data: {
       type: Object,
-      default:()=>{return {} }
+      default: () => {
+        return {};
+      }
     }
   },
-  components: {
-    
-  },
+  components: {},
   data() {
     return {
       slide: 0
@@ -62,11 +74,14 @@ export default {
   computed: {
     ...mapGetters({
       getAccountName: "ual/getAccountName",
-      getActiveGroup: "group/getActiveGroup",
+      getActiveGroup: "group/getActiveGroup"
 
       // getActiveGroupConfig: "group/getActiveGroupConfig",
       // getNumberCustodians: "group/getNumberCustodians"
     })
+  },
+  methods:{
+    isYouTubeUrl
   }
-}
+};
 </script>

@@ -39,6 +39,13 @@ export function relativeTimeDelta(previous, current=Date.now(),) {
   var elapsed = current - previous;
 
   if (elapsed < msPerMinute) {
+    let n = Math.round(elapsed/1000);
+    if(n < 30){ 
+      return "just now";
+    }
+    else{
+      return n + ` seconds ago`;
+    }
        //return Math.round(elapsed/1000) + ' seconds ago'; 
        return "just now" ;
   }

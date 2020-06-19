@@ -89,10 +89,10 @@
         </q-tab-panel>
 
         <q-tab-panel name="profile" class="overflow-hidden no-padding">
-          <q-scroll-area :visible="true" :thumb-style="thumbStyle" style="height: 180px; width:100%">
+          <q-scroll-area :visible="true" :thumb-style="thumbStyle" style="height: 200px; width:100%">
             <div v-if="!profile_is_loading" class="q-px-md q-pb-md q-pt-xs">
               <profile-text :account="custodian.account" :profile_data="profile_data" />
-              <q-btn color="primary" dense class="full-width" label="see more" :to="`/members/${getActiveGroup}/profile/${custodian.account}`"/>
+              <q-btn color="primary" dense class="full-width" label="full profile" :to="`/members/${getActiveGroup}/profile/${custodian.account}`"/>
             </div>
             <div v-else class="column justify-center items-center" style="height:200px">
               <q-spinner color="primary" size="40px"/>
