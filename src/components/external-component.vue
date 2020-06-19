@@ -7,7 +7,7 @@
 <script>
 
 module.exports = {
-  // name: 'externalComponent',
+  name: 'externalComponent',
   props:{
     src:{
       type: String,

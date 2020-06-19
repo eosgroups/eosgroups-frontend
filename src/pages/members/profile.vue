@@ -73,7 +73,7 @@
       <!-- {{profile_data}} -->
       </q-card-section>
     </q-card> 
-    <external-component  />
+    <external-component  src="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"/>
   </q-page>
 </template>
 
@@ -87,7 +87,7 @@ import profileFiles from "components/profile_data/profile-files";
 import profilePhotos from "components/profile_data/profile-photos";
 import textEdit from "components/profile_data/text-edit";
 import dateString from "components/date-string";
-
+//window.httpVueLoader('http://localhost:8080/statics/test_component.vue')
 export default {
   name: "profile",
   components: {
@@ -99,7 +99,7 @@ export default {
     profilePhotos,
     textEdit,
     dateString,
-    externalComponent: httpVueLoader("https://raw.githubusercontent.com/eosgroups/eosgroups-frontend/master/src/components/external-component.vue")
+    externalComponent: window.httpVueLoader("https://raw.githubusercontent.com/eosgroups/eosgroups-frontend/master/src/components/external-component.vue")
   
   },
   data() {
