@@ -29,6 +29,7 @@ module.exports = {
   methods:{
 
   async getUserBalance() {
+    this.is_loading = true;
     let symbol = this.token.symbol;
     let query = {
       json: true,
@@ -54,6 +55,7 @@ module.exports = {
 
     }
     this.res = r;
+    this.is_loading = false;
   }
 
 
