@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn label="test" color="primary" @click="fetchBalance()" :loading="is_loading"></q-btn>
+    <q-btn label="test" color="primary" @click="getUserBalance()" :loading="is_loading"></q-btn>
     <pre>{{res}}</pre>
     
   </div>
@@ -29,6 +29,7 @@ module.exports = {
   methods:{
 
   async getUserBalance() {
+    let symbol = this.token.symbol;
     let query = {
       json: true,
       code: this.token.contract,
@@ -42,14 +43,14 @@ module.exports = {
         balance: `0 ${symbol}`,
         amount: 0,
         symbol: symbol,
-        precision: this.tokens.get(symbol).precision,
-        contract: tokencontract,
+        precision: 4,
+        contract: this.token.contract,
       };
     } else {
       r.amount = parseFloat(r.balance.split(" ")[0]);
       r.symbol = symbol;
-      r.precision = this.tokens.get(symbol).precision;
-      r.contract = tokencontract;
+      r.precision = 4;
+      r.contract = this.token.contract;
 
     }
     this.res = r;
