@@ -63,7 +63,7 @@
       </q-tab-panels>
       
       <div class="row justify-between">
-        <div v-if="profile_data" class="text-caption">
+        <div v-if="profile_data" class="text-caption text-grey">
           <date-string prepend="updated" :date="profile_data.last_update" />
         </div>
         <div v-if="profile_data" class="text-caption">

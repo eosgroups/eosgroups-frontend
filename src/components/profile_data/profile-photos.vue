@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="q-mb-xs row justify-end">
-      <q-btn dense flat :icon="mode=='carousel'?'mdi-grid' :'mdi-view-carousel'" @click="mode=='carousel' ? mode='grid' : mode='carousel'" color="primary">
+      <q-btn dense flat :icon="mode=='carousel'?'mdi-view-carousel' :'mdi-grid'" @click="mode=='carousel' ? mode='grid' : mode='carousel'" color="primary">
         <q-tooltip content-class="bg-primary" :delay="500" anchor="center left" self="center right">
-          {{mode=='carousel'?'grid mode':'carousel mode'}}
+          {{mode=='carousel'?'switch to grid mode':'switch carousel mode'}}
         </q-tooltip>
       </q-btn>
     </div>
