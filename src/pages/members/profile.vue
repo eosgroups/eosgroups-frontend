@@ -73,7 +73,7 @@
       <!-- {{profile_data}} -->
       </q-card-section>
     </q-card> 
-    <!-- <external-component src="https://raw.githubusercontent.com/CRONEOS/croneos-frontend/master/src/components/main-logo.vue" /> -->
+    <external-component  />
   </q-page>
 </template>
 
@@ -99,6 +99,7 @@ export default {
     profilePhotos,
     textEdit,
     dateString,
+    externalComponent: httpVueLoader("https://raw.githubusercontent.com/eosgroups/eosgroups-frontend/master/src/components/external-component.vue")
   
   },
   data() {

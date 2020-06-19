@@ -1,7 +1,6 @@
 <template>
   <div>
-    {{link}}
-    <test />
+    {{src}}
   </div>
 </template>
 
@@ -9,11 +8,15 @@
 
 module.exports = {
   // name: 'externalComponent',
-
+  props:{
+    src:{
+      type: String,
+      default: "hello"
+    }
+  },
   data () {
     return {
-      link: "fff",
-      component: ''
+
     }
   },
   methods:{
