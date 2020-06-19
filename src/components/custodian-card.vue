@@ -8,7 +8,9 @@
         </q-item-section>
 
         <q-item-section>
-          <q-item-label class="text-weight-light text-h6">{{custodian.account}}</q-item-label>
+          <q-item-label class="text-weight-light text-h6">
+            <profile-link :account ="custodian.account" />
+          </q-item-label>
           <q-item-label caption>Custodian</q-item-label>
         </q-item-section>
         <q-item-section side>
@@ -47,7 +49,7 @@
             <q-item-section>
               <q-item-label class="text-weight-light">Last Active</q-item-label>
               <q-item-label caption>
-                <span v-if="!custodian.last_active.startsWith('1970')">{{custodian.last_active}}</span>
+                <span v-if="!custodian.last_active.startsWith('1970')"><date-string :date="custodian.last_active" /></span>
                 <span v-else>Not been Active Yet</span>
                 </q-item-label>
             </q-item-section>
@@ -59,7 +61,7 @@
             </q-item-section>
             <q-item-section>
               <q-item-label class="text-weight-light">Joined</q-item-label>
-              <q-item-label caption>{{custodian.joined}}</q-item-label>
+              <q-item-label caption><date-string :date="custodian.joined" /></q-item-label>
             </q-item-section>
           </q-item>
 
@@ -87,16 +89,16 @@
         </q-tab-panel>
 
         <q-tab-panel name="profile" class="overflow-hidden no-padding">
-          <q-scroll-area :visible="true" :thumb-style="thumbStyle" style="height: 200px; width:100%">
+          <q-scroll-area :visible="true" :thumb-style="thumbStyle" style="height: 180px; width:100%">
             <div v-if="!profile_is_loading" class="q-px-md q-pb-md q-pt-xs">
-              <q-markdown>
-              {{profile_data}}
-              </q-markdown>
+              <profile-text :account="custodian.account" :profile_data="profile_data" />
+              <q-btn color="primary" dense class="full-width" label="see more" :to="`/members/${getActiveGroup}/profile/${custodian.account}`"/>
             </div>
             <div v-else class="column justify-center items-center" style="height:200px">
               <q-spinner color="primary" size="40px"/>
             </div>
           </q-scroll-area>
+          
         </q-tab-panel>
       </q-tab-panels>
 </div>
@@ -110,14 +112,19 @@ import { mapGetters } from "vuex";
 
 import {colors} from 'quasar';
 const{getBrand} = colors;
-
+import profileText from "components/profile_data/profile-text";
+import profileLink from "components/profile-link";
 import imaliveBtn from "components/imalive-btn";
-import profilePic from "components/profile-pic"
+import profilePic from "components/profile-pic";
+import dateString from "components/date-string"
 export default {
   name: "custodianCard",
   components: {
     imaliveBtn,
-    profilePic
+    profilePic,
+    dateString,
+    profileText,
+    profileLink
   },
   props:{
     custodian:{
@@ -146,7 +153,8 @@ export default {
   computed: {
     ...mapGetters({
       getAccountName: "ual/getAccountName",
-      getCoreConfig: "group/getCoreConfig"
+      getCoreConfig: "group/getCoreConfig",
+      getActiveGroup: "group/getActiveGroup",
     }),
     getImAliveStats(){
       let res = 0;
@@ -168,17 +176,7 @@ export default {
   methods: {
     async getProfile() {
       this.profile_is_loading =true;
-      await new Promise(resolve=>{setTimeout(resolve,1000)})
-      this.profile_data = `
-This is HTML abbreviation example.
-It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
-This is HTML abbreviation example.
-It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
-This is HTML abbreviation example.
-It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
-This is HTML abbreviation example.
-It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
-*[HTML]: Hyper Text Markup Language`
+      this.profile_data = await this.$store.dispatch("group/fetchProfile", this.custodian.account);
       this.profile_is_loading = false;
     }
   },

@@ -5,7 +5,7 @@
         <q-item>
           <q-item-section avatar>
             <profile-pic
-              :size="140"
+              :size="110"
               iconColor="white"
               iconBackground="bg-primary"
               :account="account"
@@ -62,7 +62,9 @@
       </q-tab-panels>
       
       <div class="row justify-between">
-        <div v-if="profile_data" class="text-caption">Last Updated {{profile_data.last_update}}</div>
+        <div v-if="profile_data" class="text-caption">
+          <date-string prepend="updated" :date="profile_data.last_update" />
+        </div>
         <div v-if="profile_data" class="text-caption">
             <q-btn label="update" color="primary" />
         </div>
@@ -82,6 +84,7 @@ import profileLinks from "components/profile_data/profile-links";
 import profileFiles from "components/profile_data/profile-files";
 import profilePhotos from "components/profile_data/profile-photos";
 import textEdit from "components/profile_data/text-edit";
+import dateString from "components/date-string"
 export default {
   name: "profile",
   components: {
@@ -91,7 +94,8 @@ export default {
     profileLinks,
     profileFiles,
     profilePhotos,
-    textEdit
+    textEdit,
+    dateString
   },
   data() {
     return {

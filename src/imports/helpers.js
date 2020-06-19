@@ -28,6 +28,47 @@ export function secondsToDhms(seconds) {
   return dDisplay + hDisplay + mDisplay + sDisplay;
 }
 
+export function relativeTimeDelta(previous, current=Date.now(),) {
+
+  var msPerMinute = 60 * 1000;
+  var msPerHour = msPerMinute * 60;
+  var msPerDay = msPerHour * 24;
+  var msPerMonth = msPerDay * 30;
+  var msPerYear = msPerDay * 365;
+
+  var elapsed = current - previous;
+
+  if (elapsed < msPerMinute) {
+       //return Math.round(elapsed/1000) + ' seconds ago'; 
+       return "just now" ;
+  }
+
+  else if (elapsed < msPerHour) {
+    let n = Math.round(elapsed/msPerMinute);
+    return n + ` ${n > 1 ? "minutes" : "minute"} ago`;    
+  }
+
+  else if (elapsed < msPerDay ) {
+    let n = Math.round(elapsed/msPerHour );
+    return n + ` ${n > 1 ? "hours" : "hour"} ago`;   
+  }
+
+  else if (elapsed < msPerMonth) {
+      let n = Math.round(elapsed/msPerDay);
+      return n + ` ${n > 1 ? "days" : "day"} ago`;   
+  }
+
+  else if (elapsed < msPerYear) {
+    let n = Math.round(elapsed/msPerMonth);
+    return n + ` ${n > 1 ? "months" : "month"} ago`;  
+  }
+
+  else {
+    let n = Math.round(elapsed/msPerYear );
+    return n + ` ${n > 1 ? "years" : "year"} ago`;    
+  }
+}
+
 export function chunkArray(arr, chunksize) {
   let R = [];
   for (var i = 0; i < arr.length; i += chunksize) {
