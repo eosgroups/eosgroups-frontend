@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-btn label="test" color="primary" @click="fetchBalance()"></q-btn>
+    <pre>{{res}}</pre>
     
   </div>
 </template>
