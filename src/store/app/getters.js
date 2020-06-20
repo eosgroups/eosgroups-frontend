@@ -20,7 +20,9 @@ export function getGroupByName(state){
 
 
 
-
+export function getComponentRegistry(state){
+    return state.componentRegistry;
+}
 
 
 

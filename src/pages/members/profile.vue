@@ -41,7 +41,7 @@
         <q-tab :label="`Links (${profile_data.profile.links.length})`" name="profilelinks" />
         <q-tab :label="`Gallery (${profile_data.profile.photos.length})`" name="profilephotos" />
         <q-tab :label="`Files (${profile_data.profile.files.length})`" name="profilefiles" />
-        
+        <q-btn class="absolute-right" icon="check" />
       </q-tabs>
       <q-separator />
       <q-tab-panels v-model="active_tab" animated transition-prev="fade" transition-next="fade">
@@ -73,11 +73,13 @@
       <!-- {{profile_data}} -->
       </q-card-section>
     </q-card> 
-    <external-component  account="piecesnbits1" />
+    <!-- <external-component  account="piecesnbits1" /> -->
+    <component-loader :comp_id="102" />
   </q-page>
 </template>
 
 <script>
+
 import { mapGetters } from "vuex";
 import profilePic from "components/profile-pic";
 import updateProfilePic from "components/update-profile-pic";
@@ -87,7 +89,10 @@ import profileFiles from "components/profile_data/profile-files";
 import profilePhotos from "components/profile_data/profile-photos";
 import textEdit from "components/profile_data/text-edit";
 import dateString from "components/date-string";
+
+import componentLoader from "components/component-loader";
 //window.httpVueLoader('http://localhost:8080/statics/test_component.vue')
+//const externalComponent = httpVueLoader("https://raw.githubusercontent.com/eosgroups/eosgroups-frontend/master/src/components/external-component.vue");
 export default {
   name: "profile",
   components: {
@@ -99,7 +104,8 @@ export default {
     profilePhotos,
     textEdit,
     dateString,
-    externalComponent: window.httpVueLoader("https://raw.githubusercontent.com/eosgroups/eosgroups-frontend/master/src/components/external-component.vue")
+    componentLoader
+    // externalComponent
     // externalComponent: window.httpVueLoader("https://raw.githack.com/eosgroups/eosgroups-frontend/master/src/components/external-component.vue")
   
   },

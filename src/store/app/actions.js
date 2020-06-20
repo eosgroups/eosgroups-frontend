@@ -5,7 +5,7 @@ let CLOCK_TIMER = null;
 
 export async function initRoutine ({ dispatch }) {
 
-    //dispatch('fetchGroups');
+    dispatch('fetchComponentRegistry');
 
 
     // dispatch('fetchAllowedFeeTokens');
@@ -55,5 +55,30 @@ export function stopClock () {
     console.log('clock stopped')
     clearInterval( CLOCK_TIMER );
     CLOCK_TIMER = null;
+}
+
+export async function fetchComponentRegistry ({ state, commit }) {
+  let res = await this._vm.$eos.rpc.get_table_rows({
+      json: true,
+      code: state.config.groups_contract,
+      scope: state.config.groups_contract,
+      table: "components",
+      limit: -1
+    });
+    if(res){
+      console.log('fetched component registry',res.rows);
+      res = res.rows;
+      let registry = {};
+      for(let i = 0; i < res.length; i++){
+        let comp = res[i];
+        //parse info json here
+        registry[comp.comp_id] = comp;
+      }
+
+      commit('setComponentRegistry', registry);
+    }
+    else{
+        console.log('fetching component registry failed');
+    }
 }
 

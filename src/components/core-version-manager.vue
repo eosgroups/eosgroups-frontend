@@ -40,6 +40,7 @@ import {randomName, sha256} from "../imports/helpers.js";
 import wasmCompiler from "components/wasm-compiler";
 export default {
   // name: 'ComponentName',
+  
   components: {
     wasmCompiler
   },
