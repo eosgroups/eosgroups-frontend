@@ -11,7 +11,7 @@
           <!-- <q-route-tab  label="pricing" to="/mine" /> -->
           <!-- <q-route-tab  label="docs" to="/docs/getting-started" /> -->
         </q-tabs>
-        <login-network-switcher />
+        <login-network-switcher :avatar="false" />
 
 
       </q-toolbar>

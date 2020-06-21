@@ -26,7 +26,7 @@
             </q-tooltip>
           </q-btn>
           
-          <profile-pic v-if="getAccountName" :size="28"  :icon="getIsCustodian(getAccountName)?'mdi-star':''" iconColor="primary"  :account="getAccountName" class="q-mr-xs"/>
+          <profile-pic v-if="getAccountName && avatar" :size="28"  :icon="getIsCustodian(getAccountName)?'mdi-star':''" iconColor="primary"  :account="getAccountName" class="q-mr-xs"/>
           <div class="text-center">{{getAccountName ? getAccountName : 'login'}}</div>
           
         </div>
@@ -81,10 +81,15 @@ import {notifyError} from '../../imports/notifications.js';
 import profilePic from "components/profile-pic";
 
 export default {
-  // name: 'ComponentName',
+  name: 'loginNetworkSwitcher',
+  props:{
+    avatar:{
+      type: Boolean,
+      default: true
+    }
+  },
   components:{
     profilePic
-
   },
   data() {
     return {

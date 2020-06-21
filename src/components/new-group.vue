@@ -329,14 +329,37 @@ export default {
       this.step="request_settings";
       if(this.wasmhex == '' || this.abihex == ''){
         this.wasmhex = (await this.$refs.wasm_compiler.loadRemoteWasm('https://raw.githubusercontent.com/eosgroups/group/master/group.wasm')).wasm;
-        
         this.abihex = await this.$refs.wasm_compiler.loadRemoteAbi('https://raw.githubusercontent.com/eosgroups/group/master/group.abi');
 
       }
 
+    },
+    async get_wasm_and_abi_from_block(query){
+      // let query ={
+      //   wasm:[],
+      //   abi:[]
+      // };
+      let blocks=[];
+      blocks.push(this.$eos.rpc.get_block(query.wasm[0]) );
+      if(query.wasm[0] != query.abi[0]){
+        blocks.push(this.$eos.rpc.get_block(query.abi[0]) );
+      }
+      let [wasmblock, abiblock] = await Promise.all(blocks);
+      abiblock = abiblock || wasmblock;
+
+      //get wasm hex
+      let wasmhex = wasmblock.transactions.find(trx => trx.trx.id == query.wasm[1]).trx.transaction.actions.find(a => a.name == "setcode").data.code;
+      let abihex = abiblock.transactions.find(trx => trx.trx.id == query.abi[1]).trx.transaction.actions.find(a => a.name == "setabi").data.abi;
+
+      console.log(abihex)
     }
   },
   async mounted(){
+    let query = {
+      wasm:[21241340, "6b595f150ecd2217d06e0b668ec1ec935068c51239b9802806ed505256978724"],
+      abi:[21241344, "5f5e090e6ab1d4a493fc2d6fb241c48aa9e0c9655f994201cc089efe27451273"]
+    }
+    this.get_wasm_and_abi_from_block(query);
     if(this.prefill.group_account_name){
       this.new_group_account_name = this.prefill.group_account_name;
     }    

@@ -1,11 +1,15 @@
 <template>
   <q-page padding>
-    <q-card>
+  <div class="row q-col-gutter-md">
+    
+    <div class="col-xs-12">
+    <q-card >
       <q-card-section>
         <q-item>
           <q-item-section avatar>
             <profile-pic
-              :size="110"
+              style="margin-left:-15px"
+              :size="100"
               iconColor="white"
               iconBackground="bg-primary"
               :account="account"
@@ -32,8 +36,11 @@
         </transition>
       </q-card-section>
     </q-card>
+    </div>
+
+    <div class="col-xs-12">
     <q-card v-if="profile_data">
-      <q-card-section class="q-mt-md"  >
+      <q-card-section>
         <!-- {{profile_data}} -->
       <q-tabs  v-model="active_tab" class="text-primary" dense align="left">
         <q-tab v-if="account == getAccountName" label="(Edit)" name="textedit"  />
@@ -41,7 +48,7 @@
         <q-tab :label="`Links (${profile_data.profile.links.length})`" name="profilelinks" />
         <q-tab :label="`Gallery (${profile_data.profile.photos.length})`" name="profilephotos" />
         <q-tab :label="`Files (${profile_data.profile.files.length})`" name="profilefiles" />
-        <q-btn class="absolute-right" icon="check" />
+        <!-- <q-btn class="absolute-right" icon="check" /> -->
       </q-tabs>
       <q-separator />
       <q-tab-panels v-model="active_tab" animated transition-prev="fade" transition-next="fade">
@@ -72,10 +79,13 @@
       </div>
       <!-- {{profile_data}} -->
       </q-card-section>
-    </q-card> 
+    </q-card>
+    </div>
     <!-- <external-component  account="piecesnbits1" /> -->
     <component-loader :comp_id="102" />
+  </div>
   </q-page>
+  
 </template>
 
 <script>
