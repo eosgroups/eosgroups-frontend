@@ -194,6 +194,7 @@ import { mapGetters } from "vuex";
 import newGroup from "components/new-group";
 import wasmCompiler from "components/wasm-compiler";
 
+
 import {
   isValidAccountName,
   isAvailableAccountName
@@ -204,6 +205,7 @@ export default {
   components: {
     newGroup,
     wasmCompiler
+    
   },
   props:{
     prefill:{
@@ -335,10 +337,7 @@ export default {
 
     },
     async get_wasm_and_abi_from_block(query){
-      // let query ={
-      //   wasm:[],
-      //   abi:[]
-      // };
+
       let blocks=[];
       blocks.push(this.$eos.rpc.get_block(query.wasm[0]) );
       if(query.wasm[0] != query.abi[0]){
@@ -347,12 +346,12 @@ export default {
       let [wasmblock, abiblock] = await Promise.all(blocks);
       abiblock = abiblock || wasmblock;
 
-      //get wasm hex
       let wasmhex = wasmblock.transactions.find(trx => trx.trx.id == query.wasm[1]).trx.transaction.actions.find(a => a.name == "setcode").data.code;
       let abihex = abiblock.transactions.find(trx => trx.trx.id == query.abi[1]).trx.transaction.actions.find(a => a.name == "setabi").data.abi;
-
-      console.log(abihex)
+      return {wasmhex: wasmhex, abihex: abihex};
     }
+
+    
   },
   async mounted(){
     let query = {

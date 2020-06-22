@@ -1,6 +1,8 @@
+import {getLogoForToken} from "../../imports/tokens.js";
 export async function loggedInRoutine ({ dispatch }, payload) {
 
   dispatch('fetchAccount', payload.accountname);
+  dispatch('fetchHubDeposits', payload.accountname);
   //dispatch('fetchIsMember', payload.accountname);
 
 }
@@ -9,10 +11,8 @@ export async function loggedOutRoutine ({ dispatch, commit }) {
 
   commit('setAccount', false);
   commit('setIsMember', false);
+  commit('setHubDeposits', false);
 }
-
-
-
 
 export async function fetchAccount ({ commit, rootState, rootGetters }, accountname) {
   //let account = rootGetters.getAccountName ||
@@ -43,6 +43,38 @@ export async function fetchIsMember ({ commit, rootState, rootGetters }, account
         }
         return res.rows[0];
       }
+    }
+}
+
+export async function fetchHubDeposits({ state,rootState, commit, rootGetters }, accountname) {
+  let res = await this._vm.$eos.rpc.get_table_rows({
+      json: true,
+      code: rootState.app.config.groups_contract,
+      scope: accountname,
+      table: "deposits",
+      limit: 1
+    });
+    if(res){
+      console.log('fetched hub deposits for',accountname, res.rows);
+
+      res = res.rows;
+      let balances = [];
+      res.forEach(b =>{
+        let t = {};
+        t.contract = b.balance.contract;
+        t.quantity = b.balance.quantity;
+        let [amount, symbol] = b.balance.quantity.split(' ');
+        t.symbol = symbol;
+        t.amount = parseFloat(amount);
+        t.precision = amount.split('.')[1] ? amount.split('.')[1].length : 0;
+        t.logo = getLogoForToken(t.contract, t.symbol)
+        balances.push(t);
+      })
+
+      commit('setHubDeposits', balances);
+    }
+    else{
+        console.log('fetching hub deposits failed for:', accountname);
     }
 }
 

@@ -2,6 +2,7 @@
   <q-page padding class="bg-white">
     <scrolling-background class="absolute-bottom" />
     <!-- content -->
+
     <new-group class="q-mt-lg" :prefill="{group_account_name: $route.params.newgroupname}" />
    
     <div style="height:275px"></div>
@@ -16,11 +17,13 @@ import scrollingBackground from "components/scrolling-background";
 import newGroup from "components/new-group";
 
 
+
 export default {
   name: "create",
   components: {
     newGroup,
     scrollingBackground
+
   },
   data() {
     return {

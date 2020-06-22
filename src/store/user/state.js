@@ -15,6 +15,7 @@ export default {
   minifyCustodians: false,
   isDark: false,
   isMember: false,
+  hubDeposits: false,
 
   currentFCMToken:'',
   topicSubscriptions:[]

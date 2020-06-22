@@ -31,6 +31,10 @@ export function setMinifyCustodians(state, payload){
     state.minifyCustodians = payload;
 }
 
+export function setHubDeposits(state, payload){
+    state.hubDeposits = payload;
+}
+
 export function setIsDark(state, payload){
     state.isDark = payload;
 }

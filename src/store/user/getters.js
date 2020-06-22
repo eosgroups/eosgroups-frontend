@@ -40,4 +40,8 @@ export function getTopicSubscriptions(state){
   return state.topicSubscriptions;
 }
 
+export function getHubDeposits(state){
+  return state.hubDeposits;
+}
+
 

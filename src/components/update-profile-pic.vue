@@ -1,6 +1,6 @@
 <template>
   <q-input
-  ref="input"
+    ref="input"
     :value="new_avatar"
     label="new avatar url"
     outlined

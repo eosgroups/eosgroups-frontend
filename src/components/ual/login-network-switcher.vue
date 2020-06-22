@@ -55,9 +55,22 @@
           </q-item-section>
         </q-item>
 
+        <q-item v-if="getAccountName" class="bg-secondary" clickable v-close-popup @click="$root.$emit('showHubDeposits')">
+          <q-item-section avatar>
+            <q-icon name="mdi-wallet" class="cursor-pointer" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Daclify hub</q-item-label>
+            <q-item-label caption>my deposits</q-item-label>
+          </q-item-section>
+        </q-item>
 
 
-        <q-item clickable v-close-popup @click="handleNetworkClick(network.key)" v-for="network in networks" :key="network.label">
+        
+
+      </q-list>
+      <q-list v-if="!getAccountName" dark class="bg-secondary" separator >
+        <q-item clickable  v-close-popup @click="handleNetworkClick(network.key)" v-for="network in networks" :key="network.label">
           <q-item-section avatar>
             <q-icon :name="network.icon" />
           </q-item-section>

@@ -31,6 +31,9 @@ export function getComponentRegistry(state){
 
 
 
+
+
+
 export function getAppConfig(state){
     return state.config;
 }
