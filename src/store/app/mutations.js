@@ -10,6 +10,10 @@ export function setComponentRegistry(state, payload){
     state.componentRegistry = payload;
 }
 
+export function setRamPricePerByte(state, payload){
+    state.ramPricePerByte = payload;
+}
+
 
 
 

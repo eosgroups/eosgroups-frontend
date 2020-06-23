@@ -22,7 +22,7 @@ export default {
   name: "create",
   components: {
     newGroup,
-    scrollingBackground
+    scrollingBackground,
 
   },
   data() {

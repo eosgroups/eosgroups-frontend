@@ -213,7 +213,10 @@ export default {
       getActiveGroup: "group/getActiveGroup",
       getActiveGroupConfig: "group/getActiveGroupConfig",
       getCoreConfig: "group/getCoreConfig"
-    })
+    }),
+    groupconfigAndAccountLoaded(){
+      return {getActiveGroupConfig: this.getActiveGroupConfig, getAccountName: this.getAccountName}
+    }
   },
   methods: {
     getBrand,
@@ -263,15 +266,16 @@ export default {
         }
       }
     },
-    //fix this -> groupaccount isn't set yet
-    getAccountName:{
+
+    groupconfigAndAccountLoaded:{
       immediate: true,
       handler(newV, oldV){
-        if(newV){
+        if(newV && this.getAccountName && this.getActiveGroupConfig){
           this.$store.dispatch('user/fetchIsMember', this.getAccountName)
         }
       }
-    }
+    },
+
   }
 };
 </script>

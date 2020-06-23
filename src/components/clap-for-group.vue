@@ -80,6 +80,15 @@ export default {
       }
     },
     async transferClaps(){
+      let open = {
+        account: this.getAppConfig.groups_contract,
+        name: "opendeposit",
+        data: {
+          account: this.getAccountName,
+          ram_payer: this.getAccountName,
+          amount: {contract: this.getAppConfig.system_token.contract, quantity: Number(0).toFixed(this.getAppConfig.system_token.precision)+` ${this.getAppConfig.system_token.symbol}`}
+        }
+      };
       let action = {
         account: "eosio.token",
         name: "transfer",
@@ -90,6 +99,18 @@ export default {
           memo: `clap for group: ${this.getActiveGroup}`
         }
       };
+      let clap = {
+        account: this.getAppConfig.groups_contract,
+        name: "clap",
+        data: {
+          clapper: this.getAccountName,
+          group: this.getActiveGroup,
+          amount: this.clap_amount
+        }
+      }
+
+      //check which actions are needed transfer? open? 
+
       let res = await this.$store.dispatch("ual/transact", { actions: [action], disable_signing_overlay: true });
       if(res && res.transactionId && res.status == "executed"){
         this.$store.commit('group/setClaps', this.getActiveGroupConfig.claps+this.clap_amount);

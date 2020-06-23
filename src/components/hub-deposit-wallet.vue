@@ -4,7 +4,7 @@
 
     <div v-for="d in getHubDeposits" :key="d.contract + d.symbol">
       <q-card >
-        <q-item>
+        <q-item >
           <q-item-section avatar>
             <q-img
               contain
@@ -19,7 +19,7 @@
               <span>{{ d.amount }}</span>
               <span class="text-weight-bold"> {{ d.symbol }}</span>
             </q-item-label>
-            <q-item-label caption>Deposit Balance</q-item-label>
+            <q-item-label caption class="text-grey">Deposit Balance</q-item-label>
           </q-item-section>
           <q-item-section side> </q-item-section>
         </q-item>
@@ -88,13 +88,13 @@ export default {
       input_value: '',
       is_transfering: false,
       is_withdrawing: false,
-      is_loading_deposits: false
+      is_loading_deposits: false,
+      selected_index : 0
     };
   },
   computed: {
     ...mapGetters({
       getAccountName: "ual/getAccountName",
-      getAppConfig: "app/getAppConfig",
       getAppConfig: "app/getAppConfig",
       getHubDeposits: "user/getHubDeposits"
     }),
@@ -103,10 +103,10 @@ export default {
     },
     selected_asset(){
       if(this.getHubDeposits && this.getHubDeposits.length){
-        return this.getHubDeposits.find(d => d.symbol=="EOS")
+        return this.getHubDeposits[this.selected_index];
       }
       else{
-        return {contract: "eosio.token", precision: 4, symbol:"EOS"}
+        return this.getAppConfig.system_token
       }
     }
   },
@@ -178,6 +178,12 @@ export default {
         this.refresh_deposits();
       }, 1000);
     }
+  },
+  mounted(){
+    if(this.getAccountName){
+      this.$store.dispatch("user/fetchHubDeposits", this.getAccountName);
+    }
+    
   }
 };
 </script>

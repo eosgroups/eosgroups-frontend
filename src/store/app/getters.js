@@ -24,6 +24,10 @@ export function getComponentRegistry(state){
     return state.componentRegistry;
 }
 
+export function getRamPricePerByte(state){
+    return state.ramPricePerByte;
+}
+
 
 
 

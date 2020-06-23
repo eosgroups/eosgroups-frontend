@@ -84,3 +84,27 @@ export async function fetchComponentRegistry ({ state, commit }) {
     }
 }
 
+export async function fetchRamPricePerByte ({ state, commit }){
+  let res = await this._vm.$eos.rpc.get_table_rows({
+    json: true,
+    code: "eosio",
+    scope: "eosio",
+    table: "rammarket",
+    limit: 1
+  }).catch(e => false);
+  if(res && res.rows.length){
+    res = res.rows[0];
+    let quote_balance = parseFloat(res.quote.balance);
+    let base_balance = parseFloat(res.base.balance);
+    let quote_weight = parseFloat(res.quote.weight);
+    let eos_per_byte =  Number(quote_balance/base_balance);
+    // console.log(eos_per_byte*1024)
+    //this.rprice =  eos_per_byte*1024 + " EOS/KB" ;
+    commit('setRamPricePerByte', eos_per_byte);
+    console.log("RAM price per byte", eos_per_byte)
+  }
+  else{
+    this.ram_price_per_byte =  0;
+  }
+}
+
