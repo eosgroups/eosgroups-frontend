@@ -2,6 +2,8 @@
   <div>
       <q-select
         ref="searchselect"
+        autocapitalize="off"
+        autocomplete="off"
         hide-dropdown-icon
         color="primary"
         outlined
@@ -24,7 +26,7 @@
         </template>
         <template v-slot:append>
           <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" >
-            <q-icon v-if="model_accountname" name="close" @click="model_accountname=''; $emit('input', '')" class="cursor-pointer"/>
+            <q-icon v-if="model_accountname" name="close" @click="deleteInput" class="cursor-pointer"/>
           </transition>
         </template>
         <template v-slot:prepend>
@@ -70,6 +72,11 @@ export default {
         return [];
       }
       
+    },
+    deleteInput(){
+      this.model_accountname='';
+      this.$emit('input', '');
+      this.fetchedAccountNames = [this.$store.state.group.activeGroup, ...this.$store.state.group.modules.map(m=> m.slave_permission.actor)];
     },
 
     async filterFn (val, update, abort) {
