@@ -39,7 +39,13 @@
               
             </div>
             <div class="q-mt-md">About</div>
-            <p class="text-caption text-weight-light">{{getActiveGroupConfig.meta.about}}</p>
+            <q-markdown
+              class="text-caption text-weight-light"
+              :src="getActiveGroupConfig.meta.about"
+              :no-abbreviation="false"
+            >
+            </q-markdown>
+
 
             <div class="text-weight-light row justify-between items-center">
             <div>
@@ -47,8 +53,8 @@
             </div>
               <q-item>
                   <q-item-section >
-                    <q-item-label caption>Created</q-item-label>
-                    <q-item-label >{{getActiveGroupConfig.creation_date}}</q-item-label>
+                    <q-item-label caption class="text-right">Created</q-item-label>
+                    <q-item-label ><date-string :date="getActiveGroupConfig.creation_date" /></q-item-label>
 
                   </q-item-section>
               </q-item>
@@ -164,6 +170,7 @@ import groupTags from "components/group-tags";
 import groupLinks from "components/group-links";
 import clapForGroup from "components/clap-for-group";
 import groupNotificationManager from "components/group-notification-manager";
+import dateString from "components/date-string"
 
 import newElectionTimer from "components/modules/elections/new-election-timer";
 
@@ -178,7 +185,8 @@ export default {
     coreVersionManager,
     clapForGroup,
     groupNotificationManager,
-    newElectionTimer
+    newElectionTimer,
+    dateString
 
   },
   data() {

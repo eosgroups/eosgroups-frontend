@@ -16,7 +16,7 @@ export default {
   coreState: false,
   coreConfig: false,
   newCoreConfig: false, //!! used for detecting config changes
-  childAccounts: false,
+  modules: false,
   avatars: [],
   profiles: []
   

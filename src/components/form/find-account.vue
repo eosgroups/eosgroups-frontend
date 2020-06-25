@@ -47,7 +47,7 @@ export default {
   data () {
     return {
       model_accountname:this.value,
-      fetchedAccountNames: [this.$store.state.group.activeGroup]
+      fetchedAccountNames: [this.$store.state.group.activeGroup, ...this.$store.state.group.modules.map(m=> m.slave_permission.actor)]
     }
   },
 

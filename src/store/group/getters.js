@@ -132,16 +132,16 @@ export function getCoreConfigDeltas(state, getters){
   }
 }
 
-export function getChildAccounts(state){
-  return state.childAccounts;
+export function getModules(state){
+  return state.modules;
 }
 
-export function getChildByModuleName(state){
+export function getModuleByName(state){
   
   return module_name => {
-    if(!state.childAccounts) return undefined;
-    let child = state.childAccounts.find(c => module_name == c.module_name);
-    return child;
+    if(!state.modules) return undefined;
+    let module = state.modules.find(c => module_name == c.module_name);
+    return module;
 };
 }
 

@@ -145,6 +145,7 @@ export default {
       console.log("proposal hash", proposal_hash)
 
 
+
       let approve_and_execute =  [
             {
               account: 'eosio.msig',

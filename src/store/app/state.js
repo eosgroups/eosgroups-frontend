@@ -5,7 +5,8 @@ export default {
   config: require("../../statics/config/jungle.json"),
   groups:false,
   componentRegistry: {},
-  ramPricePerByte: 0
+  ramPricePerByte: 0,
+  versioning: {}
 
 
 

@@ -84,6 +84,27 @@ export async function fetchComponentRegistry ({ state, commit }) {
     }
 }
 
+export async function fetchVersioning ({ state, commit }, payload) {
+  let module_type = payload.scope || "core";
+  let res = await this._vm.$eos.rpc.get_table_rows({
+    json: true,
+    code: state.config.groups_contract,
+    scope: module_type,
+    table: "versioning",
+    limit: -1
+  });
+  if(res){
+    console.log(`fetched versions for ${module_type}`,res.rows);
+    let temp = {};
+    temp[module_type] = res.rows;
+    commit('setVersioning', temp);
+  }
+  else{
+      console.log('fetching component registry failed');
+  }
+
+}
+
 export async function fetchRamPricePerByte ({ state, commit }){
   let res = await this._vm.$eos.rpc.get_table_rows({
     json: true,

@@ -37,7 +37,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item v-if="getChildByModuleName('elections')" clickable :to="`/members/${getActiveGroup}/elections`">
+        <q-item v-if="getModuleByName('elections')" clickable :to="`/members/${getActiveGroup}/elections`">
           <q-item-section avatar>
             <q-icon name="mdi-vote" />
           </q-item-section>
@@ -62,7 +62,7 @@ export default {
     ...mapGetters({
       getActiveGroup: "group/getActiveGroup",
       getAccountName: "ual/getAccountName",
-      getChildByModuleName: "group/getChildByModuleName",
+      getModuleByName: "group/getModuleByName",
       getIsMember: "user/getIsMember",
     })
   },

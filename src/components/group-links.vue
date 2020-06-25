@@ -1,24 +1,26 @@
 <template>
   <div>
-    <div
-      v-if="links.length"
-      class="row text-caption text-weight-light  items-center"
-    >
+
+    <!-- :label="link.label || `link ${i+1}`" -->
+    <transition-group v-if="links.length" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut" class="row text-caption text-weight-light  items-center">
       <q-btn
         class="q-mr-sm q-my-xs"
-        v-for="(link, i) in links"
+        size="sm"
+        dense
+        v-for="(link,i) in links"
         :key="link.url"
         :disabled="!isValidUrl(link.url)"
-        :label="link.label || `link ${i+1}`"
+        :label="!link.icon && !link.label? `link ${i+1}` :link.label"
         :icon="link.icon || 'link'"
         color="primary"
         @click="openURL(link.url)"
       >
-        <q-tooltip content-class="bg-secondary">{{
+        <q-tooltip content-class="bg-secondary" :delay="500">{{
           link.url
         }}</q-tooltip>
       </q-btn>
-    </div>
+    </transition-group>
+
     <div v-else>
       Group has no links
     </div>
@@ -27,6 +29,7 @@
 
 <script>
 import { isValidUrl } from "../imports/validators.js";
+import { openURL } from "quasar";
 export default {
   // name: 'ComponentName',
   props: {
@@ -39,7 +42,8 @@ export default {
     return {};
   },
   methods: {
-    isValidUrl
+    isValidUrl,
+    openURL
   }
 };
 </script>

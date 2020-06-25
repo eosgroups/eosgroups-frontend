@@ -110,7 +110,8 @@ export default {
     ...mapGetters({
       getAccountName: "ual/getAccountName",
       getActiveGroup: "group/getActiveGroup",
-      getLinkedThresholdForContractAction:"group/getLinkedThresholdForContractAction"
+      getLinkedThresholdForContractAction:"group/getLinkedThresholdForContractAction",
+      getModules: "group/getModules"
     }),
     addToBucketAllowed() {
       let disabled = false;
@@ -134,6 +135,11 @@ export default {
         authorization: [{ actor: this.getActiveGroup, permission: "owner" }],
         data: {}
       };
+
+      let is_action_from_module = this.getModules.find(m=> m.slave_permission.actor ==  this.fields.contract);
+      if(is_action_from_module){
+        action.authorization = [is_action_from_module.slave_permission];
+      }
 
       this.action_fields.fields.forEach(af => {
         let parsed_value = String(af.value).trim();

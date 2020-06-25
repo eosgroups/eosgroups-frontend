@@ -152,8 +152,8 @@ export function setNewCoreConfigPath(state, payload){
 
 }
 
-export function setChildAccounts(state, payload){
-    state.childAccounts = payload;
+export function setModules(state, payload){
+    state.modules = payload;
 }
 
 

@@ -14,7 +14,8 @@ const { setBrand } = colors;
 export async function resetStore ({  commit }, payload) {
   commit('setCoreConfig', false);
   commit('setCustodians', []);
-  commit('setChildAccounts', false);
+  //commit('setChildAccounts', false);
+  commit('setModules', false);
   commit('setAvatars', []);
   commit('elections/setElectionsContract', false, {root: true});
   commit('elections/setCandidates', false, {root: true});
@@ -45,7 +46,8 @@ export async function loadGroupRoutine ({ dispatch, commit, rootGetters }, paylo
     dispatch('fetchAccount', groupname);
     dispatch('fetchCustodians', groupname);
 
-    dispatch('fetchChildAccounts', groupname);
+    //dispatch('fetchChildAccounts', groupname);
+    dispatch('fetchModules', groupname);
 
     dispatch('fetchProposals', {groupname: groupname, scope: groupname});
     dispatch('fetchProposals', {groupname: groupname, scope: "cancelled"});
@@ -110,26 +112,27 @@ export async function fetchGroupConfig ({ commit, rootState, rootGetters }, grou
   }
 }
 
-export async function fetchChildAccounts ({ commit, rootState, rootGetters }, groupname) {
+export async function fetchModules ({ commit, rootState, rootGetters }, groupname) {
   let res = await this._vm.$eos.rpc.get_table_rows({
     json: true,
     code: groupname,
     scope: groupname,
-    table: "childaccount",
+    table: "modules",
     limit: -1
   });
   if(res && res.rows.length){
-    commit('setChildAccounts', res.rows);
+    commit('setModules', res.rows);
+    console.log(`fetched modules for group ${groupname}`, res.rows);
     //REGISTER MODULES IN STORES
     let elections = res.rows.find(m => m.module_name = 'elections');
     if(elections){
-      commit('elections/setElectionsContract', elections.account_name, {root: true});
+      commit('elections/setElectionsContract', elections.slave_permission.actor, {root: true});
     }
 
     return res.rows;
   }
   else{
-    console.log(`fetching group config ${groupname} failed`);
+    console.log(`fetching modules for group ${groupname} failed`);
     return false;
   }
 }
