@@ -45,9 +45,9 @@
       <q-tabs  v-model="active_tab" class="text-primary" dense align="left">
         <q-tab v-if="account == getAccountName" label="(Edit)" name="textedit"  />
         <q-tab :label="`Profile`" name="profiletext"  />
-        <q-tab :label="`Links (${profile_data.profile.links.length})`" name="profilelinks" />
-        <q-tab :label="`Gallery (${profile_data.profile.photos.length})`" name="profilephotos" />
-        <q-tab :label="`Files (${profile_data.profile.files.length})`" name="profilefiles" />
+        <q-tab :label="`Links (${profile_data.links.length})`" name="profilelinks" />
+        <q-tab :label="`Gallery (${profile_data.gallery.length})`" name="profilegallery" />
+        <q-tab :label="`Files (${profile_data.files.length})`" name="profilefiles" />
         <!-- <q-btn class="absolute-right" icon="check" /> -->
       </q-tabs>
       <q-separator />
@@ -64,8 +64,8 @@
         <q-tab-panel name="profilefiles" class="overflow-hidden">
           <profile-files :account="account" :profile_data="profile_data" />
         </q-tab-panel>
-        <q-tab-panel name="profilephotos" class="overflow-hidden">
-          <profile-photos :account="account" :profile_data="profile_data" />
+        <q-tab-panel name="profilegallery" class="overflow-hidden">
+          <profile-gallery :account="account" :profile_data="profile_data" />
         </q-tab-panel>
       </q-tab-panels>
       
@@ -96,7 +96,7 @@ import updateProfilePic from "components/update-profile-pic";
 import profileText from "components/profile_data/profile-text";
 import profileLinks from "components/profile_data/profile-links";
 import profileFiles from "components/profile_data/profile-files";
-import profilePhotos from "components/profile_data/profile-photos";
+import profileGallery from "components/profile_data/profile-gallery";
 import textEdit from "components/profile_data/text-edit";
 import dateString from "components/date-string";
 
@@ -111,7 +111,7 @@ export default {
     profileText,
     profileLinks,
     profileFiles,
-    profilePhotos,
+    profileGallery,
     textEdit,
     dateString,
     componentLoader

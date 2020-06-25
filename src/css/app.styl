@@ -142,7 +142,16 @@ textarea {resize: none!important}
 /* selected link */
 .text-link:active {
   color: var(--q-color-primary);
-} 
+}
+
+.text-link2, .text-link2:visited{
+  text-decoration: none;
+  transition: color 0.5s ease;
+  color: var(--q-color-white);
+}
+.text-link2:hover, .text-link2:active  {
+  color: var(--q-color-primary);
+}
 
 p {
   text-align: justify;

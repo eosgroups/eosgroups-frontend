@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-for="(f,i) in profile_data.profile.files" :key="i"></div>
+  <div v-if="profile_data.files.length">
+    <div v-for="(f,i) in profile_data.files" :key="i"></div>
     <pre>{{profile_data.profile.files}}</pre>
   </div>
 </template>

@@ -309,33 +309,46 @@ export async function fetchProfile ({ state, commit, rootState, rootGetters }, a
       scope:   rootState.group.activeGroup,
       lower_bound: accountname,
       upper_bound: accountname,
-      table: "profiles",
+      table: "profiledata",
       limit: 1
     });
     if(res && res.rows.length){
       let p = res.rows[0];
-      console.log("xxxxxxxxxxxxxxxxxxxxx", p)
-      if(p && p.profile){
+      console.log("xxxxxxxxxxxxxxxxxxxxx", p.data);
+      let data = {};
+      if(p && p.data){
         
         try {
-            p.profile = JSON.parse(p.profile);
-            if(p.profile.text === undefined) p.profile.text = "Example text";
-            if(p.profile.links === undefined || !Array.isArray(p.profile.links) ) p.profile.links = profile_template.links;
-            if(p.profile.files === undefined || !Array.isArray(p.profile.files) ) p.profile.files = profile_template.files;
-            if(p.profile.photos === undefined || !Array.isArray(p.profile.photos) ) p.profile.photos = profile_template.photos;
+            p.data.forEach(entry =>{
+              if(entry.key != "text"){
+                data[entry.key] = JSON.parse(entry.value);
+              }
+              else{
+                data[entry.key] = entry.value;
+              }
+              
+            })
+            data = Object.assign(profile_template, data);
+            data.account = p.account;
+            data.last_update = p.last_update
+           // p.profile = JSON.parse(p.profile);
+            // if(p.profile.text === undefined) p.profile.text = "Example text";
+            // if(p.profile.links === undefined || !Array.isArray(p.profile.links) ) p.profile.links = profile_template.links;
+            // if(p.profile.files === undefined || !Array.isArray(p.profile.files) ) p.profile.files = profile_template.files;
+            // if(p.profile.photos === undefined || !Array.isArray(p.profile.photos) ) p.profile.photos = profile_template.photos;
         } catch(e) {
             alert(e); // error in the above string (in this case, yes)!
         }
        
       }
-      console.log("yyyyyyyyyyyyyy", p)
-      if(p.account == accountname){
+      console.log("yyyyyyyyyyyyyy", data)
+      if(data.account == accountname){
         
-        commit('updateOrAddProfile', p);
+        commit('updateOrAddProfile', data);
         
       }
-      console.log(`fetched profile for ${accountname}`, p);
-      return p;
+      console.log(`fetched profile for ${accountname}`, data);
+      return data;
     }
 }
 

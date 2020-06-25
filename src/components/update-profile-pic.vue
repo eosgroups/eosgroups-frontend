@@ -59,7 +59,7 @@ export default {
     }
   },
   mounted() {
-    this.new_avatar = this.getAvatar(this.getAccountName);
+    this.new_avatar = this.getAvatar(this.getAccountName) || "";
   },
   methods: {
     isValidUrl,

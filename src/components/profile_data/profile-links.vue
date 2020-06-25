@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div v-if="profile_data.links.length">
     <q-markdown
       
-      :src="profile_data.profile.links.join('\n')"
+      :src="profile_data.links.join('\n')"
       :no-abbreviation="false"
     >
     </q-markdown>

@@ -3,7 +3,7 @@
     
     <q-markdown
       
-      :src="profile_data.profile.text"
+      :src="profile_data.text"
       :no-abbreviation="false"
     >
     </q-markdown>

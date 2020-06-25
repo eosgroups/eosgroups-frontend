@@ -1,5 +1,5 @@
 <template>
-  <q-input v-model="profile_data.profile.text" type="textarea"  />
+  <q-input v-model="profile_data.text" type="textarea"  />
 
 </template>
 

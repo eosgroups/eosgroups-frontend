@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link class="text-link" :to="constructlink">
+    <router-link :class="inversestyle ? 'text-link2' : 'text-link'" :to="constructlink">
       {{account}}
       <q-tooltip content-class="bg-primary" :delay="500">
         Visit profile
@@ -17,6 +17,10 @@ export default {
     account:{
       type: String,
       default:""
+    },
+    inversestyle:{
+      type: Boolean,
+      default: false
     }
   },
   computed:{

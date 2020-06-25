@@ -12,7 +12,9 @@
               <q-item class="no-padding">
                 <q-item-section side></q-item-section>
                 <q-item-section>
-                  <q-item-label class="text-capitalize text-h6 text-weight-light">{{ candidate.cand }}</q-item-label>
+                  <q-item-label class="text-capitalize text-h6 text-weight-light">
+                    <profile-link :account="candidate.cand" inversestyle />
+                  </q-item-label>
                 </q-item-section>
               </q-item>
               <q-item>
@@ -65,12 +67,14 @@
 <script>
 import { mapGetters } from "vuex";
 import profilePic from "components/profile-pic";
+import profileLink from "components/profile-link";
 import dateString from "components/date-string"
 import {notifyError, notifySuccess} from '../../../imports/notifications.js';
 export default {
   name: "listCandidates",
   components: {
     profilePic,
+    profileLink,
     dateString
   },
   props: {
