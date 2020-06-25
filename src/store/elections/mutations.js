@@ -20,6 +20,13 @@ export function removeCandidate (state, payload) {
         state.candidates.splice(index, 1);
     }
 }
+
+export function updateCandidateTotalVotes (state, payload) {
+
+    let cand = state.candidates.find(c => c.cand == payload.cand);
+    cand.total_votes = cand.total_votes+payload.delta
+}
+
 export function addCandidate (state, payload) {
     let cand_template = { cand: payload, total_votes: 0, is_active: 1, registered: "Just now" };
     if(state.candidates === false){
@@ -37,10 +44,10 @@ export function togglePauseCampaign (state, payload) {
 }
 
 
-
 export function setUserVotes (state, payload) {
     state.userVotes = payload;
 }
+
 
 export function setUserStakes (state, payload) {
     state.userStakes = payload;

@@ -7,7 +7,7 @@
           <q-item class="">
             <q-item-section>
               <q-item-label>Candidate since</q-item-label>
-              <q-item-label caption>{{getIsCandidate.registered}}</q-item-label>
+              <q-item-label caption><date-string :date="getIsCandidate.registered" /></q-item-label>
             </q-item-section>
           </q-item>
 
@@ -48,11 +48,12 @@
 
 <script>
 import { mapGetters } from "vuex";
+import dateString from "components/date-string"
 
 export default {
   name: "manageCandidacy",
   components: {
-
+    dateString
   },
   data() {
     return {

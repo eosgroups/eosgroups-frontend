@@ -1,7 +1,7 @@
 <template>
   <div class="q-mt-md">
     <q-card class="candidate" :class="{'candidate-selected': candidate.vote}">
-      <q-expansion-item class="primary-hover-list">
+      <q-expansion-item class="primary-hover-list" @show="fetchProfileData">
         <template v-slot:header>
           <q-item-section avatar>
             <profile-pic :size="60" :account="candidate.cand" :icon="getIsCustodian(candidate.cand) ? 'mdi-star' : ''"/>
@@ -35,15 +35,24 @@
         </template>
           <q-separator />
           <q-card-section>
-            {{candidate}}
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem,
-            eius reprehenderit eos corrupti commodi magni quaerat ex numquam,
-            dolorum officiis modi facere maiores architecto suscipit iste
-            eveniet doloribus ullam aliquid.
+            <!-- {{candidate}} -->
+            <div v-if="is_profile_data_loading" class="row justify-center">
+              <div class="text-center">
+              <q-spinner color="primary" size="40px"/>
+              <div class="text-grey">Loading Profile</div>
+              </div>
+            </div>
+            <q-markdown
+              v-if="profile_data"
+              :src="profile_data.profile.text"
+              :no-abbreviation="false"
+            >
+            </q-markdown>
+
           </q-card-section>
           <q-separator />
           <q-card-section class="row">
-            {{candidate.registered}}
+            <date-string :date="candidate.registered" prepend="Candidate since:"/>
           </q-card-section>
 
       <!-- {{getElectionsConfig}} -->
@@ -56,22 +65,29 @@
 <script>
 import { mapGetters } from "vuex";
 import profilePic from "components/profile-pic";
+import dateString from "components/date-string"
 import {notifyError, notifySuccess} from '../../../imports/notifications.js';
 export default {
   name: "listCandidates",
   components: {
-    profilePic
+    profilePic,
+    dateString
   },
   props: {
     candidate: {
       type: Object,
       default: () => {
-        return {};
+        return {
+          
+        };
       }
     }
   },
   data() {
-    return {};
+    return {
+      profile_data: false,
+      is_profile_data_loading: false
+    };
   },
   computed: {
     ...mapGetters({
@@ -91,9 +107,19 @@ export default {
       }
       else{
         this.candidate.vote = e;
+        if(e){
+          this.$store.commit("elections/updateCandidateTotalVotes",{cand: this.candidate.cand, delta:1});
+        }
+        else{ 
+          this.$store.commit("elections/updateCandidateTotalVotes",{cand: this.candidate.cand, delta:-1});
+        }
+        
       }
-      
-      // console.log(e)
+    },
+    async fetchProfileData(){
+      this.is_profile_data_loading = true;
+      this.profile_data = await this.$store.dispatch("group/fetchProfile", this.candidate.cand);
+      this.is_profile_data_loading = false;
     }
   },
   watch: {}

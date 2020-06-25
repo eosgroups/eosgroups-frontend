@@ -2,13 +2,14 @@
   <div>
     <q-card class="q-mb-md" v-intersection="onIntersection" >
       <q-card-section class="column justify-between" style="min-height:150px">
-        <div v-if="getNewVotes && getNewVotes.length ==0"  class="text-caption" key="no_votes">You don't have active votes</div>
+        
         <transition-group
           appear
           enter-active-class="animated zoomIn"
           leave-active-class="animated zoomOut"
           class="row q-gutter-sm"
           tag="div"
+          mode="in-out"
         >
           <q-card
             v-for="vote in getNewVotes"
@@ -23,11 +24,11 @@
                 <q-item-label>{{ vote }}</q-item-label>
               </q-item-section>
               <q-item-section side>
-                <q-icon name="close" color="negative" class="cursor-pointer"/>
+                <q-icon name="close" color="negative" class="cursor-pointer" @click="removeNewVote(vote)" />
               </q-item-section>
             </q-item>
           </q-card>
-          
+          <div v-if="getNewVotes && getNewVotes.length ==0"  class="text-caption" key="no_votes">You don't have active votes</div>
         </transition-group>
         
 
@@ -139,6 +140,10 @@ export default {
       } else {
         this.show_fixed_votes = false;
       }
+    },
+    removeNewVote(vote){
+      this.getCandidates.find(c => c.cand == vote && c.vote===true).vote= false;
+      this.$store.commit("elections/updateCandidateTotalVotes",{cand: vote, delta:-1});
     }
   },
 
