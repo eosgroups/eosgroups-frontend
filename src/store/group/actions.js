@@ -328,20 +328,15 @@ export async function fetchProfile ({ state, commit, rootState, rootGetters }, a
               }
               
             })
-            data = Object.assign(profile_template, data);
-            data.account = p.account;
-            data.last_update = p.last_update
-           // p.profile = JSON.parse(p.profile);
-            // if(p.profile.text === undefined) p.profile.text = "Example text";
-            // if(p.profile.links === undefined || !Array.isArray(p.profile.links) ) p.profile.links = profile_template.links;
-            // if(p.profile.files === undefined || !Array.isArray(p.profile.files) ) p.profile.files = profile_template.files;
-            // if(p.profile.photos === undefined || !Array.isArray(p.profile.photos) ) p.profile.photos = profile_template.photos;
         } catch(e) {
-            alert(e); // error in the above string (in this case, yes)!
+            //alert(e); // error in the above string (in this case, yes)!
         }
+        data = Object.assign(profile_template, data);
+        data.account = p.account;
+        data.last_update = p.last_update
        
       }
-      console.log("yyyyyyyyyyyyyy", data)
+      //console.log("yyyyyyyyyyyyyy", data)
       if(data.account == accountname){
         
         commit('updateOrAddProfile', data);
