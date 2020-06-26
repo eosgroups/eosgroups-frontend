@@ -1,16 +1,20 @@
 <template>
   <div>
-
     <!-- :label="link.label || `link ${i+1}`" -->
-    <transition-group v-if="links.length" enter-active-class="animated zoomIn" leave-active-class="animated zoomOut" class="row text-caption text-weight-light  items-center">
+    <transition-group
+      v-if="links.length"
+      enter-active-class="animated zoomIn"
+      leave-active-class="animated zoomOut"
+      class="row text-caption text-weight-light justify-center items-center"
+    >
       <q-btn
         class="q-mr-sm q-my-xs"
         size="sm"
         dense
-        v-for="(link,i) in links"
+        v-for="(link, i) in links"
         :key="link.url"
         :disabled="!isValidUrl(link.url)"
-        :label="!link.icon && !link.label? `link ${i+1}` :link.label"
+        :label="!link.icon && !link.label ? `link ${i + 1}` : link.label"
         :icon="link.icon || 'link'"
         color="primary"
         @click="openURL(link.url)"

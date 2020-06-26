@@ -14,6 +14,7 @@ const { setBrand } = colors;
 export async function resetStore ({  commit }, payload) {
   commit('setCoreConfig', false);
   commit('setCustodians', []);
+  commit('setMyOldProfile', false);
   //commit('setChildAccounts', false);
   commit('setModules', false);
   commit('setAvatars', []);
@@ -314,7 +315,7 @@ export async function fetchProfile ({ state, commit, rootState, rootGetters }, a
     });
     if(res && res.rows.length){
       let p = res.rows[0];
-      console.log("xxxxxxxxxxxxxxxxxxxxx", p.data);
+      //console.log("xxxxxxxxxxxxxxxxxxxxx", p.data);
       let data = {};
       if(p && p.data){
         
@@ -329,7 +330,7 @@ export async function fetchProfile ({ state, commit, rootState, rootGetters }, a
               
             })
         } catch(e) {
-            //alert(e); // error in the above string (in this case, yes)!
+            alert(e); // error in the above string (in this case, yes)!
         }
         data = Object.assign(profile_template, data);
         data.account = p.account;
@@ -338,10 +339,10 @@ export async function fetchProfile ({ state, commit, rootState, rootGetters }, a
       }
       //console.log("yyyyyyyyyyyyyy", data)
       if(data.account == accountname){
-        
-        commit('updateOrAddProfile', data);
-        
+        commit('setMyOldProfile', JSON.parse(JSON.stringify(data) ) );
       }
+      commit('updateOrAddProfile', data);
+      
       console.log(`fetched profile for ${accountname}`, data);
       return data;
     }

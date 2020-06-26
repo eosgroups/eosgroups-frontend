@@ -99,7 +99,7 @@ export default {
 
       }
       else{
-        return false;
+        //return false;
       }
       this.is_transacting = false;
     }

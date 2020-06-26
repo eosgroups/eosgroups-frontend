@@ -103,7 +103,7 @@
               </div>
             </q-scroll-area>
                 <div class="row justify-between text-caption q-px-md text-grey-5">
-                  <div><b>Submitted</b>: {{proposal.submitted}}</div>
+                  <div><date-string prepend="Submitted:" :date="proposal.submitted" /></div>
                   <div><b>Expiration</b>: {{proposal.expiration}}</div>
                   <div><b>ID</b>: {{proposal.id}}</div>
                 </div>
@@ -156,6 +156,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import dateString from "components/date-string";
 import proposalBtns from "components/proposal-btns";
 import approvalsList from "components/approvals-list";
 import actionDisplay from "components/action-display";
@@ -171,7 +172,8 @@ export default {
     approvalsList,
     actionDisplay,
     trxId,
-    proposalIcon
+    proposalIcon,
+    dateString
   },
   props: {
     proposal: {

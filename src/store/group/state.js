@@ -18,6 +18,7 @@ export default {
   newCoreConfig: false, //!! used for detecting config changes
   modules: false,
   avatars: [],
-  profiles: []
+  profiles: [],
+  myOldProfile: false
   
 }

@@ -58,6 +58,10 @@ export function getProposals(state){
     return state.proposals;
 }
 
+export function getMyOldProfile(state){
+  return state.myOldProfile;
+}
+
 export function getThresholds(state){
     return state.thresholds;
 }
